@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "Bullet.hpp"
 
 Player::Player(int x, int y, std::string c){
     this->h  = x;
@@ -43,7 +44,8 @@ void Player::moveRight(){
 }
 
 void    Player::shoot(){
-    Bullet
+    Bullet::shoot();
+    Bullet::player = true;
 }
 
 void display(){

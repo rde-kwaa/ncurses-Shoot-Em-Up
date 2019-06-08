@@ -12,7 +12,7 @@ class Enemy:public Entity
 		Enemy(int x, int y,int maxx,int maxy);
 		Enemy(const Enemy &Enemy);
 		~Enemy();
-		Entity &operator=(const Entity &entity);
+		Enemy &operator=(const Enemy &enemy);
 };
 
 #endif // !ENEMY_H

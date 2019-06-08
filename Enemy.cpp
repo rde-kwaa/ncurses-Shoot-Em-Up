@@ -1,5 +1,4 @@
 #include "Enemy.hpp"
-#include "Enemy.hpp"
 
 void Enemy::_randomStart() {
 	srand(time(NULL));
@@ -24,12 +23,12 @@ Enemy::~Enemy(void){
 	return ;
 }
 
-Entity &Entity::operator=(const Entity &entity){
-	this->_character = entity._character;
-	this->_h = entity._h;
-	this->_v = entity._v;
-	this->_maxV = entity._maxV;
-	this->_maxH = entity._maxH;
-	this->_speed = entity._speed;
+Enemy &Enemy::operator=(const Enemy &enemy){
+	this->_character = enemy._character;
+	this->_h = enemy._h;
+	this->_v = enemy._v;
+	this->_maxV = enemy._maxV;
+	this->_maxH = enemy._maxH;
+	this->_speed = enemy._speed;
 	return (*this);
 }

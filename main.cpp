@@ -32,6 +32,64 @@ void objectUpdate(WINDOW *win, std::list<Entity> &listOfPlayer, int yMax, int xM
     mvwprintw(win, 5 + 2, it->h, "0");
 }
 
+// Game begin storyline
+void storylineBegin(WINDOW *win, int xMax, int yMax){
+    
+    const char *text = "The Earth is in trouble...";
+    const char *text2 = "Mark Zuckerburg and the Queen of England threaten to enslave the entire world..";
+    const char *text3 = "As Elon's Prized Space car it is up to you to protect the people of Earth..";
+    const char *text4 = "Stop the ever growing Lizzard threat and mighty Elon will love you forever..";
+    const char *text5 = "Begin game? (y/n): ";
+
+    mvwprintw(win, 1, xMax / 2 - 20, text);
+    wrefresh(win);
+    wgetch(win);
+
+    mvwprintw(win, 2, xMax / 2 - 45, text2);
+    wrefresh(win);
+    wgetch(win);
+
+    mvwprintw(win, 3, xMax / 2 - 42, text3);
+    wrefresh(win);
+    wgetch(win);
+
+    mvwprintw(win, 4, xMax / 2 - 43, text4);
+    wrefresh(win);
+    wgetch(win);
+    
+    wclear(win);
+    wrefresh(win);
+
+    mvwprintw(win, 8, xMax / 2 - 15, text5);
+    wrefresh(win);
+    wgetch(win);
+
+    wclear(win);
+    wrefresh(win);
+}
+
+// Game fail storyline
+void storylineFail(WINDOW *win, int xMax, int yMax){
+    const char *textFail1 = "You have doomed us all";
+    const char *textFail2 = "The Queen of england now rules over humanity with Mark Zuckerburg at her side..";
+    const char *textFail3 = "Retry? (y/n): ";
+
+    mvwprintw(win, 1, xMax / 2 - 15, textFail1);
+    wrefresh(win);
+    wgetch(win);
+
+    mvwprintw(win, 2, xMax / 2 - 42, textFail2);
+    wrefresh(win);
+    wgetch(win);
+
+    wclear(win);
+    wrefresh(win);
+
+    mvwprintw(win, 5, xMax / 2 - 15, textFail3);
+    wrefresh(win);
+    wgetch(win);
+}
+
 void menu(WINDOW *win, int xMax, int yMax) {
     int x, y;
     int c, i = 0;
@@ -42,7 +100,7 @@ void menu(WINDOW *win, int xMax, int yMax) {
         x = xMax / 2;
         y = yMax / 2;
         move(10, 10);
-        printw("Rush-Type");
+
         if (i == 0)
             wattron(win, A_STANDOUT);  // highlights the first item.
         else
@@ -89,8 +147,12 @@ int main(int argc, char *argv[]) {
     box(win, 0, 0);
     keypad(win, true);
     curs_set(0);  // hides the default screen cursor.
-    menu(win, xMax, yMax);
+    // menu(win, xMax, yMax);
 
+    // Call when game begins (STORYLINE)
+    storylineBegin(win, xMax, yMax);
+    // Call when player fails (STORYLINE)
+    // storylineFail(win, xMax, yMax);
     Player playerOne(1, 1, "0");
 
     while (playerOne.alive) {

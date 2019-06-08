@@ -7,7 +7,7 @@
 
 class Player : public Entity
 {
-
+    
     public:
         Player(int h, int v, std::string c);
         ~Player();

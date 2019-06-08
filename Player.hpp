@@ -20,7 +20,7 @@ class Player : public Entity
         void shoot();
 		bool alive;
 		
-        std::string c;
+        std::string _character;
 };
 
 #endif

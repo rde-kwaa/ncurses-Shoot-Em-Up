@@ -42,6 +42,10 @@ void Player::moveRight(){
     }
 }
 
+void    Player::shoot(){
+    Bullet
+}
+
 void display(){
     
 }
@@ -67,7 +71,11 @@ int Player::getMove(WINDOW *win, int yMax, int xMax){
         case KEY_RIGHT:{
             moveRight();
 			break;	
-		}		
+		}
+        case KEY_F0:{
+            shoot();
+            break;
+        }
         default:
             break;
     }

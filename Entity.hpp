@@ -14,6 +14,7 @@ class Entity{
         Entity(int x, int y,int maxx,int maxy);
         Entity(const Entity &entity);
         ~Entity(void);
+        Entity &operator=(const Entity &entity);
         void updatePosition();
         void collide(Entity &entity);
         void takeDamage();

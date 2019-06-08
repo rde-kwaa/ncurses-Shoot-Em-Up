@@ -11,7 +11,7 @@ class Bullet : public Entity
         void moveLeft();
         void moveRight();
         void display();
-
+        void updatePosition();
         std::string c;
 
         bool player;

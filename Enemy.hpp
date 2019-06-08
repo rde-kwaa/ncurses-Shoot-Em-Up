@@ -4,11 +4,15 @@
 #include <iostream>
 
 class Enemy:public Entity
-{
+{	
+	private:
+		void _randomStart();
+
 	public:
-		void randomStart();
-		Enemy(/* args */);
+		Enemy(int x, int y,int maxx,int maxy);
+		Enemy(const Enemy &Enemy);
 		~Enemy();
+		Entity &operator=(const Entity &entity);
 };
 
 #endif // !ENEMY_H

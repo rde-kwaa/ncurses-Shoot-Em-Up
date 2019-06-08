@@ -1,9 +1,9 @@
 #include <ncurses.h>
+#include <sys/timeb.h>
 #include <unistd.h>
+#include <cstdlib>
 #include <iostream>
 #include <list>
-#include <cstdlib>
-#include <sys/timeb.h>
 #include "Entity.hpp"
 #include "Player.hpp"
 
@@ -14,8 +14,8 @@ void windowClean(WINDOW *win) {
     box(win, 0, 0);
 }
 
-void playerUpdate(WINDOW *win, Player playerOne,int yMax, int xMax){
-	mvwprintw(win, playerOne.getV(), playerOne.getH(), "0");
+void playerUpdate(WINDOW *win, Player playerOne, int yMax, int xMax) {
+    mvwprintw(win, playerOne.getV(), playerOne.getH(), "0");
 }
 
 void objectUpdate(WINDOW *win, std::list<Entity> &listOfPlayer, int yMax, int xMax) {
@@ -24,78 +24,71 @@ void objectUpdate(WINDOW *win, std::list<Entity> &listOfPlayer, int yMax, int xM
     int next_x;
     // TODO -- loop list
 
-	 next_x = it->getH() + it->getSpeed();
+    next_x = it->getH() + it->getSpeed();
 
-	if (next_x >= xMax || next_x < 0) {
-		it->setSpeed(it->getSpeed()* -1);
-	} else {
-		it->setH(it->getH()+it->getV());
-	}
-	mvwprintw(win, 5+2, it->getH(), "0");
+    if (next_x >= xMax || next_x < 0) {
+        it->setSpeed(it->getSpeed() * -1);
+    } else {
+        it->setH(it->getH() + it->getV());
+    }
+    mvwprintw(win, 5 + 2, it->getH(), "0");
 }
 
 void menu(WINDOW *win, int xMax, int yMax) {
-    int x, y;
-    int c, i = 0;
-    char list[3][9] = {"NEW GAME", "HELP", "QUIT"};
-    char item[9];
+    int x = xMax / 2 - 8;
+    int y = yMax / 2 - 2;
+    std::string items[3] = {"NEW GAME", "HELP", "QUIT"};
+    int item;
+    int highlight = 0;
+    int ws = 0;
+    std::string s;
 
-    for (i = 0; i < 3; i++) {
-        x = xMax / 2;
-        y = yMax / 2;
-        move(10, 10);
-        printw("Rush-Type");
-        if (i == 0)
-            wattron(win, A_STANDOUT);  // highlights the first item.
-        else
+    while (1) {
+        mvwprintw(win, y - 2, x + 4, "Rush-Type");
+        for (int i = 0; i < 3; i++) {
+            if (i == highlight)
+                wattron(win, A_STANDOUT);
+            s = items[i].c_str();
+            (strlen(s.c_str()) > 5) ? ws = 4 : ws = 6;
+            // print at centered coordinate. c_str is to cast as it only takes char *.
+            mvwprintw(win, i + y + 1, x + 1, "%*s%*s",
+                      (8 + strlen(s.c_str()) / 2), s.c_str(), ws, " ");
             wattroff(win, A_STANDOUT);
-        sprintf(item, "%-7s", list[i]);
-        mvwprintw(win, i + 1, 2, "%s", item);
-    }
-
-    wrefresh(win);  // update the terminal screen
-    while (c != 'q') {
-        c = wgetch(win);
-		
-        sprintf(item, "%-7s", list[i]);
-		
-        mvwprintw(win, i + 1, 2, "%s", item);
-        // use a variable to increment or decrement the value based on the input.
-        switch (c) {
+        }
+        item = wgetch(win);
+        wrefresh(win);
+        switch (item) {
             case KEY_UP:
-                i--;
-                i = (i < 0) ? 2 : i;
+                highlight--;
+                (highlight == -1) ? highlight = 0 : 0;
                 break;
             case KEY_DOWN:
-                i++;
-                i = (i > 2) ? 0 : i;
+                highlight++;
+                (highlight == 3) ? highlight = 2 : 0;
+                break;
+            default:
                 break;
         }
-        // now highlight the next item in the list.
-        wattron(win, A_STANDOUT);
-
-        sprintf(item, "%-7s", list[i]);
-        mvwprintw(win, i + 1, 2, "%s", item);
-        wattroff(win, A_STANDOUT);
+        if (item == 10)
+            break;
     }
 }
 
-int getMilliCount(){
-	timeb tb;
-	ftime(&tb);
-	int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
-	return nCount;
+int getMilliCount() {
+    timeb tb;
+    ftime(&tb);
+    int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
+    return nCount;
 }
 
-int getMilliSpan(int nTimeStart){
-	int nSpan = getMilliCount() - nTimeStart;
-	if(nSpan < 0)
-		nSpan += 0x100000 * 1000;
-	return nSpan;
+int getMilliSpan(int nTimeStart) {
+    int nSpan = getMilliCount() - nTimeStart;
+    if (nSpan < 0)
+        nSpan += 0x100000 * 1000;
+    return nSpan;
 }
 
-void updateTime(WINDOW *win, int xMax, int milliSecondsElapsed){
-	
+void updateTime(WINDOW *win, int xMax, int milliSecondsElapsed) {
 }
 
 int main(int argc, char *argv[]) {
@@ -103,14 +96,14 @@ int main(int argc, char *argv[]) {
     noecho();
     cbreak();
 
-	int start = getMilliCount();
-	int milliSecondsElapsed;
+    int start = getMilliCount();
+    int milliSecondsElapsed;
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
     yMax -= 10;
     xMax -= 10;
     WINDOW *win = newwin(yMax, xMax, 0, 0);
-	nodelay(win, TRUE);
+    nodelay(win, TRUE);
 
     box(win, 0, 0);
     keypad(win, true);
@@ -118,20 +111,20 @@ int main(int argc, char *argv[]) {
     menu(win, xMax, yMax);
 
     Player playerOne(1, 1, "0");
- 	while(playerOne.alive) {
-		milliSecondsElapsed = getMilliSpan(start) / 1000; // grabs current time
+    while (playerOne.alive) {
+        milliSecondsElapsed = getMilliSpan(start) / 1000;  // grabs current time
 
-		getmaxyx(stdscr, yMax, xMax);
-		yMax -=10;
-		xMax -=10;
-		clear();
-		windowClean(win);
-		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
-		
-		playerUpdate(win, playerOne, yMax, xMax);
-		refresh();
-		playerOne.getMove(win, yMax, xMax);
-		wrefresh(win);
+        getmaxyx(stdscr, yMax, xMax);
+        yMax -= 10;
+        xMax -= 10;
+        clear();
+        windowClean(win);
+        mvwprintw(win, 0, xMax / 2, "Time: %d", milliSecondsElapsed);
+
+        playerUpdate(win, playerOne, yMax, xMax);
+        refresh();
+        playerOne.getMove(win, yMax, xMax);
+        wrefresh(win);
 
         usleep(DELAY);
     }

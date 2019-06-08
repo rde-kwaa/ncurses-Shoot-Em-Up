@@ -12,8 +12,8 @@ void windowClean(WINDOW *win) {
     box(win, 0, 0);
 }
 
-void playerUpdate(WINDOW *win, Player playerOne, int yMax, int xMax) {
-    mvwprintw(win, playerOne.v, playerOne.h, "0");
+void playerUpdate(WINDOW *win, Player playerOne,int yMax, int xMax){
+	mvwprintw(win, playerOne.getV(), playerOne.getH(), "0");
 }
 
 void objectUpdate(WINDOW *win, std::list<Entity> &listOfPlayer, int yMax, int xMax) {
@@ -22,14 +22,14 @@ void objectUpdate(WINDOW *win, std::list<Entity> &listOfPlayer, int yMax, int xM
     int next_x;
     // TODO -- loop list
 
-    next_x = it->h + it->speed;
+	 next_x = it->getH() + it->getSpeed();
 
-    if (next_x >= xMax || next_x < 0) {
-        it->speed *= -1;
-    } else {
-        it->h += it->speed;
-    }
-    mvwprintw(win, 5 + 2, it->h, "0");
+	if (next_x >= xMax || next_x < 0) {
+		it->setSpeed(it->getSpeed()* -1);
+	} else {
+		it->setH(it->getH()+it->getV());
+	}
+	mvwprintw(win, 5+2, it->getH(), "0");
 }
 
 void menu(WINDOW *win, int xMax, int yMax) {
@@ -93,16 +93,17 @@ int main(int argc, char *argv[]) {
 
     Player playerOne(1, 1, "0");
 
-    while (playerOne.alive) {
-        getmaxyx(stdscr, yMax, xMax);
-        yMax -= 10;
-        xMax -= 10;
-        clear();
-        windowClean(win);
-        playerUpdate(win, playerOne, yMax, xMax);
-        refresh();
-        playerOne.getMove(win, yMax, xMax);
-        wrefresh(win);
+ 	while(playerOne._alive) {
+		
+		getmaxyx(stdscr, yMax, xMax);
+		yMax -=10;
+		xMax -=10;
+		clear();
+		windowClean(win);
+		playerUpdate(win, playerOne, yMax, xMax);
+		refresh();
+		playerOne.getMove(win, yMax, xMax);
+		wrefresh(win);
 
         usleep(DELAY);
     }

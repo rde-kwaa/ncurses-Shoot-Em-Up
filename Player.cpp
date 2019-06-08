@@ -44,8 +44,8 @@ void Player::moveRight(){
 }
 
 void    Player::shoot(){
-    Bullet::shoot();
-    Bullet::player = true;
+    // Bullet::shoot();
+    // Bullet::player = true;
 }
 
 void display(){

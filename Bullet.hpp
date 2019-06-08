@@ -1,6 +1,8 @@
+#ifndef BULLET_H
+#define BULLET_H
 #include <iostream>
 
-class Bullet
+class Bullet : public Entity
 {
     public:
         Bullet(int h, int v, std::string c);
@@ -10,5 +12,8 @@ class Bullet
         void moveRight();
         void display();
 
+        std::string c;
+
         bool player;
-}
+};
+#endif

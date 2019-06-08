@@ -1,11 +1,12 @@
 #include "Player.hpp"
+#include "Bullet.hpp"
 
 Player::Player(int x, int y, std::string c){
     this->_h  = x;
     this->_v = y;
     this->_character = c;
 	this->_speed = 1;
-	this->_alive = true;
+	this->alive = true;
     // getmaxyx(this->win, this->yMax, this->xMax);
     
 }
@@ -42,6 +43,11 @@ void Player::moveRight(){
     }
 }
 
+void    Player::shoot(){
+    Bullet  playerBullet(this->_h+1, this->_v, ".");
+    playerBullet.player = true;
+}
+
 void display(){
     
 }
@@ -67,7 +73,11 @@ int Player::getMove(WINDOW *win, int yMax, int xMax){
         case KEY_RIGHT:{
             moveRight();
 			break;	
-		}		
+		}
+        case KEY_F0:{
+            shoot();
+            break;
+        }
         default:
             break;
     }

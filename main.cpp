@@ -40,8 +40,6 @@ void menu(WINDOW *win, int xMax, int yMax) {
     char list[3][9] = {"NEW GAME", "HELP", "QUIT"};
     char item[9];
 
-
-
     for (i = 0; i < 3; i++) {
         x = xMax / 2;
         y = yMax / 2;
@@ -120,8 +118,8 @@ int main(int argc, char *argv[]) {
     menu(win, xMax, yMax);
 
     Player playerOne(1, 1, "0");
- 	while(playerOne._alive) {
-		milliSecondsElapsed = getMilliSpan(start) /1000; // grabs current time
+ 	while(playerOne.alive) {
+		milliSecondsElapsed = getMilliSpan(start) / 1000; // grabs current time
 
 		getmaxyx(stdscr, yMax, xMax);
 		yMax -=10;

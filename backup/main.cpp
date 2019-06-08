@@ -4,8 +4,8 @@
 #include <list>
 #include <cstdlib>
 #include <sys/timeb.h>
-#include "Entity.hpp"
-#include "Player.hpp"
+#include "../inc/Entity.hpp"
+#include "../inc/Player.hpp"
 
 #define DELAY 20000
 

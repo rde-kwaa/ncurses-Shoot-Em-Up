@@ -1,6 +1,6 @@
 #ifndef ENEMY_H
 # define ENEMY_H
-#include "Entity.hpp"
+#include "../inc/Entity.hpp"
 #include <iostream>
 
 class Enemy:public Entity

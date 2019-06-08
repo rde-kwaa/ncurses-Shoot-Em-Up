@@ -8,20 +8,11 @@ E = \033[0m
 # Name
 PROG := run
 
-FILES = main.cpp  Entity.cpp Player.cpp Enemy.cpp
-SRC_DIR = src
-SRCS = src/main.cpp  src/Entity.cpp src/Player.cpp src/Enemy.cpp
-OBJDIR = obj
-OBJS = obj/main.o  obj/Entity.o obj/Player.o obj/Enemy.o
-
 # Sources
-# SRCS :=	$(wildcard src/*.cpp)
+SRCS :=	main.cpp Entity.cpp Enemy.cpp Player.cpp
 
 # Object
-# /OBJS :=	$(SRCS:.cpp=.o)
-# OBJDIR := obj/
-# _OBJS	= $(patsubst src/%.cpp, %.o, $(SRC))
-# OBJS	= $(addprefix $(OBJDIR), $(_OBJS))
+OBJS :=	$(SRCS:.cpp=.o)
 
 # Flag
 # CXXFLAGS :=	-Wall -Werror -Wextra -pedantic -std=c++98
@@ -32,17 +23,14 @@ CXX := clang++
 
 # Build
 $(PROG): $(OBJS)
-	@echo $(SRCS)
 	@$(CXX) $(OBJS) -lncurses -o $@
 	@echo "$(G)Done!$(E)"
 
-$(OBJS): $(SRCS)
-	mkdir -p $(OBJDIR)
+%.o:%.c
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 # All
 all: $(PROG)
-	@echo $(SRCS)
 
 # Clean
 clean:

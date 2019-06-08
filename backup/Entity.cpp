@@ -1,4 +1,4 @@
-#include "Entity.hpp"
+#include "../inc/Entity.hpp"
 #include <iostream>
 
 Entity::Entity(void){

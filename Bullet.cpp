@@ -7,5 +7,5 @@ Bullet::Bullet(int x, int y, std::string c){
     this->v = y;
     this->c = c;
 	this->speed = 1;
-	this->player = true;
+	this->player = false;
 }

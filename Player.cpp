@@ -44,8 +44,8 @@ void Player::moveRight(){
 }
 
 void    Player::shoot(){
-    // Bullet::shoot();
-    // Bullet::player = true;
+    Bullet  playerBullet(this->h+1, this->v, ".");
+    playerBullet.player = true;
 }
 
 void display(){

@@ -17,9 +17,9 @@ class Player : public Entity
         void moveRight();
         int  getMove(WINDOW *win, int vMax, int hMax);
         void display();
-		bool alive;
+		bool _alive;
 		
-        std::string c;
+        std::string _character;
 };
 
 #endif

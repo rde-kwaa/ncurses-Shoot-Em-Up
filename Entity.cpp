@@ -78,3 +78,13 @@ Entity::Entity(void){
     std::string Entity::getCharacter(){
         return this->_character;
     }
+
+    Entity &Entity::operator=(const Entity &entity){
+        this->_character = entity._character;
+        this->_h = entity._h;
+        this->_v = entity._v;
+        this->_maxV = entity._maxV;
+        this->_maxH = entity._maxH;
+        this->_speed = entity._speed;
+        return (*this);
+    }

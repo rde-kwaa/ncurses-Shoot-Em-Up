@@ -74,7 +74,6 @@ void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[ENEMIES]){
 	int currentH = this->getH();
 	int tmpEnemy = -1;
 	int tmpEnemyH = maxH;
-	// std::string str= "";
 	std::string lazer;
 	int lazorLen = maxH - 10;
 	for (int i = 0; i <= ENEMIES; i++){

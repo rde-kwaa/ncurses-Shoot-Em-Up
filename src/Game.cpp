@@ -277,7 +277,7 @@ void    Game::storylineFail(WINDOW *win, int maxH){
 	std::string texts[2] = {
 		"You have doomed us all",
 		"The Queen of england now rules over humanity with Mark Zuckerburg at her side.."};
-	int cenX[3] = {15, 42, 15};
+	int cenX[2] = {15, 42};
 
     wclear(win);
     wrefresh(win);
@@ -289,9 +289,6 @@ void    Game::storylineFail(WINDOW *win, int maxH){
 	}
 	wclear(win);
     wrefresh(win);
-	mvwprintw(win, 5, maxH / 2 - cenX[2], "Retry?");
-	wrefresh(win);
-    getch();
 }
 #include <signal.h>
 void        Game::menu_sound(void)

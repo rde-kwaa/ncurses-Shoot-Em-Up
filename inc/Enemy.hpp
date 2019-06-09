@@ -6,15 +6,17 @@
 class Enemy : public Entity
 {	
 	private:
-		void 			_randomStart();
 		int				_size;
 		std::string		_type;
 
 	public:
+		Enemy(void);
 		Enemy(int h, int v);
 		Enemy(const Enemy &Enemy);
 		~Enemy();
 		Enemy &operator=(const Enemy &enemy);
+		void 			randomStart(int maxH, int maxV);
+		void 			resetEnemy(int maxH, int maxV);
 		void			setSize(int);
 		void			setType(std::string);
 		int				getSize(void);

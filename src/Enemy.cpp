@@ -1,15 +1,19 @@
 #include "../inc/Enemy.hpp"
 
-void Enemy::_randomStart() {
-	srand(time(NULL));
-	// this->_h = this->_maxH;
-	// this->_v = std::rand() % this->_maxV;
+Enemy::Enemy(void)
+{
+	return ;
+}
+
+void Enemy::randomStart(int maxH, int maxV) {
+    srand(time(NULL));	
+	this->_h = maxH;
+	this->_v = std::rand() % maxV;
 }
 
 Enemy::Enemy(int h, int v){
 	this->_h = h;
 	this->_v = v;
-	_randomStart();
 	return ;
 }
 
@@ -18,7 +22,7 @@ Enemy::Enemy(const Enemy &Enemy){
 	return ;
 }
 Enemy::~Enemy(void){
-	std::cout << "Enemy destroyed\n";
+	// std::cout << "Enemy destroyed\n";
 	return ;
 }
 
@@ -44,4 +48,10 @@ int				Enemy::getSize(void) {
 
 std::string		Enemy::getType(void) {
 	return (this->_type);
+}
+
+void 			Enemy::resetEnemy(int maxH, int maxV)
+{
+	this->randomStart(maxH, maxV);
+	// Change score here
 }

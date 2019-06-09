@@ -6,7 +6,7 @@
 /*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 01:04:00 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 11:48:02 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 14:09:51 by akay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ void    Game::displayPlayer(WINDOW *win, Player player)
 {
     mvwprintw(win, player.getV(), player.getH(), "0");
 }
+
+void   Game::displayEnemy(WINDOW *win, Enemy enemy)
+{
+    mvwprintw(win, enemy.getV(), enemy.getH(), "X");
+}
+
 
 void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 {
@@ -173,4 +179,11 @@ int     Game::getMilliSpan(int nTimeStart){
 	if(nSpan < 0)
 		nSpan += 0x100000 * 1000;
 	return nSpan;
+}
+
+void    Game::generateEnemy(int h, int v)
+{
+    this->enemies[0].setH(h);
+    this->enemies[0].setV(v);
+    this->enemies[0].randomStart(10, this->getTermHeight());
 }

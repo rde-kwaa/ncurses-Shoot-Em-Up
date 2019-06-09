@@ -29,7 +29,7 @@ class Player : public Entity
 		bool alive;
 		int getScore(void);
 		void setScore(int n);
-		
+		void die();
         std::string _character;
 };
 

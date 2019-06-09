@@ -1,7 +1,7 @@
 #include "../inc/Player.hpp"
 #include "../inc/Bullet.hpp"
 
-#define ENEMIES 1000
+#define ENEMIES 100
 
 Player::Player(void)
 {
@@ -66,6 +66,9 @@ std::string CreateLazer(int lazorLen, int currentH){
 		str.append("=");
 	}
 	return (str);
+}
+void Player::die() {
+	this->alive = false;
 }
 
 

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Game.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/09 01:04:00 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 14:52:46 by rde-kwaa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../inc/Game.hpp"
 
 /* DEFAULT
@@ -85,6 +73,11 @@ void Game::getAction(WINDOW *win, int termHeight, int termWidth) {
 			break;
 		case KEY_RIGHT:
 			this->player.moveRight(termWidth);
+			break;
+		case 27:
+			windowClean(win);
+			wrefresh(win);
+			exit(0);
 			break;
 		default:
 			break;
@@ -164,7 +157,7 @@ int Game::help(WINDOW *win, int yMax) {
 		"ACTIONS:",
 		"SPACEBAR - Fire",
 		"",
-		"EXIT - ESC"};
+		"EXIT - ESC x 2"};
 
 	while (1) {
 		mvwprintw(win, 2, 3, "HELP:");
@@ -200,64 +193,41 @@ int Game::getMilliSpan(int nTimeStart) {
 }
 
 void    Game::storylineBegin(WINDOW *win, int maxH){
+std::string texts[5] = {
+		"The Earth is in trouble...",
+		"Mark Zuckerburg and the Queen of England threaten to enslave the entire world..",
+		"As Elon's Prized Space car it is up to you to protect the people of Earth..",
+		"Stop the ever growing Lizzard threat and mighty Elon will love you forever..",
+		"Begin Game?"};
+int cenX[5] = {20, 45, 42, 43, 15};
 
-    const char *text1 = "The Earth is in trouble...";
-    const char *text2 = "Mark Zuckerburg and the Queen of England threaten to enslave the entire world..";
-    const char *text3 = "As Elon's Prized Space car it is up to you to protect the people of Earth..";
-    const char *text4 = "Stop the ever growing Lizzard threat and mighty Elon will love you forever..";
-    const char *text5 = "Begin game?";
-    
-    wclear(win);
-    wrefresh(win);
-    
-    getch();
-    wrefresh(win);
-
-    mvwprintw(win, 1, maxH / 2 - 20, text1);
-    wrefresh(win);
-    getch();    
-
-    mvwprintw(win, 2, maxH / 2 - 45, text2);
-    wrefresh(win);
-    getch();    
-
-    mvwprintw(win, 3, maxH / 2 - 42, text3);
-    wrefresh(win);
-    getch();
-
-    mvwprintw(win, 4, maxH / 2 - 43, text4);
-    wrefresh(win);
-    getch();    
-    
     wclear(win);
     wrefresh(win);
 
-    mvwprintw(win, 5, maxH / 2 - 15, text5);
-    wrefresh(win);
-    getch();
+	for (int i=0; i<5; i++){
+		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
+    	wrefresh(win);
+    	getch();
+	}
 }
 
 void    Game::storylineFail(WINDOW *win, int maxH){
-    const char *textFail1 = "You have doomed us all";
-    const char *textFail2 = "The Queen of england now rules over humanity with Mark Zuckerburg at her side..";
-    const char *textFail3 = "Retry?";
+	std::string texts[2] = {
+		"You have doomed us all",
+		"The Queen of england now rules over humanity with Mark Zuckerburg at her side.."};
+	int cenX[3] = {15, 42, 15};
 
     wclear(win);
     wrefresh(win);
 
-    mvwprintw(win, 1, maxH / 2 - 15, textFail1);
+	for (int i=0; i<2; i++){
+		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
+    	wrefresh(win);
+    	getch();
+	}
+	wclear(win);
     wrefresh(win);
-    getch();    
-
-    mvwprintw(win, 2, maxH / 2 - 42, textFail2);
-    wrefresh(win);
-    getch();
-
-
-    wclear(win);
-    wrefresh(win);
-
-    mvwprintw(win, 5, maxH / 2 - 15, textFail3);
-    wrefresh(win);
+	mvwprintw(win, 5, maxH / 2 - cenX[2], "Retry?");
+	wrefresh(win);
     getch();
 }

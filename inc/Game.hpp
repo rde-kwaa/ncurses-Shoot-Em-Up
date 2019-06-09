@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
+/*   By: rde-kwaa <rde-kwaa@student.wethinkcode.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 13:54:11 by rde-kwaa         ###   ########.fr       */
+/*   Updated: 2019/06/09 15:03:07 by rde-kwaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,42 @@
 
 class Game {
    public:
-    Player player;
+	Player player;
 
-    Game(void);
-    Game(Player player);
-    Game(Game const &obj);
-    ~Game();
-    Game &operator=(Game const &obj);
+	Game(void);
+	Game(Player player);
+	Game(Game const &obj);
+	~Game();
+	Game &operator=(Game const &obj);
 
-    // Game functions
-    void displayPlayer(WINDOW *win, Player player);
+	// Window functions
+	WINDOW *createWindow(int height, int width, int coY, int coX);
+	void getAction(WINDOW *win, int termHeight, int termWidth);
+	void windowClean(WINDOW *win);
+	int menu(WINDOW *win, int winHeight, int winWidth);
+	int help(WINDOW *win, int winHeight);
 
-    // Setters
-    void setTermHeight(int termHeight);
-    void setTermWidth(int termWidth);
-    void setTermDimensions(int termHeight, int termWidth);
+	// Game functions
+	void displayPlayer(WINDOW *win, Player player);
 
-        int         getMilliCount();
-        int         getMilliSpan(int nStartTime);   
+	// Setters
+	void setTermHeight(int termHeight);
+	void setTermWidth(int termWidth);
+	void setTermDimensions(int termHeight, int termWidth);
 
-        // Storyline
-        void        storylineBegin(WINDOW *win, int maxH);
-        void        storylineFail(WINDOW *win, int maxH);     
-    
-    private:
-        int         _termHeight;
-        int         _termWidth;
-};
-    // Getters
-    int getTermHeight();
-    int getTermWidth();
+	// Getters
+	int getTermHeight();
+	int getTermWidth();
+	int getMilliCount();
+	int getMilliSpan(int nStartTime);
 
-    // Window functions
-    WINDOW *createWindow(int height, int width, int coY, int coX);
-    void getAction(WINDOW *win, int termHeight, int termWidth);
-    void windowClean(WINDOW *win);
-    int menu(WINDOW *win, int winHeight, int winWidth);
-    int help(WINDOW *win, int winHeight);
+	// Storyline
+	void storylineBegin(WINDOW *win, int maxH);
+	void storylineFail(WINDOW *win, int maxH);
 
-    int getMilliCount();
-    int getMilliSpan(int nStartTime);
-
-   private:
-    int _termHeight;
-    int _termWidth;
+	private:
+		int _termHeight;
+		int _termWidth;
 };
 
 #endif

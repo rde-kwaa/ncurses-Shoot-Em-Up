@@ -15,8 +15,6 @@ int main(void) {
 	int milliSecondsElapsed;
     
     getmaxyx(stdscr, yMax, xMax);
-    yMax -= 10;
-    xMax -= 10;
     
     WINDOW *win = game.createWindow(yMax, xMax, 0, 0);
 	nodelay(win, TRUE);
@@ -32,13 +30,9 @@ int main(void) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
 
 		getmaxyx(stdscr, yMax, xMax);
-		yMax -=10;
-		xMax -=10;
-		clear();
 		game.windowClean(win);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
         game.displayPlayer(win, game.player);
-		refresh();
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);

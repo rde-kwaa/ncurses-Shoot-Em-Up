@@ -6,7 +6,7 @@
 /*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 01:04:00 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 11:31:14 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 11:48:02 by akay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
     switch(move)
     {
         case KEY_UP:
-            this->player.moveUp();
+            this->player.moveUp(termHeight);
             break;
         case KEY_DOWN:
             this->player.moveDown(termHeight);
@@ -109,7 +109,7 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 }
 
 void    Game::windowClean(WINDOW *win) {
-    wclear(win);
+    werase(win);
     box(win, 0, 0);
 }
 
@@ -158,6 +158,7 @@ void    Game::menu(WINDOW *win, int yMax, int xMax) {
         mvwprintw(win, i + 1, 2, "%s", item);
         wattroff(win, A_STANDOUT);
     }
+    werase(win);
 }
 
 int     Game::getMilliCount(){

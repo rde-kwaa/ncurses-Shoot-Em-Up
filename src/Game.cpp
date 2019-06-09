@@ -64,14 +64,15 @@ int		Game::getStartTime() {
 WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
 {
 	start_color();
-	WINDOW  *win = newwin(height, width, coY, coX);
-	box(win, 0 , 0);
-	
-	return (win);
+    WINDOW  *win = newwin(height, width, coY, coX);
+    box(win, 0 , 0);
+
+    return (win);
 }
 
 void		Game::displayPlayer(WINDOW *win, Player player)
 {
+	this->player.setCharacter("<)==>");
 	init_pair(3, COLOR_GREEN, 0);
 	wattron(win, COLOR_PAIR(3));
 	const char * playerShip = this->player._character.c_str();
@@ -83,6 +84,20 @@ void		Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 {
 	(void)i;
 	int		n;
+	if (enemy.getType() == "small")
+		enemy.setCharacter("<)");
+	else if (enemy.getType() == "big")
+		enemy.setCharacter("{{=>");
+	const char * enemyShip = enemy.getCharacter().c_str();
+    enemy.setH(enemy.getH() - 1);
+    if (enemy.getH() <= 0)
+    {
+        enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
+    }
+	init_pair(2, COLOR_RED, 0);
+	wattron(win, COLOR_PAIR(2));
+    mvwprintw(win, enemy.getV(), enemy.getH(), enemyShip);
+	wattroff(win, COLOR_PAIR(2));
 
 	enemy.setH(enemy.getH() - 1);
 	if (enemy.getH() < 1)
@@ -108,7 +123,7 @@ void		Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 
 }
 
-void		Game::getAction(WINDOW *win, int termHeight, int termWidth)
+void        Game::getAction(WINDOW *win, int termHeight, int termWidth, pid_t pid)
 {
 	int move = wgetch(win);
 	switch(move)
@@ -131,15 +146,15 @@ void		Game::getAction(WINDOW *win, int termHeight, int termWidth)
 		case 27:
 			windowClean(win);
 			wrefresh(win);
-			exit(0);
+			kill(pid, SIGKILL);
+			exit(1);
 			break;
 		default:
 			break;
 	}
 }
 
-
-void		Game::makeScenery(WINDOW *win, int time) {
+void	Game::makeScenery(WINDOW *win, int time) {
 	static int i;
 	(void)time;
 	int yMax, xMax;
@@ -165,7 +180,7 @@ void		Game::windowClean(WINDOW *win) {
 	werase(win);
 	makeScenery(win, this->getMilliSpan(this->getStartTime()));
 	box(win, 0, 0);
-		
+
 }
 
 int			Game::menu(WINDOW *win, int yMax, int xMax) {
@@ -245,7 +260,6 @@ int			Game::help(WINDOW *win, int yMax) {
 		}
 		wattron(win, A_STANDOUT);
 		curs_set(1);
-
 		mvwprintw(win, yMax - 3, 3, "%s", back.c_str());
 		curs_set(0);
 		wattroff(win, A_STANDOUT);
@@ -270,54 +284,52 @@ int			Game::getMilliSpan(int nTimeStart) {
 		nSpan += 0x100000 * 1000;
 	return nSpan;
 }
-
-void		Game::storylineBegin(WINDOW *win, int maxH){
-	std::string texts[5] = {
+void    Game::storylineBegin(WINDOW *win, int maxH){
+std::string texts[6] = {
 		"The Earth is in trouble...",
 		"Mark Zuckerburg and the Queen of England threaten to enslave the entire world..",
 		"As Elon's Prized Space car it is up to you to protect the people of Earth..",
 		"Stop the ever growing Lizzard threat and mighty Elon will love you forever..",
-		"Begin Game?"};
-	int cenX[5] = {20, 45, 42, 43, 15};
+		"Begin Game?",""};
+int cenX[5] = {20, 45, 42, 43, 15};
 
     wclear(win);
     wrefresh(win);
-	getch();
 
-	for (int i=0; i<5; i++){
-		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
+	for (int i=0; i<6; i++){
 		wrefresh(win);
+		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
 		getch();
 	}
 }
 
-void		Game::storylineFail(WINDOW *win, int maxH){
-	std::string texts[2] = {
+void    Game::storylineFail(WINDOW *win, int maxH){
+	std::string texts[3] = {
 		"You have doomed us all",
-		"The Queen of england now rules over humanity with Mark Zuckerburg at her side.."};
-	int cenX[2] = {15, 42};
+		"The Queen of england now rules over humanity with Mark Zuckerburg at her side..",""};
+	int cenX[3] = {15, 42, 15};
 
 	wclear(win);
 	wrefresh(win);
 
-	for (int i=0; i<2; i++){
-		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
+	for (int i=0; i<3; i++){
 		wrefresh(win);
+		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
 		getch();
 	}
 	wclear(win);
     wrefresh(win);
 }
 
-void		Game::menu_sound(void)
+pid_t        Game::menu_sound(void)
 {
-
-	pid_t pid = fork();
-	if (!pid)
-	{
-		execlp("afplay", "afplay", "./res/BeachLasagne.mp3", NULL);
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/BeachLasagne.mp3", NULL);
 		exit(0);
-	}
+    }
+	return(pid);
 }
 
 void		Game::boom(void)

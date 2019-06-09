@@ -16,7 +16,7 @@ int main(void) {
 	int start = game.getMilliCount();
 	game.setStartTime(start);
 	int milliSecondsElapsed;
-    
+
     getmaxyx(stdscr, yMax, xMax);
 
     WINDOW *win = game.createWindow(yMax, xMax, 0, 0);
@@ -53,12 +53,12 @@ int main(void) {
 
 	// Menu/game music start
 	//  Comment out to turn off music
-	game.menu_sound();
+	pid_t pid = game.menu_sound();
 
     int     i = 0;
     int     k = 0;
 	game.storylineBegin(win, xMax);
-    srand(time(NULL));	
+    srand(time(NULL));
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
 
@@ -83,12 +83,13 @@ int main(void) {
                 // Call when player fails (STORYLINE)
                 game.storylineFail(win, xMax);
                 game.game_Over();
+				kill(pid, SIGKILL);
                 wclear(win);
                 endwin();
                 return (0);
             }
         }
-		game.getAction(win, yMax, xMax);
+		game.getAction(win, yMax, xMax, pid);
 		wrefresh(win);
         usleep(DELAY);
         k++;

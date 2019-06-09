@@ -1,5 +1,6 @@
 #include "../inc/Game.hpp"
 #include <signal.h>
+#include <iostream>
 
 /* DEFAULT
    FUNCTIONS */
@@ -39,6 +40,10 @@ void 		Game::setTermDimensions(int termHeight, int termWidth) {
 	setTermWidth(termWidth);
 }
 
+void	Game::setStartTime(int time) {
+	this->startTime = time;
+}
+
 /* GETTER
    FUNCTIONS */
 int			Game::getTermHeight() {
@@ -49,17 +54,26 @@ int 		Game::getTermWidth() {
 	return (this->_termWidth);
 }
 
-WINDOW 		*Game::createWindow(int height, int width, int coY, int coX) {
-	WINDOW *win = newwin(height, width, coY, coX);
-	box(win, 0, 0);
+int		Game::getStartTime() {
+	return(this->startTime);
+}
 
+WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
+{
+	start_color();
+	WINDOW  *win = newwin(height, width, coY, coX);
+	box(win, 0 , 0);
+	
 	return (win);
 }
 
 void		Game::displayPlayer(WINDOW *win, Player player)
 {
+	init_pair(3, COLOR_GREEN, 0);
+	wattron(win, COLOR_PAIR(3));
 	const char * playerShip = this->player._character.c_str();
 	mvwprintw(win, player.getV(), player.getH(), playerShip);
+	wattroff(win, COLOR_PAIR(3));
 }
 
 void		Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
@@ -70,9 +84,18 @@ void		Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 	{
 		enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
 	}
-	//Assign colour
+	//ifs
+	if (enemy.getPhase() > 2 && enemy.getPhase() < 6) {
+		init_pair(12, COLOR_MAGENTA, 0);
+	} else if (enemy.getPhase() > 0 && enemy.getPhase() < 3) {
+		init_pair(12, COLOR_YELLOW, 0);
+	} else {
+		init_pair(12, COLOR_RED, 0);
+	}
+	wattron(win, COLOR_PAIR(12));
 	mvwprintw(win, enemy.getV(), enemy.getH(), "X");
-	//Unassign colour
+	wattroff(win, COLOR_PAIR(12));
+
 }
 
 void		Game::getAction(WINDOW *win, int termHeight, int termWidth)
@@ -99,16 +122,40 @@ void		Game::getAction(WINDOW *win, int termHeight, int termWidth)
 			windowClean(win);
 			wrefresh(win);
 			exit(0);
-		break;
+			break;
 		default:
 			break;
 	}
 }
 
+
+void		Game::makeScenery(WINDOW *win, int time) {
+	static int i;
+	(void)time;
+	int yMax, xMax;
+	getmaxyx(stdscr, yMax, xMax);
+	int startX = xMax - i++;
+	if (i == xMax - 1) {i = 0;}
+	init_pair(1, 4, 0);
+	wattron(win, COLOR_PAIR(1));
+	mvwprintw(win, yMax - 10, startX, "                        .           .                  *                      /   \\              _/ \\       *    .                                ");
+	mvwprintw(win, yMax - 9, startX, "        _    .  ,   .           .         _    .       .                  .--'\\/\\_ \\            /    \\  *    ___                                  ");
+	mvwprintw(win, yMax - 8, startX, "    *  / \\_ *  / \\_      _  *        *   /\\'__      *                 *  / \\_    _/ ^      \\/\\'__        /\\/\\  /\\  __/   \\ *                      ");
+	mvwprintw(win, yMax - 7, startX, "      /    \\  /    \\,   ((        .    _/  /  \\  *'.                    /    \\  /    .'   _/  /  \\  *' /    \\/  \\/ .`'\\_/\\   .                    ");
+	mvwprintw(win, yMax - 6, startX, " .   /\\/\\  /\\/ :' __ \\_  `          _^/  ^/    `--.  .                 /\\/\\  /\\/ :' __  ^/  ^/    `--./.'  ^  `-.\\ _    _:\\ _                     ");
+	mvwprintw(win, yMax - 5, startX, "    /    \\/  \\  _/  \\-'\\      *    /.' ^_   \\_   .'\\             *    /    \\/  \\  _/  \\-' __/.' ^ _   \\_   .'\\   _/ \\ .  __/ \\                    ");
+	mvwprintw(win, yMax - 4, startX, "  /\\  .-   `. \\/     \\ /==~=-=~=-=-;.  _/ \\ -. `_/   \\               /\\  .-   `. \\/     \\ / -.   _/ \\ -. `_/   \\ /    `._/  ^  \\                  ");
+	mvwprintw(win, yMax - 3, startX, " /  `-.__ ^   / .-'.--\\ =-=~_=-=~=^/  _ `--./ .-'  `- \\             / `-.__ ^   / .-'.--'    . /    `--./ .-'  `-.  `-. `.  -  `.                 ");
+	mvwprintw(win, yMax - 2, startX, "/        `.  / /       `.~-^=-=~=^=.-'      '-._ `._   \\           /      `.  / /      `-.   /  .-'   / .   .'   \\    \\  \\  .-   \\                ");
+	wattroff(win, COLOR_PAIR(1));
+
+}
+
 void		Game::windowClean(WINDOW *win) {
 	werase(win);
-	// wclear(win);
+	makeScenery(win, this->getMilliSpan(this->getStartTime()));
 	box(win, 0, 0);
+		
 }
 
 int			Game::menu(WINDOW *win, int yMax, int xMax) {
@@ -292,19 +339,22 @@ void		Game::generateEnemy(int h, int v, int id)
 	this->enemies[id].randomStart(this->getTermWidth(), this->getTermHeight() - 2);
 }
 
-void		Game::enemyAttacks(Player player) {
+void		Game::enemyAttacks(WINDOW *win, Player player) {
 	int		time;
 	int		imminence;
-
+	int yMax, xMax;
+	getmaxyx(stdscr, yMax, xMax);
+	time = this->getMilliSpan(this->getStartTime());
+	
 	for (int i = 0; i < sizeof(this->enemies); i++) {
-		// getMilliSpan()
-		// imminence = ((time / 100) % 10) - (i % 10);
-		// if (imminence == 0 && this->enemies[i].getPhase() == 1) {
-		// 	this->enemies[i].setPhase(imminence);
-		// 	this->enemy[i].shoot();
-		// } else if (imminence > 0 && imminence < 5) {
-		// 	if (this->enemies[i].getH() < getmaxyx())
-		// 	this->enemies[i].setPhase(imminence);
-		// }
+		imminence = ((time / 100) % 10) - (i % 10);
+		if (imminence == 0 && this->enemies[i].getPhase() == 1) {
+			this->enemies[i].setPhase(imminence);
+			this->enemies[i].shoot(win, xMax, player.getH(), player.getV());
+		} else if (imminence > 0 && imminence < 5) {
+			if (this->enemies[i].getH() < xMax - 5 && this->enemies[i].getH() > 5) {
+					this->enemies[i].setPhase(imminence);
+			}
+		}
 	}
 }

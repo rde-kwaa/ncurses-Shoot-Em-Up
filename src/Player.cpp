@@ -1,7 +1,7 @@
 #include "../inc/Player.hpp"
 #include "../inc/Bullet.hpp"
 
-#define ENEMIES 1000
+#define ENEMIES 100
 
 Player::Player(void)
 {
@@ -57,7 +57,11 @@ void Player::setScore(int n){
 }
 
 void Player::immaFirinMahLazer(WINDOW *win, int v, int h, const char * lazor) {
-		mvwprintw(win, v, h, lazor);
+	init_pair(4, COLOR_CYAN, 0);
+	wattron(win, COLOR_PAIR(4));
+	mvwprintw(win, v, h, lazor);
+	wattroff(win, COLOR_PAIR(4));
+
 }
 
 std::string CreateLazer(int lazorLen, int currentH){
@@ -66,6 +70,9 @@ std::string CreateLazer(int lazorLen, int currentH){
 		str.append("=");
 	}
 	return (str);
+}
+void Player::die() {
+	this->alive = false;
 }
 
 

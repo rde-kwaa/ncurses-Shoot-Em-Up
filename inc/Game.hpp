@@ -2,7 +2,7 @@
 #define GAME_HPP
 
 #define DELAY 20000
-#define ENEMIES 1000
+#define ENEMIES 100
 #include <ncurses.h>
 #include "../inc/Player.hpp"
 #include "../inc/Enemy.hpp"
@@ -28,22 +28,25 @@ class Game
 		void		displayPlayer(WINDOW *win, Player player);
 		void		displayEnemy(WINDOW *win, Enemy &enemy, int secondsElapsed);
 		void		generateEnemy(int h, int v, int id);
-		void		enemyAttacks(Player player);
+		void		enemyAttacks(WINDOW *win, Player player);
 
 		// Setters
 		void		setTermHeight(int termHeight);
 		void		setTermWidth(int termWidth);
 		void		setTermDimensions(int termHeight, int termWidth);
-
+		void		setStartTime(int startTime);
+		
 		// Getters
 		int			getTermHeight();
 		int			getTermWidth();
+		int			getStartTime();
 
 		// Window functions
 		WINDOW		*createWindow(int height, int width, int coY, int coX);
 		void		getAction(WINDOW *win, int termHeight, int termWidth);
 		void		windowClean(WINDOW *win);
 		int			menu(WINDOW *win, int winHeight, int winWidth);
+		void		makeScenery(WINDOW *win, int time);
 		int			help(WINDOW *win, int yMax);
 
 		int			getMilliCount();
@@ -62,6 +65,7 @@ class Game
 	private:
 		int			_termHeight;
 		int			_termWidth;
+		unsigned int startTime;
 };
 
 #endif

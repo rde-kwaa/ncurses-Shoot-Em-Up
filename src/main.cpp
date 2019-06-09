@@ -13,7 +13,10 @@ initscr();
     noecho();
     cbreak();
 
-
+	int start = game.getMilliCount();
+	game.setStartTime(start);
+	int milliSecondsElapsed;
+    
     getmaxyx(stdscr, yMax, xMax);
 
     WINDOW *win = game.createWindow(yMax, xMax, 0, 0);
@@ -55,9 +58,7 @@ initscr();
     int     i = 0;
     int     k = 0;
 	game.storylineBegin(win, xMax);
-	int start = game.getMilliCount();
-	int milliSecondsElapsed;
-    srand(time(NULL));
+    srand(time(NULL));	
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
 
@@ -69,6 +70,7 @@ initscr();
             game.generateEnemy(10, 10, i);
             i++;
         }
+		game.enemyAttacks(win, game.player);
         for (int j = 0; j < i; j++)
         {
             game.displayEnemy(win, game.enemies[j], milliSecondsElapsed);

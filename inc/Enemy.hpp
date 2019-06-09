@@ -2,6 +2,7 @@
 # define ENEMY_H
 #include "../inc/Entity.hpp"
 #include <iostream>
+#include <ncurses.h>
 
 class Enemy : public Entity
 {	
@@ -24,6 +25,7 @@ class Enemy : public Entity
 		int				getSize(void);
 		std::string		getType(void);
 		int				getPhase(void);
+		bool 			shoot(WINDOW *win, int maxH, int playerV, int playerH);
 };
 
 #endif

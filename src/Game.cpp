@@ -2,6 +2,8 @@
 #include <signal.h>
 #include <iostream>
 
+# define ENEMIES 100
+
 /* DEFAULT
    FUNCTIONS */
 Game::Game(void) {
@@ -270,8 +272,9 @@ void		Game::storylineBegin(WINDOW *win, int maxH){
 		"Begin Game?"};
 	int cenX[5] = {20, 45, 42, 43, 15};
 
-	wclear(win);
-	wrefresh(win);
+    wclear(win);
+    wrefresh(win);
+	getch();
 
 	for (int i=0; i<5; i++){
 		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
@@ -284,7 +287,7 @@ void		Game::storylineFail(WINDOW *win, int maxH){
 	std::string texts[2] = {
 		"You have doomed us all",
 		"The Queen of england now rules over humanity with Mark Zuckerburg at her side.."};
-	int cenX[3] = {15, 42, 15};
+	int cenX[2] = {15, 42};
 
 	wclear(win);
 	wrefresh(win);
@@ -295,10 +298,11 @@ void		Game::storylineFail(WINDOW *win, int maxH){
 		getch();
 	}
 	wclear(win);
-	wrefresh(win);
-	mvwprintw(win, 5, maxH / 2 - cenX[2], "Retry?");
-	wrefresh(win);
-	getch();
+	// wrefresh(win);
+	// mvwprintw(win, 5, maxH / 2 - cenX[2], "Retry?");
+	// wrefresh(win);
+	// getch();
+    wrefresh(win);
 }
 
 void		Game::menu_sound(void)
@@ -345,11 +349,14 @@ void		Game::enemyAttacks(WINDOW *win, Player player) {
 	int yMax, xMax;
 	getmaxyx(stdscr, yMax, xMax);
 	time = this->getMilliSpan(this->getStartTime());
+	(void)win;
+	(void)player;
 	
-	for (int i = 0; i < sizeof(this->enemies); i++) {
+	for (int i = 0; i < ENEMIES; i++) {
 		imminence = ((time / 100) % 10) - (i % 10);
 		if (imminence == 0 && this->enemies[i].getPhase() == 1) {
 			this->enemies[i].setPhase(imminence);
+			// this->player.alive = this->enemies[i].shoot(win, xMax, player.getH(), player.getV());
 			this->enemies[i].shoot(win, xMax, player.getH(), player.getV());
 		} else if (imminence > 0 && imminence < 5) {
 			if (this->enemies[i].getH() < xMax - 5 && this->enemies[i].getH() > 5) {

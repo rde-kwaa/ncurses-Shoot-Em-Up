@@ -9,7 +9,7 @@ int main(void) {
 	int menuNumber;
 	int menu = 1;
 
-initscr();
+	initscr();
     noecho();
     cbreak();
 
@@ -71,21 +71,29 @@ initscr();
             i++;
         }
 		game.enemyAttacks(win, game.player);
+        game.displayPlayer(win, game.player);
         for (int j = 0; j < i; j++)
         {
             game.displayEnemy(win, game.enemies[j], milliSecondsElapsed);
         }
-        game.displayPlayer(win, game.player);
+        for (int m = 0; m < i; m++)
+        {
+            if ((game.player.getH() == game.enemies[m].getH()) && (game.player.getV()) == game.enemies[m].getV())
+            {
+                // Call when player fails (STORYLINE)
+                game.storylineFail(win, xMax);
+                game.game_Over();
+                wclear(win);
+                endwin();
+                return (0);
+            }
+        }
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);
         k++;
     }
-    // Call when player fails (STORYLINE)
-    game.storylineFail(win, xMax);
-
-	game.game_Over();
-
-	endwin();
+    endwin();
+    return (0);
 }
 

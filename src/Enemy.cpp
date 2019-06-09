@@ -19,6 +19,7 @@ Enemy::Enemy(int h, int v):Entity(h,v){
 	// Enemy::Enemy(int h, int v){
 	this->_h = h;
 	this->_v = v;
+	this->_phase = 0;
 	// _randomStart();
 	return ;
 }
@@ -37,6 +38,7 @@ Enemy &Enemy::operator=(const Enemy &enemy){
 	this->_h = enemy._h;
 	this->_v = enemy._v;
 	this->_speed = enemy._speed;
+	this->_phase = enemy._phase;
 	return (*this);
 }
 
@@ -68,4 +70,58 @@ void 			Enemy::resetEnemy(int maxH, int maxV)
 {
 	this->randomStart(maxH, maxV);
 	// Change score here
+}
+
+std::string 		CreateBadLazer(int lazorLen, int currentH){
+	std::string str= "";
+	for (int i = currentH; i < lazorLen; i++){
+		str.append("-");
+	}
+	return (str);
+}
+
+void 			immaFirinMahBadLazer(WINDOW *win, int v, int h, const char * lazor) {
+		mvwprintw(win, v, h, lazor);
+}
+
+bool			withinRange(int playerH, int eneH, int maxH){
+	int lazerSize = maxH / 2;
+	int location = playerH + lazerSize;
+
+	if (playerH <= lazerSize && location >= eneH)
+	{
+		return true;
+	} else{
+		return(false);
+	}
+}
+
+bool 			 Enemy::shoot(WINDOW *win, int maxH ,int playerV, int playerH){
+	int currentV = this->getV();
+	int currentH = this->getH();
+	int lazorStart;
+	std::string lazer;
+	int maxLazorLen = maxH / 2;
+
+	if (currentV == playerV && (withinRange(playerH,currentH, maxH)) && (playerH <= currentH) ){
+		lazorStart = currentH - maxLazorLen;
+		if (lazorStart <= 0)
+		{
+			lazorStart = 0;
+			maxLazorLen = currentH;
+		}
+		lazer = CreateBadLazer(maxLazorLen, playerH);
+		immaFirinMahBadLazer(win, currentV, playerH, lazer.c_str());
+		return (true);
+	} else {
+		lazorStart = currentH - maxLazorLen;
+		if (lazorStart <= 0)
+		{
+			lazorStart = 0;
+			maxLazorLen = currentH;
+		}
+		lazer = CreateBadLazer(maxLazorLen, 0);
+		immaFirinMahBadLazer(win, currentV, lazorStart, lazer.c_str());
+		return(false);
+	}
 }

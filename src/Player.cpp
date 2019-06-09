@@ -2,10 +2,10 @@
 #include "Bullet.hpp"
 
 Player::Player(int x, int y, std::string c){
-    this->h  = x;
-    this->v = y;
-    this->c = c;
-	this->speed = 1;
+    this->_h  = x;
+    this->_v = y;
+    this->_character = c;
+	this->_speed = 1;
 	this->alive = true;
     // getmaxyx(this->win, this->yMax, this->xMax);
     
@@ -16,35 +16,35 @@ Player::~Player(){
 }
 
 void Player::moveUp(){
-    this->v--;
-    if (this->v < 1){
-        this->v = this->vMax - 2;
+    this->_v--;
+    if (this->_v < 1){
+        this->_v = this->_maxV - 2;
     }
 }
 
 void Player::moveDown(){
-    this->v++;
-    if (this->v > vMax - 2){
-        this->v = 1;
+    this->_v++;
+    if (this->_v > _maxV - 2){
+        this->_v = 1;
     }
 }
 
 void Player::moveLeft(){
-    this->h--;
-    if (this->h < 1){
-        this->h = this->hMax - 2;
+    this->_h--;
+    if (this->_h < 1){
+        this->_h = this->_maxH - 2;
     }
 }
 
 void Player::moveRight(){
-    this->h++;
-    if (this->h > this->hMax - 2){
-        this->h = 1;
+    this->_h++;
+    if (this->_h > this->_maxH - 2){
+        this->_h = 1;
     }
 }
 
 void    Player::shoot(){
-    Bullet  playerBullet(this->h+1, this->v, ".");
+    Bullet  playerBullet(this->_h+1, this->_v, ".");
     playerBullet.player = true;
 }
 
@@ -53,8 +53,8 @@ void display(){
 }
 
 int Player::getMove(WINDOW *win, int yMax, int xMax){
-	this->hMax = xMax;
-	this->vMax = yMax;
+	this->_maxH = xMax;
+	this->_maxV = yMax;
 	
     int move = wgetch(win);
     switch(move){

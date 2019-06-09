@@ -34,7 +34,7 @@ void objectUpdate(WINDOW *win, std::list<Entity> &listOfPlayer, int yMax, int xM
 	mvwprintw(win, 5 + 2, it->getH(), "0");
 }
 
-void menu(WINDOW *win, int xMax, int yMax) {
+int		menu(WINDOW *win, int xMax, int yMax) {
 	int x = xMax / 2 - 8;
 	int y = yMax / 2 - 2;
 	std::string items[3] = {"NEW GAME", "HELP", "QUIT"};
@@ -44,7 +44,8 @@ void menu(WINDOW *win, int xMax, int yMax) {
 	std::string s;
 
 	while (1) {
-		mvwprintw(win, y - 2, x + 4, "Rush-Type");
+		// Printing the screen
+		mvwprintw(win, y - 2, x + 4, "FT_RETRO");
 		for (int i = 0; i < 3; i++) {
 			if (i == highlight)
 				wattron(win, A_STANDOUT);
@@ -55,6 +56,7 @@ void menu(WINDOW *win, int xMax, int yMax) {
 					  (8 + strlen(s.c_str()) / 2), s.c_str(), ws, " ");
 			wattroff(win, A_STANDOUT);
 		}
+		// Get character input
 		item = wgetch(win);
 		wrefresh(win);
 		switch (item) {
@@ -69,8 +71,18 @@ void menu(WINDOW *win, int xMax, int yMax) {
 			default:
 				break;
 		}
-		if (item == 10)
-			break;
+		if (item == 10) {
+			switch (highlight) {
+				case 0:
+					return 0;
+				case 1:
+					return 1;
+				case 2:
+					return 2;
+				default:
+					break;
+			}
+		}
 	}
 }
 
@@ -99,6 +111,7 @@ int main(int argc, char *argv[]) {
 	int start = getMilliCount();
 	int milliSecondsElapsed;
 	int yMax, xMax;
+	int	menuNumber;
 	getmaxyx(stdscr, yMax, xMax);
 	yMax -= 10;
 	xMax -= 10;
@@ -108,8 +121,20 @@ int main(int argc, char *argv[]) {
 	box(win, 0, 0);
 	keypad(win, true);
 	curs_set(0);  // hides the default screen cursor.
-	menu(win, xMax, yMax);
-
+	menuNumber = menu(win, xMax, yMax);
+	switch (menuNumber) {
+		case 0:
+			//Play game
+			break;
+		case 1:
+			//Help menu
+			break;
+		case 2:
+			windowClean(win);
+			return 0;
+		default:
+			break;
+	}
 	Player playerOne(1, 1, "0");
 	while (playerOne.alive) {
 		milliSecondsElapsed = getMilliSpan(start) / 1000;  // grabs current time

@@ -6,6 +6,8 @@
 *.ipch
 *.out
 *.vscode
-*.o
+obj
 run
 ft_retro
+*.o
+*.d

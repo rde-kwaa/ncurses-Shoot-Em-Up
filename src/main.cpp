@@ -13,16 +13,6 @@ void playerUpdate(WINDOW *win, Player playerOne){
 	mvwprintw(win, playerOne.getV(), playerOne.getH(), "0");
 }
 
-void        menu_sound(void)
-{
-    pid_t pid = fork();
-    if (!pid)
-    {
-        execlp("afplay", "afplay", "./res/PewDiePie - Beach Lasagna (8-bit) by RushJet1.mp3", NULL);
-        exit(0);
-    }
-}
-
 void menu(WINDOW *win, int xMax, int yMax) {
     int x, y;
     int c = 0;
@@ -107,14 +97,18 @@ int main(void) {
     curs_set(0);  // hides the default screen cursor.
 
     game.setTermDimensions(yMax, xMax);
-    game.menu(win, yMax, xMax);
+	
+	// Menu/game music start
+	//  Comment out to turn off music
+	game.menu_sound();
+    
+	game.menu(win, yMax, xMax);
 
     // Call when game begins (STORYLINE)
     game.storylineBegin(win, xMax);
 
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
-
 		getmaxyx(stdscr, yMax, xMax);
 		game.windowClean(win);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
@@ -125,6 +119,7 @@ int main(void) {
     }
     // Call when player fails (STORYLINE)
     game.storylineFail(win, xMax);
+	game.game_Over();
 
     endwin();
 }

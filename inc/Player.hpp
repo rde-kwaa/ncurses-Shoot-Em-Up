@@ -1,12 +1,25 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <iostream>
 #include <ncurses.h>
 #include "../inc/Entity.hpp"
 
-class Player : public Entity
-{
+class Player : public Entity {
+   private:
+    int _killscore;
+
+   public:
+    Player(int h, int v, std::string c);
+    ~Player();
+    void moveUp();
+    void moveDown();
+    void moveLeft();
+    void moveRight();
+    int getMove(WINDOW *win, int vMax, int hMax);
+    void setKillScore();
+    void display();
+    void shoot();
+    bool alive;
 
     public:
         Player(void);

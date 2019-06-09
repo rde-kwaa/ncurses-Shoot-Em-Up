@@ -1,14 +1,12 @@
-#include "Entity.hpp"
+#include "../inc/Entity.hpp"
 #include <iostream>
 
 Entity::Entity(void){
         return;
     }
-    Entity::Entity(int x, int y,int maxx,int maxy){
-        this->_h = x;
-        this->_v = y;
-        this->_maxH = maxx;
-        this->_maxV = maxy;
+    Entity::Entity(int h, int v){
+        this->_h = h;
+        this->_v = v;
         return ;
     }
     Entity::Entity(const Entity &entity){
@@ -16,15 +14,14 @@ Entity::Entity(void){
         return ;
     }
     Entity::~Entity(void){
-        std::cout << "Entity destroyed\n";
         return ;
     }
-    void    Entity::updatePosition(){
-        this->setH(this->getH() + this->getSpeed());
-        if(this->getH() > this->getMaxH())
-            this->setH(this->getMaxH());
-        return ;
-    }
+    // void    Entity::updatePosition(){
+    //     this->setH(this->getH() + this->getSpeed());
+    //     if(this->getH() > this->getMaxH())
+    //         this->setH(this->getMaxH());
+    //     return ;
+    // }
 
     void    Entity::collide(Entity &entity){
         if((entity.getH() == this->getH()) && (entity.getV() == this->getV()))
@@ -46,12 +43,6 @@ Entity::Entity(void){
         void Entity::setV(int y){
             this->_v = y;
         }
-        void Entity::setMaxH(int h){
-            this->_maxH = h;
-        }
-        void Entity::setMaxV(int v){
-            this->_maxV = v;
-        }
         void Entity::setSpeed(int speed){
             this->_speed = speed;
         }
@@ -66,12 +57,6 @@ Entity::Entity(void){
     int Entity::getV(){
         return this->_v;
     }
-    int Entity::getMaxH(){
-        return this->_maxH;
-    }
-    int Entity::getMaxV(){
-        return this->_maxV;
-    }
     int Entity::getSpeed(){
         return this->_speed;
     }
@@ -83,8 +68,6 @@ Entity::Entity(void){
         this->_character = entity._character;
         this->_h = entity._h;
         this->_v = entity._v;
-        this->_maxV = entity._maxV;
-        this->_maxH = entity._maxH;
         this->_speed = entity._speed;
         return (*this);
     }

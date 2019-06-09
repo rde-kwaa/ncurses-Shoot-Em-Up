@@ -2,16 +2,14 @@
 #define BULLET_H
 #include <iostream>
 
+# include "../inc/Entity.hpp"
+
 class Bullet : public Entity
 {
     public:
         Bullet(int h, int v, std::string c);
         ~Bullet();
-
-        void moveLeft();
-        void moveRight();
-        void display();
-        void updatePosition();
+        // void updatePosition();
         std::string c;
 
         bool player;

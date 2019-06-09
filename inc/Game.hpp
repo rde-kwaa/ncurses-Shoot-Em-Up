@@ -6,7 +6,7 @@
 /*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 11:33:17 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 14:10:01 by akay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #define DELAY 20000
 #include <ncurses.h>
 #include "../inc/Player.hpp"
+#include "../inc/Enemy.hpp"
 #include <iostream>
 #include <ncurses.h>
 #include <unistd.h>
@@ -26,6 +27,7 @@ class Game
 {
     public:
         Player      player;
+        Enemy       enemies[10];
 
         Game(void);
         Game(Player player);
@@ -35,6 +37,8 @@ class Game
         
         // Game functions
         void        displayPlayer(WINDOW *win, Player player);
+        void        displayEnemy(WINDOW *win, Enemy enemy);
+        void        generateEnemy(int h, int v);
 
         // Setters
         void        setTermHeight(int termHeight);

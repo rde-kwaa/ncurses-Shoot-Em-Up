@@ -116,10 +116,7 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 			break;
 	}
 }
-char *chop(std::string str,int n, int k){
-	std::string s= str.substr(n,k);
-	return ( s);
-}
+
 
 void	Game::makeScenery(WINDOW *win, int time) {
 	static int i;
@@ -127,12 +124,12 @@ void	Game::makeScenery(WINDOW *win, int time) {
 	int yMax, xMax;
 	getmaxyx(stdscr, yMax, xMax);
 	int startX = xMax - i++;
-	if (startX <= 2){
-		startX = xMax - 1;
-	}
-	if( startX > xMax - 147){
-		yMax--;
-	}
+	// if (startX <= 2){
+	// 	startX = xMax - 1;
+	// }
+	// if( startX > xMax - 147){
+	// 	yMax--;
+	// }
 	if (i == xMax - 1) {i = 0;}
 	mvwprintw(win, yMax - 10, startX, "                        .           .                  *                      /   \\              _/ \\       *    .                                ");
 	mvwprintw(win, yMax - 9, startX, "        _    .  ,   .           .         _    .       .                  .--'\\/\\_ \\            /    \\  *    ___                                  ");

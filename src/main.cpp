@@ -1,13 +1,15 @@
 // #include "../inc/Entity.hpp"
-#include "../inc/Player.hpp"
 #include "../inc/Game.hpp"
+#include "../inc/Player.hpp"
 
 int main(void) {
-    Player player(1, 1);
-    Game game(player);
-    int yMax, xMax;
-    
-    initscr();
+	Player player(1, 1);
+	Game game(player);
+	int yMax, xMax;
+	int menuNumber;
+	int menu = 1;
+
+initscr();
     noecho();
     cbreak();
 
@@ -16,21 +18,42 @@ int main(void) {
 	int milliSecondsElapsed;
     
     getmaxyx(stdscr, yMax, xMax);
-    
+
     WINDOW *win = game.createWindow(yMax, xMax, 0, 0);
 	nodelay(win, TRUE);
 
-    box(win, 0, 0);
-    keypad(win, true);
-    curs_set(0);  // hides the default screen cursor.
+	box(win, 0, 0);
+	keypad(win, true);
+	curs_set(0);  // hides the default screen cursor.
+	while (menu) {
+		menuNumber = game.menu(win, yMax, xMax);
+		game.windowClean(win);
+		wrefresh(win);
+		switch (menuNumber) {
+			case 0:
+				//Play game
+				menu = 0;
+				break;
+			case 1:
+				//Help menu
+				game.help(win, yMax);
+				game.windowClean(win);
+				wrefresh(win);
+				break;
+			case 2:
+				//Quit
+				game.windowClean(win);
+				wrefresh(win);
+				return 0;
+			default:
+				break;
+		}
+	}
+	game.setTermDimensions(yMax, xMax);
 
-    game.setTermDimensions(yMax, xMax);
-	
 	// Menu/game music start
 	//  Comment out to turn off music
 	game.menu_sound();
-    
-	game.menu(win, yMax, xMax);
 
     int     i = 0;
     int     k = 0;
@@ -59,7 +82,9 @@ int main(void) {
     }
     // Call when player fails (STORYLINE)
     game.storylineFail(win, xMax);
+
 	game.game_Over();
 
-    endwin();
+	endwin();
 }
+

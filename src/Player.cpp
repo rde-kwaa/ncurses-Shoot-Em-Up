@@ -5,7 +5,7 @@
 
 Player::Player(void)
 {
-    return ;
+	return ;
 }
 
 Player::Player(int h, int v) : Entity(h, v) {
@@ -21,31 +21,31 @@ Player::~Player(){
 }
 
 void Player::moveUp(int maxV){
-    this->_v--;
-    if (this->_v < 1){
-        setV(maxV - 2);
-    }
+	this->_v--;
+	if (this->_v < 1){
+		setV(maxV - 2);
+	}
 }
 
 void Player::moveDown(int maxV){
-    this->_v++;
-    if (this->_v > maxV - 2){
-        this->_v = 1;
-    }
+	this->_v++;
+	if (this->_v > maxV - 2){
+		this->_v = 1;
+	}
 }
 
 void Player::moveLeft(){
-    this->_h--;
-    if (this->_h < 1){
-        setH(1);
-    }
+	this->_h--;
+	if (this->_h < 1){
+		setH(1);
+	}
 }
 
 void Player::moveRight(int maxH){
-    this->_h++;
-    if (this->_h > maxH - 2){
-        setH(maxH - 2);
-    }
+	this->_h++;
+	if (this->_h > maxH - 2){
+		setH(maxH - 2);
+	}
 }
 
 int Player::getScore(void){

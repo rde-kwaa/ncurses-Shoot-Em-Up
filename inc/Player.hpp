@@ -12,7 +12,7 @@ class Player : public Entity
         Player(void);
         Player(int h, int v);
         ~Player();
-        void moveUp();
+        void moveUp(int maxV);
         void moveDown(int maxV);
         void moveLeft();
         void moveRight(int maxH);

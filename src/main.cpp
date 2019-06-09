@@ -10,7 +10,7 @@
 #define DELAY 20000
 
 void windowClean(WINDOW *win) {
-    wclear(win);
+   	werase(win);
     box(win, 0, 0);
 }
 
@@ -62,6 +62,7 @@ void menu(WINDOW *win, int xMax, int yMax) {
         sprintf(item, "%-7s", list[i]);
         mvwprintw(win, i + 1, 2, "%s", item);
         wattroff(win, A_STANDOUT);
+		clear();
     }
 }
 
@@ -90,8 +91,6 @@ int main(void) {
 	int milliSecondsElapsed;
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
-    yMax -= 10;
-    xMax -= 10;
     WINDOW *win = newwin(yMax, xMax, 0, 0);
 	nodelay(win, TRUE);
 
@@ -104,15 +103,12 @@ int main(void) {
 		milliSecondsElapsed = getMilliSpan(start) / 1000; // grabs current time
 
 		getmaxyx(stdscr, yMax, xMax);
-		yMax -=10;
-		xMax -=10;
-		clear();
 		windowClean(win);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
 		
 		playerUpdate(win, game.player);
         // game.displayPlayer(win, game.player);
-		refresh();
+		
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);

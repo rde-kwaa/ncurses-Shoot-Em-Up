@@ -18,10 +18,10 @@ Player::~Player(){
 
 }
 
-void Player::moveUp(){
+void Player::moveUp(int maxV){
     this->_v--;
     if (this->_v < 1){
-        setV(1);
+        setV(maxV - 2);
     }
 }
 
@@ -50,35 +50,3 @@ void Player::shoot(){
     Bullet  playerBullet(this->_h+1, this->_v, ".");
     playerBullet.player = true;
 }
-
-// int Player::getMove(WINDOW *win, int yMax, int xMax){
-// 	this->_maxH = xMax;
-// 	this->_maxV = yMax;
-	
-//     int move = wgetch(win);
-//     switch(move){
-//         case KEY_UP:{
-//             moveUp();
-// 			break;
-// 		}
-//         case KEY_DOWN:{
-//             moveDown();
-// 			break;
-// 		}
-//         case KEY_LEFT:{
-//             moveLeft();
-// 			break;
-// 		}
-//         case KEY_RIGHT:{
-//             moveRight();
-// 			break;	
-// 		}
-//         case KEY_F0:{
-//             shoot();
-//             break;
-//         }
-//         default:
-//             break;
-//     }
-//     return move;
-// }

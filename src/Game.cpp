@@ -129,12 +129,6 @@ void	Game::makeScenery(WINDOW *win, int time) {
 	int yMax, xMax;
 	getmaxyx(stdscr, yMax, xMax);
 	int startX = xMax - i++;
-	// if (startX <= 2){
-	// 	startX = xMax - 1;
-	// }
-	// if( startX > xMax - 147){
-	// 	yMax--;
-	// }
 	if (i == xMax - 1) {i = 0;}
 	mvwprintw(win, yMax - 10, startX, "                        .           .                  *                      /   \\              _/ \\       *    .                                ");
 	mvwprintw(win, yMax - 9, startX, "        _    .  ,   .           .         _    .       .                  .--'\\/\\_ \\            /    \\  *    ___                                  ");
@@ -145,6 +139,7 @@ void	Game::makeScenery(WINDOW *win, int time) {
 	mvwprintw(win, yMax - 4, startX, "  /\\  .-   `. \\/     \\ /==~=-=~=-=-;.  _/ \\ -. `_/   \\               /\\  .-   `. \\/     \\ / -.   _/ \\ -. `_/   \\ /    `._/  ^  \\                  ");
 	mvwprintw(win, yMax - 3, startX, " /  `-.__ ^   / .-'.--\\ =-=~_=-=~=^/  _ `--./ .-'  `- \\             / `-.__ ^   / .-'.--'    . /    `--./ .-'  `-.  `-. `.  -  `.                 ");
 	mvwprintw(win, yMax - 2, startX, "/        `.  / /       `.~-^=-=~=^=.-'      '-._ `._   \\           /      `.  / /      `-.   /  .-'   / .   .'   \\    \\  \\  .-   \\                ");
+
 }
 
 void    Game::windowClean(WINDOW *win) {

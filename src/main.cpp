@@ -1,9 +1,4 @@
-#include <ncurses.h>
-#include <unistd.h>
-#include <iostream>
-#include <cstdlib>
-#include <sys/timeb.h>
-#include "../inc/Entity.hpp"
+// #include "../inc/Entity.hpp"
 #include "../inc/Player.hpp"
 #include "../inc/Game.hpp"
 
@@ -93,36 +88,43 @@ int getMilliSpan(int nTimeStart){
 int main(void) {
     Player player(1, 1);
     Game game(player);
+    int yMax, xMax;
+    
     initscr();
     noecho();
     cbreak();
 
-	int start = getMilliCount();
+	int start = game.getMilliCount();
 	int milliSecondsElapsed;
-    int yMax, xMax;
+    
     getmaxyx(stdscr, yMax, xMax);
-    WINDOW *win = newwin(yMax, xMax, 0, 0);
+    
+    WINDOW *win = game.createWindow(yMax, xMax, 0, 0);
 	nodelay(win, TRUE);
 
     box(win, 0, 0);
     keypad(win, true);
     curs_set(0);  // hides the default screen cursor.
-    menu(win, xMax, yMax);
-    menu_sound();
+
+    game.setTermDimensions(yMax, xMax);
+    game.menu(win, yMax, xMax);
+
+    // Call when game begins (STORYLINE)
+    game.storylineBegin(win, xMax);
+
  	while(game.player.alive) {
-		milliSecondsElapsed = getMilliSpan(start) / 1000; // grabs current time
+		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
 
 		getmaxyx(stdscr, yMax, xMax);
-		windowClean(win);
+		game.windowClean(win);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
-		
-		playerUpdate(win, game.player);
-        // game.displayPlayer(win, game.player);
-		
+        game.displayPlayer(win, game.player);
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);
     }
+    // Call when player fails (STORYLINE)
+    game.storylineFail(win, xMax);
 
     endwin();
 }

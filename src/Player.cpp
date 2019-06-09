@@ -42,7 +42,7 @@ void Player::moveLeft(){
 void Player::moveRight(int maxH){
     this->_h++;
     if (this->_h > maxH - 2){
-        setH(maxH - 1);
+        setH(maxH - 2);
     }
 }
 

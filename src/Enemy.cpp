@@ -6,9 +6,7 @@ void Enemy::_randomStart() {
 	// this->_v = std::rand() % this->_maxV;
 }
 
-Enemy::Enemy(int h, int v){
-	this->_h = h;
-	this->_v = v;
+Enemy::Enemy(int h, int v):Entity(h,v){
 	_randomStart();
 	return ;
 }
@@ -18,7 +16,7 @@ Enemy::Enemy(const Enemy &Enemy){
 	return ;
 }
 Enemy::~Enemy(void){
-	std::cout << "Enemy destroyed\n";
+	// std::cout << "Enemy destroyed\n";
 	return ;
 }
 

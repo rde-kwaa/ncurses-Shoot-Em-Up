@@ -1,6 +1,6 @@
 
-#include "Player.hpp"
-#include "Bullet.hpp"
+#include "../inc/Player.hpp"
+#include "../inc/Bullet.hpp"
 
 Bullet::Bullet(int x, int y, std::string c){
     this->_h  = x;

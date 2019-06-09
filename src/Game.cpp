@@ -1,3 +1,4 @@
+
 #include "../inc/Game.hpp"
 
 /* DEFAULT
@@ -59,9 +60,23 @@ void Game::displayPlayer(WINDOW *win, Player player) {
 	mvwprintw(win, player.getV(), player.getH(), "0");
 }
 
-void Game::getAction(WINDOW *win, int termHeight, int termWidth) {
+void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
+{
+    (void)i;
+    enemy.setH(enemy.getH() - 1);
+    if (enemy.getH() < 1)
+    {
+        enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
+    }
+    mvwprintw(win, enemy.getV(), enemy.getH(), "X");
+}
+
+
+void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
+{
 	int move = wgetch(win);
-	switch (move) {
+	switch(move)
+	{
 		case KEY_UP:
 			this->player.moveUp(termHeight);
 			break;
@@ -74,19 +89,18 @@ void Game::getAction(WINDOW *win, int termHeight, int termWidth) {
 		case KEY_RIGHT:
 			this->player.moveRight(termWidth);
 			break;
-		case 27:
-			windowClean(win);
-			wrefresh(win);
-			exit(0);
+		case ' ':
+			this->player.shoot(win ,termWidth,termHeight ,this->enemies);
 			break;
 		default:
 			break;
-	}
+    }
 }
 
-void Game::windowClean(WINDOW *win) {
-	werase(win);
-	box(win, 0, 0);
+void    Game::windowClean(WINDOW *win) {
+    werase(win);
+    // wclear(win);
+    box(win, 0, 0);
 }
 
 int Game::menu(WINDOW *win, int yMax, int xMax) {
@@ -191,7 +205,6 @@ int Game::getMilliSpan(int nTimeStart) {
 		nSpan += 0x100000 * 1000;
 	return nSpan;
 }
-
 void    Game::storylineBegin(WINDOW *win, int maxH){
 std::string texts[5] = {
 		"The Earth is in trouble...",
@@ -243,16 +256,6 @@ void        Game::menu_sound(void)
     }
 }
 
-void        Game::laser_sound(void)
-{
-    pid_t pid = fork();
-    if (!pid)
-    {
-        execlp("afplay", "afplay", "./res/pew.mp3", NULL);
-        exit(0);
-    }
-}
-
 void        Game::boom(void)
 {
     pid_t pid = fork();
@@ -271,4 +274,12 @@ void        Game::game_Over(void)
         execlp("afplay", "afplay", "./res/gameovervoice.mp3", NULL);
         exit(0);
     }
+}
+
+
+void    Game::generateEnemy(int h, int v, int id)
+{
+    this->enemies[id].setH(h);
+    this->enemies[id].setV(v);
+    this->enemies[id].randomStart(this->getTermWidth(), this->getTermHeight() - 2);
 }

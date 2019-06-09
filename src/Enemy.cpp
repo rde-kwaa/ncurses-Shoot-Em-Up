@@ -48,12 +48,20 @@ void			Enemy::setType(std::string type) {
 	this->_type = type;
 }
 
+void			Enemy::setPhase(int n) {
+	this->_phase = n;
+}
+
 int				Enemy::getSize(void) {
 	return (this->_size);
 }
 
 std::string		Enemy::getType(void) {
 	return (this->_type);
+}
+
+int				Enemy::getPhase(void) {
+	return (this->_phase);
 }
 
 void 			Enemy::resetEnemy(int maxH, int maxV)

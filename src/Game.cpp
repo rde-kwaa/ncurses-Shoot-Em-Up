@@ -1,4 +1,5 @@
 #include "../inc/Game.hpp"
+#include <signal.h>
 
 /* DEFAULT
    FUNCTIONS */
@@ -25,55 +26,56 @@ Game::~Game() {
 
 /* SETTER
    FUNCTIONS */
-void Game::setTermHeight(int termHeight) {
+void 		Game::setTermHeight(int termHeight) {
 	this->_termHeight = termHeight;
 }
 
-void Game::setTermWidth(int termWidth) {
+void 		Game::setTermWidth(int termWidth) {
 	this->_termWidth = termWidth;
 }
 
-void Game::setTermDimensions(int termHeight, int termWidth) {
+void 		Game::setTermDimensions(int termHeight, int termWidth) {
 	setTermHeight(termHeight);
 	setTermWidth(termWidth);
 }
 
 /* GETTER
    FUNCTIONS */
-int Game::getTermHeight() {
+int			Game::getTermHeight() {
 	return (this->_termHeight);
 }
 
-int Game::getTermWidth() {
+int 		Game::getTermWidth() {
 	return (this->_termWidth);
 }
 
-WINDOW *Game::createWindow(int height, int width, int coY, int coX) {
+WINDOW 		*Game::createWindow(int height, int width, int coY, int coX) {
 	WINDOW *win = newwin(height, width, coY, coX);
 	box(win, 0, 0);
 
 	return (win);
 }
 
-void    Game::displayPlayer(WINDOW *win, Player player)
+void		Game::displayPlayer(WINDOW *win, Player player)
 {
 	const char * playerShip = this->player._character.c_str();
-    mvwprintw(win, player.getV(), player.getH(), playerShip);
+	mvwprintw(win, player.getV(), player.getH(), playerShip);
 }
 
-void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
+void		Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 {
-    (void)i;
-    enemy.setH(enemy.getH() - 1);
-    if (enemy.getH() < 1)
-    {
-        enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
-    }
-    mvwprintw(win, enemy.getV(), enemy.getH(), "X");
+	(void)i;
+	enemy.setH(enemy.getH() - 1);
+	if (enemy.getH() < 1)
+	{
+		enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
+	}
+	//Assign colour
+	mvwprintw(win, enemy.getV(), enemy.getH(), "X");
+	//Unassign colour
 }
 
-
-void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
+void		Game::getAction(WINDOW *win, int termHeight, int termWidth)
 {
 	int move = wgetch(win);
 	switch(move)
@@ -100,16 +102,16 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 		break;
 		default:
 			break;
-    }
+	}
 }
 
-void    Game::windowClean(WINDOW *win) {
-    werase(win);
-    // wclear(win);
-    box(win, 0, 0);
+void		Game::windowClean(WINDOW *win) {
+	werase(win);
+	// wclear(win);
+	box(win, 0, 0);
 }
 
-int Game::menu(WINDOW *win, int yMax, int xMax) {
+int			Game::menu(WINDOW *win, int yMax, int xMax) {
 	int xCen = xMax / 2 - 8;
 	int yCen = yMax / 2 - 2;
 	int item;
@@ -159,7 +161,7 @@ int Game::menu(WINDOW *win, int yMax, int xMax) {
 	}
 }
 
-int Game::help(WINDOW *win, int yMax) {
+int			Game::help(WINDOW *win, int yMax) {
 	int ch;
 	std::string back = "BACK";
 	std::string instructs[15] = {
@@ -198,94 +200,111 @@ int Game::help(WINDOW *win, int yMax) {
 	}
 }
 
-int Game::getMilliCount() {
+int			Game::getMilliCount() {
 	timeb tb;
 	ftime(&tb);
 	int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
 	return nCount;
 }
 
-int Game::getMilliSpan(int nTimeStart) {
+int			Game::getMilliSpan(int nTimeStart) {
 	int nSpan = getMilliCount() - nTimeStart;
 	if (nSpan < 0)
 		nSpan += 0x100000 * 1000;
 	return nSpan;
 }
-void    Game::storylineBegin(WINDOW *win, int maxH){
-std::string texts[5] = {
+
+void		Game::storylineBegin(WINDOW *win, int maxH){
+	std::string texts[5] = {
 		"The Earth is in trouble...",
 		"Mark Zuckerburg and the Queen of England threaten to enslave the entire world..",
 		"As Elon's Prized Space car it is up to you to protect the people of Earth..",
 		"Stop the ever growing Lizzard threat and mighty Elon will love you forever..",
 		"Begin Game?"};
-int cenX[5] = {20, 45, 42, 43, 15};
+	int cenX[5] = {20, 45, 42, 43, 15};
 
-    wclear(win);
-    wrefresh(win);
+	wclear(win);
+	wrefresh(win);
 
 	for (int i=0; i<5; i++){
 		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
-    	wrefresh(win);
-    	getch();
+		wrefresh(win);
+		getch();
 	}
 }
 
-void    Game::storylineFail(WINDOW *win, int maxH){
+void		Game::storylineFail(WINDOW *win, int maxH){
 	std::string texts[2] = {
 		"You have doomed us all",
 		"The Queen of england now rules over humanity with Mark Zuckerburg at her side.."};
 	int cenX[3] = {15, 42, 15};
 
-    wclear(win);
-    wrefresh(win);
+	wclear(win);
+	wrefresh(win);
 
 	for (int i=0; i<2; i++){
 		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
-    	wrefresh(win);
-    	getch();
+		wrefresh(win);
+		getch();
 	}
 	wclear(win);
-    wrefresh(win);
+	wrefresh(win);
 	mvwprintw(win, 5, maxH / 2 - cenX[2], "Retry?");
 	wrefresh(win);
-    getch();
+	getch();
 }
-#include <signal.h>
-void        Game::menu_sound(void)
+
+void		Game::menu_sound(void)
 {
 
-    pid_t pid = fork();
-    if (!pid)
-    {
-        execlp("afplay", "afplay", "./res/BeachLasagne.mp3", NULL);
+	pid_t pid = fork();
+	if (!pid)
+	{
+		execlp("afplay", "afplay", "./res/BeachLasagne.mp3", NULL);
 		exit(0);
-    }
+	}
 }
 
-void        Game::boom(void)
+void		Game::boom(void)
 {
-    pid_t pid = fork();
-    if (!pid)
-    {
-        execlp("afplay", "afplay", "./res/Boom.mp3", NULL);
-        exit(0);
-    }
+	pid_t pid = fork();
+	if (!pid)
+	{
+		execlp("afplay", "afplay", "./res/Boom.mp3", NULL);
+		exit(0);
+	}
 }
 
-void        Game::game_Over(void)
+void		Game::game_Over(void)
 {
-    pid_t pid = fork();
-    if (!pid)
-    {
-        execlp("afplay", "afplay", "./res/gameovervoice.mp3", NULL);
-        exit(0);
-    }
+	pid_t pid = fork();
+	if (!pid)
+	{
+		execlp("afplay", "afplay", "./res/gameovervoice.mp3", NULL);
+		exit(0);
+	}
 }
 
-
-void    Game::generateEnemy(int h, int v, int id)
+void		Game::generateEnemy(int h, int v, int id)
 {
-    this->enemies[id].setH(h);
-    this->enemies[id].setV(v);
-    this->enemies[id].randomStart(this->getTermWidth(), this->getTermHeight() - 2);
+	this->enemies[id].setH(h);
+	this->enemies[id].setV(v);
+	this->enemies[id].randomStart(this->getTermWidth(), this->getTermHeight() - 2);
+}
+
+void		Game::enemyAttacks(Player player) {
+	int		time;
+	int		imminence;
+
+	for (int i = 0; i < sizeof(this->enemies); i++) {
+		// getMilliSpan()
+		// imminence = ((time / 100) % 10) - (i % 10);
+		// if (imminence == 0 && this->enemies[i].getPhase() == 1) {
+		// 	this->enemies[i].setPhase(imminence);
+		// 	this->enemy[i].shoot();
+		// } else if (imminence > 0 && imminence < 5) {
+		// 	if (this->enemies[i].getH() < getmaxyx())
+		// 	this->enemies[i].setPhase(imminence);
+		// }
+	}
 }

@@ -8,6 +8,7 @@ class Enemy : public Entity
 	private:
 		int				_size;
 		std::string		_type;
+		int				_phase;
 
 	public:
 		Enemy(void);
@@ -19,8 +20,10 @@ class Enemy : public Entity
 		void 			resetEnemy(int maxH, int maxV);
 		void			setSize(int);
 		void			setType(std::string);
+		void			setPhase(int);
 		int				getSize(void);
 		std::string		getType(void);
+		int				getPhase(void);
 };
 
 #endif

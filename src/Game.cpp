@@ -231,3 +231,44 @@ void    Game::storylineFail(WINDOW *win, int maxH){
 	wrefresh(win);
     getch();
 }
+#include <signal.h>
+void        Game::menu_sound(void)
+{
+	
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/BeachLasagne.mp3", NULL);
+		exit(0);
+    }
+}
+
+void        Game::laser_sound(void)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/pew.mp3", NULL);
+        exit(0);
+    }
+}
+
+void        Game::boom(void)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/Boom.mp3", NULL);
+        exit(0);
+    }
+}
+
+void        Game::game_Over(void)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/gameovervoice.mp3", NULL);
+        exit(0);
+    }
+}

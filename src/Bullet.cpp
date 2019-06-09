@@ -2,11 +2,8 @@
 #include "../inc/Player.hpp"
 #include "../inc/Bullet.hpp"
 
-Bullet::Bullet(int x, int y, std::string c){
-	this->_h  = x;
-	this->_v = y;
-	this->_character = c;
-	this->_speed = 1;
+Bullet::Bullet(int h, int v, std::string c):Entity(h,v){
+    this->_character = c;
 	this->player = false;
 }
  Bullet::~Bullet(){

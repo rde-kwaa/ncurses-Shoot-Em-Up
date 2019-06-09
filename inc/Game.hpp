@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Game.hpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rde-kwaa <rde-kwaa@student.wethinkcode.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 15:03:07 by rde-kwaa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef GAME_HPP
 #define GAME_HPP
 
@@ -53,12 +41,18 @@ class Game {
 	int getMilliSpan(int nStartTime);
 
 	// Storyline
-	void storylineBegin(WINDOW *win, int maxH);
-	void storylineFail(WINDOW *win, int maxH);
+	void        storylineBegin(WINDOW *win, int maxH);
+	void        storylineFail(WINDOW *win, int maxH);
+
+	// Sound
+	void        menu_sound(void);
+	void        laser_sound(void);
+	void        boom(void);
+	void        game_Over(void);
 
 	private:
-		int _termHeight;
-		int _termWidth;
+		int         _termHeight;
+		int         _termWidth;
 };
 
 #endif

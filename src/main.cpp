@@ -50,15 +50,19 @@ int main(void) {
 	}
 	game.setTermDimensions(yMax, xMax);
 
-	while (game.player.alive) {
-		milliSecondsElapsed = game.getMilliSpan(start) / 1000;  // grabs current time
+    game.setTermDimensions(yMax, xMax);
+	
+	// Menu/game music start
+	//  Comment out to turn off music
+	game.menu_sound();
+    
+	game.menu(win, yMax, xMax);
 
     // Call when game begins (STORYLINE)
     game.storylineBegin(win, xMax);
 
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
-
 		getmaxyx(stdscr, yMax, xMax);
 		game.windowClean(win);
 		mvwprintw(win, 0, xMax / 2, "Time: %d", milliSecondsElapsed);
@@ -69,6 +73,7 @@ int main(void) {
     }
     // Call when player fails (STORYLINE)
     game.storylineFail(win, xMax);
+	game.game_Over();
 
 	endwin();
 }

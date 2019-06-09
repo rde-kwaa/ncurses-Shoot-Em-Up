@@ -6,7 +6,7 @@
 /*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 14:25:40 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 15:27:07 by akay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ class Game
         // Game functions
         void        displayPlayer(WINDOW *win, Player player);
         void        displayEnemy(WINDOW *win, Enemy &enemy, int secondsElapsed);
-        void        generateEnemy(int h, int v);
+        void        generateEnemy(int h, int v, int id);
 
         // Setters
         void        setTermHeight(int termHeight);

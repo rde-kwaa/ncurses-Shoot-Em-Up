@@ -110,7 +110,7 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 			this->player.moveRight(termWidth);
 			break;
 		case ' ':
-			this->player.shoot(win ,termWidth);
+			this->player.shoot(win ,termWidth,termHeight ,this->enemies);
 			break;
 		default:
 			break;

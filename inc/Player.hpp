@@ -4,6 +4,7 @@
 #include <iostream>
 #include <ncurses.h>
 #include "../inc/Entity.hpp"
+#include "../inc/Enemy.hpp"
 
 class Game;
 
@@ -21,7 +22,7 @@ class Player : public Entity
         void moveLeft();
         void moveRight(int maxH);
         void display();
-        void shoot(WINDOW *win, int maxH);
+        void shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[10]);
 		bool alive;
 		
         std::string _character;

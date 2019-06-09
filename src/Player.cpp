@@ -51,15 +51,22 @@ void Player::immaFirinMahLazer(WINDOW *win, int v, int h, const char * lazor) {
 		mvwprintw(win, v, h, lazor);
 }
 
-void Player::shoot(WINDOW *win, int maxH){
+void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[10]){
 	int currentV = this->getV();
 	int currentH = this->getH();
 	std::string str= "";
-	
 	int lazorLen = maxH - 5;
-
-	for (int i = currentH; i < lazorLen; i++){
-		str.append("=");
+	for (int i = 0; i <= 10; i++){
+		
+		if(enemies[i].getV() == currentV){
+			lazorLen = enemies[i].getH();
+			for (int i = currentH; i < lazorLen; i++){
+				str.append("=");
+			}
+			enemies[i].resetEnemy(maxH,maxV);
+			break;
+		}
 	}
+
 	immaFirinMahLazer(win, currentV, currentH+1, str.c_str());
 }

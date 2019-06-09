@@ -1,21 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Game.hpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 15:43:17 by jlowing          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef GAME_HPP
 #define GAME_HPP
 
 #define DELAY 20000
+#define ENEMIES 1000
 #include <ncurses.h>
 #include "../inc/Player.hpp"
+#include "../inc/Enemy.hpp"
 #include <iostream>
 #include <ncurses.h>
 #include <unistd.h>
@@ -26,6 +17,7 @@ class Game
 {
     public:
         Player      player;
+        Enemy       enemies[ENEMIES];
 
         Game(void);
         Game(Player player);
@@ -35,6 +27,8 @@ class Game
         
         // Game functions
         void        displayPlayer(WINDOW *win, Player player);
+        void        displayEnemy(WINDOW *win, Enemy &enemy, int secondsElapsed);
+        void        generateEnemy(int h, int v, int id);
 
         // Setters
         void        setTermHeight(int termHeight);

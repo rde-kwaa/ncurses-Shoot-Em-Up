@@ -11,8 +11,7 @@ int main(void) {
     noecho();
     cbreak();
 
-	int start = game.getMilliCount();
-	int milliSecondsElapsed;
+	
     
     getmaxyx(stdscr, yMax, xMax);
     
@@ -31,18 +30,32 @@ int main(void) {
     
 	game.menu(win, yMax, xMax);
 
-    // Call when game begins (STORYLINE)
-    game.storylineBegin(win, xMax);
-
+    int     i = 0;
+    int     k = 0;
+	game.storylineBegin(win, xMax);
+	int start = game.getMilliCount();
+	int milliSecondsElapsed;
+    srand(time(NULL));	
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
-		getmaxyx(stdscr, yMax, xMax);
+
 		game.windowClean(win);
-		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
+		getmaxyx(stdscr, yMax, xMax);
+		mvwprintw(win, 0, xMax /2, "score: %d	Time: %d", game.player.getScore(),milliSecondsElapsed);
+        if (i < ENEMIES && k % 10 == 0)
+        {
+            game.generateEnemy(10, 10, i);
+            i++;
+        }
+        for (int j = 0; j < i; j++)
+        {
+            game.displayEnemy(win, game.enemies[j], milliSecondsElapsed);
+        }
         game.displayPlayer(win, game.player);
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);
+        k++;
     }
     // Call when player fails (STORYLINE)
     game.storylineFail(win, xMax);

@@ -50,8 +50,8 @@ fclean:     clean
 	@$(RM) -rf $(TARGET)
 	@echo "$(P)Cleaned Everything!$(E)"
 
-debug:
-	clang++ EntityDebug.cpp ./src/Entity.cpp ./src/Player.cpp ./src/Bullet.cpp ./src/Enemy.cpp -o debugEntity
+# debug:
+	# clang++ EntityDebug.cpp ./src/Entity.cpp ./src/Player.cpp ./src/Bullet.cpp ./src/Enemy.cpp -o debugEntity
 
 #Pull in dependency info for *existing* .o files
 -include $(OBJS:.$(OBJEXT)=.$(DEPEXT))

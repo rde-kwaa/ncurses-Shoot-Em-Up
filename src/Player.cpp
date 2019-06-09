@@ -57,7 +57,11 @@ void Player::setScore(int n){
 }
 
 void Player::immaFirinMahLazer(WINDOW *win, int v, int h, const char * lazor) {
-		mvwprintw(win, v, h, lazor);
+	init_pair(4, COLOR_CYAN, 0);
+	wattron(win, COLOR_PAIR(4));
+	mvwprintw(win, v, h, lazor);
+	wattroff(win, COLOR_PAIR(4));
+
 }
 
 std::string CreateLazer(int lazorLen, int currentH){

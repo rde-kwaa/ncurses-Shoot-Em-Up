@@ -68,8 +68,11 @@ WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
 
 void    Game::displayPlayer(WINDOW *win, Player player)
 {
+	init_pair(3, COLOR_GREEN, 0);
+	wattron(win, COLOR_PAIR(3));
 	const char * playerShip = this->player._character.c_str();
     mvwprintw(win, player.getV(), player.getH(), playerShip);
+	wattroff(win, COLOR_PAIR(3));
 }
 
 void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
@@ -83,7 +86,7 @@ void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 	init_pair(2, COLOR_RED, 0);
 	wattron(win, COLOR_PAIR(2));
     mvwprintw(win, enemy.getV(), enemy.getH(), "X");
-	wattroff(win, COLOR_PAIR(1));
+	wattroff(win, COLOR_PAIR(2));
 
 }
 

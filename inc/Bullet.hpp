@@ -2,6 +2,8 @@
 #define BULLET_H
 #include <iostream>
 
+# include "../inc/Entity.hpp"
+
 class Bullet : public Entity
 {
     public:

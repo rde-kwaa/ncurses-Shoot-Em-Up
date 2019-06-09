@@ -15,4 +15,4 @@ class Enemy:public Entity
 		Enemy &operator=(const Enemy &enemy);
 };
 
-#endif // !ENEMY_H
+#endif

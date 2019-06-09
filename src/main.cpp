@@ -34,7 +34,7 @@ int main(void) {
 		game.windowClean(win);
 		getmaxyx(stdscr, yMax, xMax);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
-        if (i < 10)
+        if (i < 10 && milliSecondsElapsed % 10 == 0)
         {
             game.generateEnemy(10, 10, i);
             i++;

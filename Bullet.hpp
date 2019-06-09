@@ -7,10 +7,6 @@ class Bullet : public Entity
     public:
         Bullet(int h, int v, std::string c);
         ~Bullet();
-
-        void moveLeft();
-        void moveRight();
-        void display();
         void updatePosition();
         std::string c;
 

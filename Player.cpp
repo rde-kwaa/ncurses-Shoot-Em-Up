@@ -43,7 +43,7 @@ void Player::moveRight(){
     }
 }
 
-void    Player::shoot(){
+void Player::shoot(){
     Bullet  playerBullet(this->_h+1, this->_v, ".");
     playerBullet.player = true;
 }

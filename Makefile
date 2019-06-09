@@ -9,14 +9,14 @@ E = \033[0m
 PROG := run
 
 # Sources
-SRCS :=	main.cpp Entity.cpp Enemy.cpp Player.cpp
+SRCS :=	main.cpp Entity.cpp Enemy.cpp Player.cpp Bullet.cpp
 
 # Object
 OBJS :=	$(SRCS:.cpp=.o)
 
 # Flag
-# CXXFLAGS :=	-Wall -Werror -Wextra -pedantic -std=c++98
-CXXFLAGS :=	-std=c++98
+CXXFLAGS :=	-Wall -Werror -Wextra -std=c++98
+# CXXFLAGS :=	-std=c++98
 
 # C++ Compiler
 CXX := clang++

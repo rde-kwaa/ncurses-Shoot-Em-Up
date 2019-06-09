@@ -3,16 +3,18 @@
 #include "Bullet.hpp"
 
 Bullet::Bullet(int x, int y, std::string c){
-    this->h  = x;
-    this->v = y;
-    this->c = c;
-	this->speed = 1;
+    this->_h  = x;
+    this->_v = y;
+    this->_character = c;
+	this->_speed = 1;
 	this->player = false;
 }
+ Bullet::~Bullet(){
+ }
 
 void    Bullet::updatePosition(){
-    if (this->h = this->hMax){
-        this->h = -1;
-        this-> v = -1;
+    if (this->_h == this->_maxH){
+        this->_h = -1;
+        this->_v = -1;
     }
 }

@@ -1,4 +1,3 @@
-
 #include "../inc/Game.hpp"
 
 /* DEFAULT
@@ -90,8 +89,13 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 			this->player.moveRight(termWidth);
 			break;
 		case ' ':
-			this->player.shoot(win ,termWidth,termHeight ,this->enemies);
+			this->player.shoot(win, termWidth, termHeight, this->enemies);
 			break;
+		case 27:
+			windowClean(win);
+			wrefresh(win);
+			exit(0);
+		break;
 		default:
 			break;
     }
@@ -247,7 +251,7 @@ void    Game::storylineFail(WINDOW *win, int maxH){
 #include <signal.h>
 void        Game::menu_sound(void)
 {
-	
+
     pid_t pid = fork();
     if (!pid)
     {

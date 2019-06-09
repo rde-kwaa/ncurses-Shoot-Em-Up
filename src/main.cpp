@@ -6,12 +6,16 @@ int main(void) {
 	Player player(1, 1);
 	Game game(player);
 	int yMax, xMax;
+	int menuNumber;
 	int menu = 1;
 
-	
-    
+initscr();
+    noecho();
+    cbreak();
+
+
     getmaxyx(stdscr, yMax, xMax);
-    
+
     WINDOW *win = game.createWindow(yMax, xMax, 0, 0);
 	nodelay(win, TRUE);
 
@@ -44,20 +48,16 @@ int main(void) {
 	}
 	game.setTermDimensions(yMax, xMax);
 
-    game.setTermDimensions(yMax, xMax);
-
 	// Menu/game music start
 	//  Comment out to turn off music
 	game.menu_sound();
-
-	game.menu(win, yMax, xMax);
 
     int     i = 0;
     int     k = 0;
 	game.storylineBegin(win, xMax);
 	int start = game.getMilliCount();
 	int milliSecondsElapsed;
-    srand(time(NULL));	
+    srand(time(NULL));
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
 
@@ -81,6 +81,7 @@ int main(void) {
     }
     // Call when player fails (STORYLINE)
     game.storylineFail(win, xMax);
+
 	game.game_Over();
 
 	endwin();

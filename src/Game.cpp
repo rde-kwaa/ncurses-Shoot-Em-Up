@@ -29,9 +29,6 @@ Game::~Game()
     return ;
 }
 
-
-
-
 /* SETTER
    FUNCTIONS */
 void    Game::setTermHeight(int termHeight)

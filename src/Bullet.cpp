@@ -9,9 +9,12 @@ Bullet::Bullet(int x, int y, std::string c){
 	this->speed = 1;
 	this->player = false;
 }
+Bullet::~Bullet(){
+    return ;
+}
 
 void    Bullet::updatePosition(){
-    if (this->h = this->hMax){
+    if (this->h == this->hMax){
         this->h = -1;
         this-> v = -1;
     }

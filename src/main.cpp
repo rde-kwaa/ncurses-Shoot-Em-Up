@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 	Player playerOne(1, 1, "0");
 
  	while(playerOne.alive) {
-		
+		std::cout << "\a";
 		getmaxyx(stdscr, yMax, xMax);
 		yMax -=10;
 		xMax -=10;

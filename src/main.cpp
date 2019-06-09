@@ -11,8 +11,7 @@ int main(void) {
     noecho();
     cbreak();
 
-	int start = game.getMilliCount();
-	int milliSecondsElapsed;
+	
     
     getmaxyx(stdscr, yMax, xMax);
     
@@ -26,7 +25,12 @@ int main(void) {
     game.setTermDimensions(yMax, xMax);
     game.menu(win, yMax, xMax);
 
-    game.generateEnemy(10, 10);
+    // Call when game begins (STORYLINE)
+    game.storylineBegin(win, xMax);
+	int start = game.getMilliCount();
+	int milliSecondsElapsed;
+	
+	game.generateEnemy(10, 10);
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
 
@@ -39,6 +43,8 @@ int main(void) {
 		wrefresh(win);
         usleep(DELAY);
     }
+    // Call when player fails (STORYLINE)
+    game.storylineFail(win, xMax);
 
     endwin();
 }

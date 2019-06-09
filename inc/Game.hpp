@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 14:25:40 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 13:35:19 by jlowing          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ class Game
         void        menu(WINDOW *win, int winHeight, int winWidth);
 
         int         getMilliCount();
-        int         getMilliSpan(int nStartTime);        
+        int         getMilliSpan(int nStartTime);   
+
+        // Storyline
+        void        storylineBegin(WINDOW *win, int maxH);
+        void        storylineFail(WINDOW *win, int maxH);     
     
     private:
         int         _termHeight;

@@ -16,7 +16,7 @@ OBJS :=	$(SRCS:.cpp=.o)
 
 # Flag
 CXXFLAGS :=	-Wall -Werror -Wextra -std=c++98
-# CXXFLAGS :=	-std=c++98
+CXXFLAGS :=	-std=c++98
 
 # C++ Compiler
 CXX := clang++

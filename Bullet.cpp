@@ -18,3 +18,5 @@ void    Bullet::updatePosition(){
         this->_v = -1;
     }
 }
+
+Bullet::~Bullet() {}

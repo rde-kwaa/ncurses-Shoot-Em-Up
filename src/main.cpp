@@ -77,15 +77,14 @@ initscr();
         for (int m = 0; m < i; m++)
         {
             if ((game.player.getH() == game.enemies[m].getH()) && (game.player.getV()) == game.enemies[m].getV())
-            // {
+            {
                 // Call when player fails (STORYLINE)
-				game.player.collide(game.enemies[m]);
-                // game.storylineFail(win, xMax);
-                // game.game_Over();
-            //     wclear(win);
-            //     endwin();
-            //     return (0);
-            // }
+                game.storylineFail(win, xMax);
+                game.game_Over();
+                wclear(win);
+                endwin();
+                return (0);
+            }
         }
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);

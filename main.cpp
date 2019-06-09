@@ -5,6 +5,9 @@
 #include "Entity.hpp"
 #include "Player.hpp"
 
+// #define FILEPATH "./resource/audio/music.wav"
+// #define FILEPATH "./resource/audio/shoot.wav"
+
 #define DELAY 20000
 
 void windowClean(WINDOW *win) {
@@ -34,14 +37,16 @@ void objectUpdate(WINDOW *win, std::list<Entity> &listOfPlayer, int yMax, int xM
 
 // Game begin storyline
 void storylineBegin(WINDOW *win, int xMax, int yMax){
-    
+    int c = 0;
+
     const char *text = "The Earth is in trouble...";
     const char *text2 = "Mark Zuckerburg and the Queen of England threaten to enslave the entire world..";
     const char *text3 = "As Elon's Prized Space car it is up to you to protect the people of Earth..";
     const char *text4 = "Stop the ever growing Lizzard threat and mighty Elon will love you forever..";
-    const char *text5 = "Begin game? (y/n): ";
+    const char *text5 = "Begin game?";
 
     mvwprintw(win, 1, xMax / 2 - 20, text);
+    
     wrefresh(win);
     wgetch(win);
 
@@ -60,19 +65,19 @@ void storylineBegin(WINDOW *win, int xMax, int yMax){
     wclear(win);
     wrefresh(win);
 
-    mvwprintw(win, 8, xMax / 2 - 15, text5);
+    mvwprintw(win, 5, xMax / 2 - 15, text5);
     wrefresh(win);
     wgetch(win);
-
-    wclear(win);
-    wrefresh(win);
 }
 
 // Game fail storyline
 void storylineFail(WINDOW *win, int xMax, int yMax){
     const char *textFail1 = "You have doomed us all";
     const char *textFail2 = "The Queen of england now rules over humanity with Mark Zuckerburg at her side..";
-    const char *textFail3 = "Retry? (y/n): ";
+    const char *textFail3 = "Retry?";
+
+    wclear(win);
+    wrefresh(win);
 
     mvwprintw(win, 1, xMax / 2 - 15, textFail1);
     wrefresh(win);

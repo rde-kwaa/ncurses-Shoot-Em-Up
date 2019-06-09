@@ -1,6 +1,7 @@
 #ifndef BULLET_H
 #define BULLET_H
 #include <iostream>
+#include "Entity.hpp"
 
 class Bullet : public Entity
 {

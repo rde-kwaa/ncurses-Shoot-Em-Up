@@ -1,5 +1,4 @@
 #include "Player.hpp"
-#include "Bullet.hpp"
 
 Player::Player(int x, int y, std::string c) {
     this->_h = x;

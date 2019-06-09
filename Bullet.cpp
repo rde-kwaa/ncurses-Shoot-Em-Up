@@ -10,8 +10,10 @@ Bullet::Bullet(int x, int y, std::string c) {
     this->player = false;
 }
 
+Bullet::~Bullet(void) {return;}
+
 void Bullet::updatePosition() {
-    if (this->_h = this->_maxH) {
+    if (this->_h == this->_maxH) {
         this->_h = -1;
         this->_v = -1;
     }

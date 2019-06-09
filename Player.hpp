@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <iostream>
 #include "Entity.hpp"
+#include "Bullet.hpp"
 
 class Player : public Entity {
    private:

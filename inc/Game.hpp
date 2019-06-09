@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 10:45:00 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 12:55:51 by jlowing          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ class Game
         WINDOW      *createWindow(int height, int width, int coY, int coX);
         void        getAction(WINDOW *win, int termHeight, int termWidth);
     
+        // Storyline
+        void        storylineBegin(WINDOW *win, int maxH);
+        void        storylineFail(WINDOW *win, int maxH);
     private:
         int         _termHeight;
         int         _termWidth;

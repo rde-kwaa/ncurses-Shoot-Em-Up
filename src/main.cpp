@@ -100,9 +100,7 @@ int main(void) {
     menu(win, xMax, yMax);
     
     // Call when game begins (STORYLINE)
-    storylineBegin(win, xMax, yMax);
-    // Call when player fails (STORYLINE)
-    // storylineFail(win, xMax, yMax);
+    game.storylineBegin(win, xMax);
 
  	while(game.player.alive) {
 		milliSecondsElapsed = getMilliSpan(start) / 1000; // grabs current time
@@ -118,64 +116,8 @@ int main(void) {
 		wrefresh(win);
         usleep(DELAY);
     }
+    // Call when player fails (STORYLINE)
+    game.storylineFail(win, xMax);
 
     endwin();
-}
-
-// Game begin storyline
-void storylineBegin(WINDOW *win, int xMax, int yMax){
-
-    const char *text = "The Earth is in trouble...";
-    const char *text2 = "Mark Zuckerburg and the Queen of England threaten to enslave the entire world..";
-    const char *text3 = "As Elon's Prized Space car it is up to you to protect the people of Earth..";
-    const char *text4 = "Stop the ever growing Lizzard threat and mighty Elon will love you forever..";
-    const char *text5 = "Begin game?";
-
-    mvwprintw(win, 1, xMax / 2 - 20, text);
-    
-    wrefresh(win);
-    wgetch(win);
-
-    mvwprintw(win, 2, xMax / 2 - 45, text2);
-    wrefresh(win);
-    wgetch(win);
-
-    mvwprintw(win, 3, xMax / 2 - 42, text3);
-    wrefresh(win);
-    wgetch(win);
-
-    mvwprintw(win, 4, xMax / 2 - 43, text4);
-    wrefresh(win);
-    wgetch(win);
-    
-    wclear(win);
-    wrefresh(win);
-
-    mvwprintw(win, 5, xMax / 2 - 15, text5);
-    wrefresh(win);
-    wgetch(win);
-}
-// Game fail storyline
-void storylineFail(WINDOW *win, int xMax, int yMax){
-    const char *textFail1 = "You have doomed us all";
-    const char *textFail2 = "The Queen of england now rules over humanity with Mark Zuckerburg at her side..";
-    const char *textFail3 = "Retry?";
-
-    wclear(win);
-    wrefresh(win);
-
-    mvwprintw(win, 1, xMax / 2 - 15, textFail1);
-    wrefresh(win);
-    wgetch(win);
-
-    mvwprintw(win, 2, xMax / 2 - 42, textFail2);
-    wrefresh(win);
-    wgetch(win);
-
-    wclear(win);
-    wrefresh(win);
-
-    mvwprintw(win, 5, xMax / 2 - 15, textFail3);
-    wrefresh(win);
-    wgetch(win);
 }

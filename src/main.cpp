@@ -82,6 +82,7 @@ initscr();
                 // Call when player fails (STORYLINE)
                 game.storylineFail(win, xMax);
                 game.game_Over();
+				kill(pid, SIGKILL);
                 wclear(win);
                 endwin();
                 return (0);

@@ -85,14 +85,13 @@ void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 		enemy.setCharacter("{{=>");
 	const char * enemyShip = enemy.getCharacter().c_str();
     enemy.setH(enemy.getH() - 1);
-    if (enemy.getH() <= (int)enemy.getCharacter().length()-1)
+    if (enemy.getH() <= 0)
     {
         enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
     }
 	init_pair(2, COLOR_RED, 0);
 	wattron(win, COLOR_PAIR(2));
     mvwprintw(win, enemy.getV(), enemy.getH(), enemyShip);
-	//mvwprintw(win, enemy.getV(), enemy.getH(), "X");
 	wattroff(win, COLOR_PAIR(2));
 
 }

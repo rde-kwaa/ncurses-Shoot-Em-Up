@@ -9,7 +9,7 @@ E = \033[0m
 PROG := run
 
 # Sources
-SRCS :=	main.cpp Entity.cpp Enemy.cpp Player.cpp Bullet.cpp
+SRCS :=	main.cpp Entity.cpp Enemy.cpp Player.cpp Bullet.cpp Game.cpp
 
 # Object
 OBJS :=	$(SRCS:.cpp=.o)

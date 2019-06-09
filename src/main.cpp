@@ -3,8 +3,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <sys/timeb.h>
-#include "Entity.hpp"
-#include "Player.hpp"
+#include "../inc/Entity.hpp"
+#include "../inc/Player.hpp"
+#include "../inc/Game.hpp"
 
 #define DELAY 20000
 
@@ -79,6 +80,8 @@ int getMilliSpan(int nTimeStart){
 }
 
 int main(void) {
+    Player player(1, 1);
+    Game game(player);
     initscr();
     noecho();
     cbreak();
@@ -97,8 +100,7 @@ int main(void) {
     curs_set(0);  // hides the default screen cursor.
     menu(win, xMax, yMax);
 
-    Player playerOne(1, 1, "0");
- 	while(playerOne.alive) {
+ 	while(game.player.alive) {
 		milliSecondsElapsed = getMilliSpan(start) / 1000; // grabs current time
 
 		getmaxyx(stdscr, yMax, xMax);
@@ -108,11 +110,11 @@ int main(void) {
 		windowClean(win);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
 		
-		playerUpdate(win, playerOne);
+		playerUpdate(win, game.player);
+        // game.displayPlayer(win, game.player);
 		refresh();
-		playerOne.getMove(win, yMax, xMax);
+		game.getAction(win, yMax, xMax);
 		wrefresh(win);
-
         usleep(DELAY);
     }
 

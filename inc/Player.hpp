@@ -3,19 +3,19 @@
 
 #include <iostream>
 #include <ncurses.h>
-#include "Entity.hpp"
+#include "../inc/Entity.hpp"
 
 class Player : public Entity
 {
 
     public:
-        Player(int h, int v, std::string c);
+        Player(void);
+        Player(int h, int v);
         ~Player();
         void moveUp();
-        void moveDown();
+        void moveDown(int maxV);
         void moveLeft();
-        void moveRight();
-        int  getMove(WINDOW *win, int vMax, int hMax);
+        void moveRight(int maxH);
         void display();
         void shoot();
 		bool alive;

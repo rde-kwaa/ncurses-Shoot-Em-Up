@@ -1,6 +1,6 @@
 #ifndef ENEMY_H
 # define ENEMY_H
-#include "Entity.hpp"
+#include "../inc/Entity.hpp"
 #include <iostream>
 
 class Enemy:public Entity
@@ -9,7 +9,7 @@ class Enemy:public Entity
 		void _randomStart();
 
 	public:
-		Enemy(int x, int y,int maxx,int maxy);
+		Enemy(int h, int v);
 		Enemy(const Enemy &Enemy);
 		~Enemy();
 		Enemy &operator=(const Enemy &enemy);

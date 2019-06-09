@@ -264,6 +264,7 @@ int cenX[5] = {20, 45, 42, 43, 15};
 
     wclear(win);
     wrefresh(win);
+	getch();
 
 	for (int i=0; i<5; i++){
 		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());

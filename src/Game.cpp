@@ -59,6 +59,7 @@ int		Game::getStartTime() {
 
 WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
 {
+	start_color();
     WINDOW  *win = newwin(height, width, coY, coX);
     box(win, 0 , 0);
 
@@ -68,8 +69,11 @@ WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
 void    Game::displayPlayer(WINDOW *win, Player player)
 {
 	this->player.setCharacter("<)==>");
-	const char * playerShip = this->player.getCharacter().c_str();
+	init_pair(3, COLOR_GREEN, 0);
+	wattron(win, COLOR_PAIR(3));
+	const char * playerShip = this->player._character.c_str();
     mvwprintw(win, player.getV(), player.getH(), playerShip);
+	wattroff(win, COLOR_PAIR(3));
 }
 
 void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
@@ -85,7 +89,12 @@ void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
     {
         enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
     }
+	init_pair(2, COLOR_RED, 0);
+	wattron(win, COLOR_PAIR(2));
     mvwprintw(win, enemy.getV(), enemy.getH(), enemyShip);
+	//mvwprintw(win, enemy.getV(), enemy.getH(), "X");
+	wattroff(win, COLOR_PAIR(2));
+
 }
 
 
@@ -127,6 +136,8 @@ void	Game::makeScenery(WINDOW *win, int time) {
 	getmaxyx(stdscr, yMax, xMax);
 	int startX = xMax - i++;
 	if (i == xMax - 1) {i = 0;}
+	init_pair(1, 4, 0);
+	wattron(win, COLOR_PAIR(1));
 	mvwprintw(win, yMax - 10, startX, "                        .           .                  *                      /   \\              _/ \\       *    .                                ");
 	mvwprintw(win, yMax - 9, startX, "        _    .  ,   .           .         _    .       .                  .--'\\/\\_ \\            /    \\  *    ___                                  ");
 	mvwprintw(win, yMax - 8, startX, "    *  / \\_ *  / \\_      _  *        *   /\\'__      *                 *  / \\_    _/ ^      \\/\\'__        /\\/\\  /\\  __/   \\ *                      ");
@@ -136,6 +147,7 @@ void	Game::makeScenery(WINDOW *win, int time) {
 	mvwprintw(win, yMax - 4, startX, "  /\\  .-   `. \\/     \\ /==~=-=~=-=-;.  _/ \\ -. `_/   \\               /\\  .-   `. \\/     \\ / -.   _/ \\ -. `_/   \\ /    `._/  ^  \\                  ");
 	mvwprintw(win, yMax - 3, startX, " /  `-.__ ^   / .-'.--\\ =-=~_=-=~=^/  _ `--./ .-'  `- \\             / `-.__ ^   / .-'.--'    . /    `--./ .-'  `-.  `-. `.  -  `.                 ");
 	mvwprintw(win, yMax - 2, startX, "/        `.  / /       `.~-^=-=~=^=.-'      '-._ `._   \\           /      `.  / /      `-.   /  .-'   / .   .'   \\    \\  \\  .-   \\                ");
+	wattroff(win, COLOR_PAIR(1));
 
 }
 
@@ -261,9 +273,8 @@ int cenX[5] = {20, 45, 42, 43, 15};
 
 	for (int i=0; i<6; i++){
 		wrefresh(win);
-    	getch();
 		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
-
+		getch();
 	}
 }
 
@@ -278,8 +289,8 @@ void    Game::storylineFail(WINDOW *win, int maxH){
 
 	for (int i=0; i<3; i++){
 		wrefresh(win);
-    	getch();
 		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
+		getch();
 	}
 	wclear(win);
     wrefresh(win);

@@ -2,12 +2,6 @@
 #include "../inc/Player.hpp"
 #include "../inc/Game.hpp"
 
-#define DELAY 20000
-
-void playerUpdate(WINDOW *win, Player playerOne){
-	mvwprintw(win, playerOne.getV(), playerOne.getH(), "0");
-}
-
 int main(void) {
     Player player(1, 1);
     Game game(player);

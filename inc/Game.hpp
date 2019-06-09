@@ -6,13 +6,14 @@
 /*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 11:31:00 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 11:33:17 by akay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#define DELAY 20000
 #include <ncurses.h>
 #include "../inc/Player.hpp"
 #include <iostream>

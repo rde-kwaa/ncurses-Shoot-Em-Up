@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <signal.h>
+#include <unistd.h>
 #include <iostream>
 #include <ncurses.h>
 #include "../inc/Entity.hpp"

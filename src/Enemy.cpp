@@ -15,9 +15,11 @@ void Enemy::randomStart(int maxH, int maxV) {
 	this->_v = iRand;
 }
 
-Enemy::Enemy(int h, int v){
+Enemy::Enemy(int h, int v):Entity(h,v){
+	// Enemy::Enemy(int h, int v){
 	this->_h = h;
 	this->_v = v;
+	// _randomStart();
 	return ;
 }
 

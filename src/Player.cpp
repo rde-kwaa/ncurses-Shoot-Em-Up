@@ -9,8 +9,7 @@ Player::Player(void)
 }
 
 Player::Player(int h, int v) : Entity(h, v) {
-    this->_character = "0";
-	this->_speed = 1;
+    this->_character = ">";
 	this->alive = true;
 	this->_score = 0;
     // getmaxyx(this->win, this->yMax, this->xMax);
@@ -69,6 +68,18 @@ std::string CreateLazer(int lazorLen, int currentH){
 	return (str);
 }
 
+
+void laser_sound(void)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/pew.mp3", NULL);
+        exit(0);
+    }
+}
+
+
 void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[ENEMIES]){
 	int currentV = this->getV();
 	int currentH = this->getH();
@@ -92,5 +103,6 @@ void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[ENEMIES]){
 		lazer = CreateLazer(lazorLen, currentH);
 
 	}
+	laser_sound();
 	immaFirinMahLazer(win, currentV, currentH+1, (const char *)lazer.c_str());
 }

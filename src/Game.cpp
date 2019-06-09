@@ -85,20 +85,19 @@ void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 		enemy.setCharacter("{{=>");
 	const char * enemyShip = enemy.getCharacter().c_str();
     enemy.setH(enemy.getH() - 1);
-    if (enemy.getH() <= (int)enemy.getCharacter().length()-1)
+    if (enemy.getH() <= 0)
     {
         enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
     }
 	init_pair(2, COLOR_RED, 0);
 	wattron(win, COLOR_PAIR(2));
     mvwprintw(win, enemy.getV(), enemy.getH(), enemyShip);
-	//mvwprintw(win, enemy.getV(), enemy.getH(), "X");
 	wattroff(win, COLOR_PAIR(2));
 
 }
 
 
-void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
+void        Game::getAction(WINDOW *win, int termHeight, int termWidth, pid_t pid)
 {
 	int move = wgetch(win);
 	switch(move)
@@ -121,13 +120,13 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 		case 27:
 			windowClean(win);
 			wrefresh(win);
-			exit(0);
-		break;
+			kill(pid, SIGKILL);
+			exit(1);
+			break;
 		default:
 			break;
 	}
 }
-
 
 void	Game::makeScenery(WINDOW *win, int time) {
 	static int i;
@@ -296,7 +295,7 @@ void    Game::storylineFail(WINDOW *win, int maxH){
     wrefresh(win);
 }
 
-void        Game::menu_sound(void)
+pid_t        Game::menu_sound(void)
 {
     pid_t pid = fork();
     if (!pid)
@@ -304,6 +303,7 @@ void        Game::menu_sound(void)
         execlp("afplay", "afplay", "./res/BeachLasagne.mp3", NULL);
 		exit(0);
     }
+	return(pid);
 }
 
 void        Game::boom(void)

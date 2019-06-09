@@ -34,7 +34,7 @@ class Game
         void        setTermWidth(int termWidth);
         void        setTermDimensions(int termHeight, int termWidth);
 		void		setStartTime(int startTime);
-        
+
         // Getters
         int         getTermHeight();
         int         getTermWidth();
@@ -42,7 +42,7 @@ class Game
 
         // Window functions
         WINDOW      *createWindow(int height, int width, int coY, int coX);
-        void        getAction(WINDOW *win, int termHeight, int termWidth);
+        void        getAction(WINDOW *win, int termHeight, int termWidth, pid_t pid);
         void        windowClean(WINDOW *win);
         int        menu(WINDOW *win, int winHeight, int winWidth);
 		void		makeScenery(WINDOW *win, int time);
@@ -56,7 +56,7 @@ class Game
         void        storylineFail(WINDOW *win, int maxH);
 
 		// Sound
-		void        menu_sound(void);
+		pid_t       menu_sound(void);
 		void        laser_sound(void);
 		void        boom(void);
 		void        game_Over(void);

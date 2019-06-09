@@ -98,7 +98,7 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
     switch(move)
     {
         case KEY_UP:
-            this->player.moveUp();
+            this->player.moveUp(termHeight);
             break;
         case KEY_DOWN:
             this->player.moveDown(termHeight);

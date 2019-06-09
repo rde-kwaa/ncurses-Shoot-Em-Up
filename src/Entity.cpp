@@ -14,7 +14,6 @@ Entity::Entity(void){
         return ;
     }
     Entity::~Entity(void){
-        std::cout << "Entity destroyed\n";
         return ;
     }
     // void    Entity::updatePosition(){

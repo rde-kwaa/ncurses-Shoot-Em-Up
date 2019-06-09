@@ -1,0 +1,13 @@
+*.bin
+.DS_Store
+*a.out
+*.iml
+*.xml
+*.ipch
+*.out
+*.vscode
+obj
+run
+ft_retro
+*.o
+*.d

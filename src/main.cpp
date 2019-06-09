@@ -94,6 +94,8 @@ int main(void) {
         usleep(DELAY);
         k++;
     }
+	kill(pid, SIGKILL);
+
     endwin();
     return (0);
 }

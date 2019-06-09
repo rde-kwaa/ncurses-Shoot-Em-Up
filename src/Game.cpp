@@ -116,6 +116,10 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 			break;
 	}
 }
+char *chop(std::string str,int n, int k){
+	std::string s= str.substr(n,k);
+	return ( s);
+}
 
 void	Game::makeScenery(WINDOW *win, int time) {
 	static int i;

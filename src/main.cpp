@@ -23,7 +23,7 @@ void        menu_sound(void)
     pid_t pid = fork();
     if (!pid)
     {
-        execlp("afplay", "afplay", "BeachLasagne.mp3", NULL);
+        execlp("afplay", "afplay", "./res/PewDiePie - Beach Lasagna (8-bit) by RushJet1.mp3", NULL);
         exit(0);
     }
 }

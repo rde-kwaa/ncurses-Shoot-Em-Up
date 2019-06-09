@@ -88,23 +88,26 @@ void    Game::displayPlayer(WINDOW *win, Player player)
 
 void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 {
-    int move = wgetch(win);
-    switch(move)
-    {
-        case KEY_UP:
-            this->player.moveUp(termHeight);
-            break;
-        case KEY_DOWN:
-            this->player.moveDown(termHeight);
-            break;
-        case KEY_LEFT:
-            this->player.moveLeft();
-            break;
-        case KEY_RIGHT:
-            this->player.moveRight(termWidth);
-            break;
-        default:
-            break;
+	int move = wgetch(win);
+	switch(move)
+	{
+		case KEY_UP:
+			this->player.moveUp(termHeight);
+			break;
+		case KEY_DOWN:
+			this->player.moveDown(termHeight);
+			break;
+		case KEY_LEFT:
+			this->player.moveLeft();
+			break;
+		case KEY_RIGHT:
+			this->player.moveRight(termWidth);
+			break;
+		case ' ':
+			this->player.shoot(win ,termWidth);
+			break;
+		default:
+			break;
     }
 }
 

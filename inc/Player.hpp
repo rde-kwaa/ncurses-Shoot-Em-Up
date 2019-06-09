@@ -5,8 +5,12 @@
 #include <ncurses.h>
 #include "../inc/Entity.hpp"
 
+class Game;
+
 class Player : public Entity
 {
+	private:
+		void immaFirinMahLazer(WINDOW *win, int v, int h, const char * lazor);
 
     public:
         Player(void);
@@ -17,7 +21,7 @@ class Player : public Entity
         void moveLeft();
         void moveRight(int maxH);
         void display();
-        void shoot();
+        void shoot(WINDOW *win, int maxH);
 		bool alive;
 		
         std::string _character;

@@ -1,6 +1,7 @@
 #include "../inc/Player.hpp"
 #include "../inc/Bullet.hpp"
 
+
 Player::Player(void)
 {
     return ;
@@ -46,7 +47,19 @@ void Player::moveRight(int maxH){
     }
 }
 
-void Player::shoot(){
-    Bullet  playerBullet(this->_h+1, this->_v, ".");
-    playerBullet.player = true;
+void Player::immaFirinMahLazer(WINDOW *win, int v, int h, const char * lazor) {
+		mvwprintw(win, v, h, lazor);
+}
+
+void Player::shoot(WINDOW *win, int maxH){
+	int currentV = this->getV();
+	int currentH = this->getH();
+	std::string str= "";
+	
+	int lazorLen = maxH - 5;
+
+	for (int i = currentH; i < lazorLen; i++){
+		str.append("=");
+	}
+	immaFirinMahLazer(win, currentV, currentH+1, str.c_str());
 }

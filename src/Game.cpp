@@ -57,19 +57,25 @@ WINDOW *Game::createWindow(int height, int width, int coY, int coX) {
 
 void    Game::displayPlayer(WINDOW *win, Player player)
 {
-	const char * playerShip = this->player._character.c_str();
+	this->player.setCharacter("<)==>");
+	const char * playerShip = this->player.getCharacter().c_str();
     mvwprintw(win, player.getV(), player.getH(), playerShip);
 }
 
 void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 {
     (void)i;
+	if (enemy.getType() == "small")
+		enemy.setCharacter("<)");
+	else if (enemy.getType() == "big")
+		enemy.setCharacter("{{=>");
+	const char * enemyShip = enemy.getCharacter().c_str();
     enemy.setH(enemy.getH() - 1);
     if (enemy.getH() < 1)
     {
         enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
     }
-    mvwprintw(win, enemy.getV(), enemy.getH(), "X");
+    mvwprintw(win, enemy.getV(), enemy.getH(), enemyShip);
 }
 
 
@@ -186,7 +192,6 @@ int Game::help(WINDOW *win, int yMax) {
 		}
 		wattron(win, A_STANDOUT);
 		curs_set(1);
-
 		mvwprintw(win, yMax - 3, 3, "%s", back.c_str());
 		curs_set(0);
 		wattroff(win, A_STANDOUT);
@@ -212,37 +217,38 @@ int Game::getMilliSpan(int nTimeStart) {
 	return nSpan;
 }
 void    Game::storylineBegin(WINDOW *win, int maxH){
-std::string texts[5] = {
+std::string texts[6] = {
 		"The Earth is in trouble...",
 		"Mark Zuckerburg and the Queen of England threaten to enslave the entire world..",
 		"As Elon's Prized Space car it is up to you to protect the people of Earth..",
 		"Stop the ever growing Lizzard threat and mighty Elon will love you forever..",
-		"Begin Game?"};
+		"Begin Game?",""};
 int cenX[5] = {20, 45, 42, 43, 15};
 
     wclear(win);
     wrefresh(win);
 
-	for (int i=0; i<5; i++){
-		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
-    	wrefresh(win);
+	for (int i=0; i<6; i++){
+		wrefresh(win);
     	getch();
+		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
+
 	}
 }
 
 void    Game::storylineFail(WINDOW *win, int maxH){
-	std::string texts[2] = {
+	std::string texts[3] = {
 		"You have doomed us all",
-		"The Queen of england now rules over humanity with Mark Zuckerburg at her side.."};
+		"The Queen of england now rules over humanity with Mark Zuckerburg at her side..",""};
 	int cenX[3] = {15, 42, 15};
 
     wclear(win);
     wrefresh(win);
 
-	for (int i=0; i<2; i++){
-		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
-    	wrefresh(win);
+	for (int i=0; i<3; i++){
+		wrefresh(win);
     	getch();
+		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
 	}
 	wclear(win);
     wrefresh(win);
@@ -250,10 +256,9 @@ void    Game::storylineFail(WINDOW *win, int maxH){
 	wrefresh(win);
     getch();
 }
-#include <signal.h>
+
 void        Game::menu_sound(void)
 {
-
     pid_t pid = fork();
     if (!pid)
     {

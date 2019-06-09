@@ -14,7 +14,7 @@ Player::Player(int h, int v) : Entity(h, v) {
 	this->alive = true;
 	this->_score = 0;
     // getmaxyx(this->win, this->yMax, this->xMax);
-    
+
 }
 
 Player::~Player(){
@@ -96,7 +96,7 @@ void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[ENEMIES]){
 	std::string lazer;
 	int lazorLen = maxH - 10;
 	for (int i = 0; i <= ENEMIES; i++){
-		
+
 		if(enemies[i].getV() == currentV && (enemies[i].getH() <= maxH - 5) && (enemies[i].getH() > this->getH())  && (enemies[i].getH() < tmpEnemyH) ){
 			tmpEnemyH = enemies[i].getH();
 			tmpEnemy = i;

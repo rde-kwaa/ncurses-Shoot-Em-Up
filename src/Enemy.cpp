@@ -6,7 +6,12 @@ Enemy::Enemy(void)
 }
 
 void Enemy::randomStart(int maxH, int maxV) {
-	this->_h = maxH - 1;
+	int r = rand() % 10;
+	if (r % 2)
+		setType("small");
+	else
+		setType("big");
+	this->_h = maxH - 5;
 	int iRand = std::rand() % maxV;
 	if (iRand == -1 || iRand == 0)
 	{
@@ -16,7 +21,7 @@ void Enemy::randomStart(int maxH, int maxV) {
 }
 
 Enemy::Enemy(int h, int v):Entity(h,v){
-	// Enemy::Enemy(int h, int v){
+	//this->_character = "<)}";
 	this->_h = h;
 	this->_v = v;
 	// _randomStart();

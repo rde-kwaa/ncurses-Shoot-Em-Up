@@ -14,25 +14,26 @@
 
 class Game
 {
-    public:
-        Player      player;
-        Enemy       enemies[ENEMIES];
+	public:
+		Player		player;
+		Enemy		enemies[ENEMIES];
 
-        Game(void);
-        Game(Player player);
-        Game(Game const &obj);
-        ~Game();
-        Game        &operator=(Game const &obj);
+		Game(void);
+		Game(Player player);
+		Game(Game const &obj);
+		~Game();
+		Game		&operator=(Game const &obj);
 
-        // Game functions
-        void        displayPlayer(WINDOW *win, Player player);
-        void        displayEnemy(WINDOW *win, Enemy &enemy, int secondsElapsed);
-        void        generateEnemy(int h, int v, int id);
+		// Game functions
+		void		displayPlayer(WINDOW *win, Player player);
+		void		displayEnemy(WINDOW *win, Enemy &enemy, int secondsElapsed);
+		void		generateEnemy(int h, int v, int id);
+		void		enemyAttacks(WINDOW *win, Player player);
 
-        // Setters
-        void        setTermHeight(int termHeight);
-        void        setTermWidth(int termWidth);
-        void        setTermDimensions(int termHeight, int termWidth);
+		// Setters
+		void		setTermHeight(int termHeight);
+		void		setTermWidth(int termWidth);
+		void		setTermDimensions(int termHeight, int termWidth);
 		void		setStartTime(int startTime);
 
         // Getters
@@ -46,14 +47,14 @@ class Game
         void        windowClean(WINDOW *win);
         int        menu(WINDOW *win, int winHeight, int winWidth);
 		void		makeScenery(WINDOW *win, int time);
-		int         help(WINDOW *win, int yMax);
+		int			help(WINDOW *win, int yMax);
 
-        int         getMilliCount();
-        int         getMilliSpan(int nStartTime);
+		int			getMilliCount();
+		int			getMilliSpan(int nStartTime);
 
-        // Storyline
-        void        storylineBegin(WINDOW *win, int maxH);
-        void        storylineFail(WINDOW *win, int maxH);
+		// Storyline
+		void		storylineBegin(WINDOW *win, int maxH);
+		void		storylineFail(WINDOW *win, int maxH);
 
 		// Sound
 		pid_t       menu_sound(void);
@@ -61,9 +62,9 @@ class Game
 		void        boom(void);
 		void        game_Over(void);
 
-    private:
-        int         _termHeight;
-        int         _termWidth;
+	private:
+		int			_termHeight;
+		int			_termWidth;
 		unsigned int startTime;
 };
 

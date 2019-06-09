@@ -2,6 +2,7 @@
 
 Enemy::Enemy(void)
 {
+	this->_phase = 0;
 	return ;
 }
 
@@ -24,6 +25,7 @@ Enemy::Enemy(int h, int v):Entity(h,v){
 	//this->_character = "<)}";
 	this->_h = h;
 	this->_v = v;
+	this->_phase = 0;
 	// _randomStart();
 	return ;
 }
@@ -42,6 +44,7 @@ Enemy &Enemy::operator=(const Enemy &enemy){
 	this->_h = enemy._h;
 	this->_v = enemy._v;
 	this->_speed = enemy._speed;
+	this->_phase = 0;
 	return (*this);
 }
 
@@ -53,12 +56,20 @@ void			Enemy::setType(std::string type) {
 	this->_type = type;
 }
 
+void			Enemy::setPhase(int n) {
+	this->_phase = n;
+}
+
 int				Enemy::getSize(void) {
 	return (this->_size);
 }
 
 std::string		Enemy::getType(void) {
 	return (this->_type);
+}
+
+int				Enemy::getPhase(void) {
+	return (this->_phase);
 }
 
 void 			Enemy::resetEnemy(int maxH, int maxV)

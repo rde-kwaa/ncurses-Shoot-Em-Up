@@ -9,7 +9,7 @@ int main(void) {
 	int menuNumber;
 	int menu = 1;
 
-initscr();
+	initscr();
     noecho();
     cbreak();
 
@@ -70,6 +70,7 @@ initscr();
             game.generateEnemy(10, 10, i);
             i++;
         }
+		game.enemyAttacks(win, game.player);
         game.displayPlayer(win, game.player);
         for (int j = 0; j < i; j++)
         {
@@ -93,6 +94,8 @@ initscr();
         usleep(DELAY);
         k++;
     }
+	kill(pid, SIGKILL);
+
     endwin();
     return (0);
 }

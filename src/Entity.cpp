@@ -8,7 +8,7 @@ Entity::Entity(void){
 		this->_h = h;
 		this->_v = v;
 		this->_speed = 1;
-		this->_hp = 1;
+		this->_hp = 3;
 		this->_damageOut = 1;
 		return ;
 	}

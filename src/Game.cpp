@@ -61,7 +61,7 @@ WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
 {
     WINDOW  *win = newwin(height, width, coY, coX);
     box(win, 0 , 0);
-    
+
     return (win);
 }
 
@@ -81,7 +81,7 @@ void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 		enemy.setCharacter("{{=>");
 	const char * enemyShip = enemy.getCharacter().c_str();
     enemy.setH(enemy.getH() - 1);
-    if (enemy.getH() < 1)
+    if (enemy.getH() <= (int)enemy.getCharacter().length()-1)
     {
         enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
     }
@@ -143,7 +143,7 @@ void    Game::windowClean(WINDOW *win) {
 	werase(win);
 	makeScenery(win, this->getMilliSpan(this->getStartTime()));
 	box(win, 0, 0);
-		
+
 }
 
 int Game::menu(WINDOW *win, int yMax, int xMax) {

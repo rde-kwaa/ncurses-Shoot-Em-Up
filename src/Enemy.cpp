@@ -11,7 +11,7 @@ void Enemy::randomStart(int maxH, int maxV) {
 		setType("small");
 	else
 		setType("big");
-	this->_h = maxH - 1;
+	this->_h = maxH - 5;
 	int iRand = std::rand() % maxV;
 	if (iRand == -1 || iRand == 0)
 	{

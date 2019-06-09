@@ -349,14 +349,12 @@ void		Game::enemyAttacks(WINDOW *win, Player player) {
 	int yMax, xMax;
 	getmaxyx(stdscr, yMax, xMax);
 	time = this->getMilliSpan(this->getStartTime());
-	(void)win;
-	(void)player;
 	
 	for (int i = 0; i < ENEMIES; i++) {
 		imminence = ((time / 100) % 10) - (i % 10);
 		if (imminence == 0 && this->enemies[i].getPhase() == 1) {
 			this->enemies[i].setPhase(imminence);
-			// this->player.alive = this->enemies[i].shoot(win, xMax, player.getH(), player.getV());
+			this->player.alive = !this->enemies[i].shoot(win, xMax, player.getH(), player.getV());
 			this->enemies[i].shoot(win, xMax, player.getH(), player.getV());
 		} else if (imminence > 0 && imminence < 5) {
 			if (this->enemies[i].getH() < xMax - 5 && this->enemies[i].getH() > 5) {

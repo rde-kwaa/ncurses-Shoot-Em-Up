@@ -51,11 +51,11 @@ int main(void) {
 	game.setTermDimensions(yMax, xMax);
 
     game.setTermDimensions(yMax, xMax);
-	
+
 	// Menu/game music start
 	//  Comment out to turn off music
 	game.menu_sound();
-    
+
 	game.menu(win, yMax, xMax);
 
     // Call when game begins (STORYLINE)
@@ -77,4 +77,4 @@ int main(void) {
 
 	endwin();
 }
-}
+

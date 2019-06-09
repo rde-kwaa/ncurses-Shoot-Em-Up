@@ -27,6 +27,7 @@ int main(void) {
     game.menu(win, yMax, xMax);
 
     int     i = 0;
+    int     k = 0;
     srand(time(NULL));	
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
@@ -34,7 +35,7 @@ int main(void) {
 		game.windowClean(win);
 		getmaxyx(stdscr, yMax, xMax);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
-        if (i < 10 && milliSecondsElapsed % 10 == 0)
+        if (i < 10 && k % 20 == 0)
         {
             game.generateEnemy(10, 10, i);
             i++;
@@ -47,6 +48,7 @@ int main(void) {
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);
+        k++;
     }
 
     endwin();

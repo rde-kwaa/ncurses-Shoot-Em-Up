@@ -294,9 +294,6 @@ void    Game::storylineFail(WINDOW *win, int maxH){
 	}
 	wclear(win);
     wrefresh(win);
-	mvwprintw(win, 5, maxH / 2 - cenX[2], "Retry?");
-	wrefresh(win);
-    getch();
 }
 
 void        Game::menu_sound(void)

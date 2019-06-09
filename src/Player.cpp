@@ -10,6 +10,7 @@ Player::Player(void)
 
 Player::Player(int h, int v) : Entity(h, v) {
     this->_character = "<)==>";
+	this->_hp = 3;
 	this->alive = true;
 	this->_score = 0;
     // getmaxyx(this->win, this->yMax, this->xMax);

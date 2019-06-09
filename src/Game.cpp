@@ -6,7 +6,7 @@
 /*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 01:04:00 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 10:48:02 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 11:48:02 by akay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,6 @@ WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
 
 void    Game::displayPlayer(WINDOW *win, Player player)
 {
-    // int k = player.getCharacter().size() + 1;
-    // char symbol[k];
-    
-    // player.getCharacter().copy(symbol, player.getCharacter().size() + 1);
-    // symbol[player.getCharacter().size()] = '\0';
-
     mvwprintw(win, player.getV(), player.getH(), "0");
 }
 
@@ -112,4 +106,71 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
         default:
             break;
     }
+}
+
+void    Game::windowClean(WINDOW *win) {
+    werase(win);
+    box(win, 0, 0);
+}
+
+void    Game::menu(WINDOW *win, int yMax, int xMax) {
+    int x, y;
+    int c = 0;
+	int i = 0;
+    char list[3][9] = {"NEW GAME", "HELP", "QUIT"};
+    char item[9];
+
+    for (int t = 0; t < 3; t++) {
+        x = xMax / 2;
+        y = yMax / 2;
+        move(10, 10);
+        printw("Rush-Type");
+        if (t == 0)
+            wattron(win, A_STANDOUT);  // highlights the first item.
+        else
+            wattroff(win, A_STANDOUT);
+        sprintf(item, "%-7s", list[t]);
+        mvwprintw(win, t + 1, 2, "%s", item);
+    }
+
+    wrefresh(win);  // update the terminal screen
+    while (c != 'q') {
+        c = wgetch(win);
+		
+        sprintf(item, "%-7s", list[i]);
+		
+        mvwprintw(win, i + 1, 2, "%s", item);
+        // use a variable to increment or decrement the value based on the input.
+        switch (c) {
+            case KEY_UP:
+                i--;
+                i = (i < 0) ? 2 : i;
+                break;
+            case KEY_DOWN:
+                i++;
+                i = (i > 2) ? 0 : i;
+                break;
+        }
+        // now highlight the next item in the list.
+        wattron(win, A_STANDOUT);
+
+        sprintf(item, "%-7s", list[i]);
+        mvwprintw(win, i + 1, 2, "%s", item);
+        wattroff(win, A_STANDOUT);
+    }
+    werase(win);
+}
+
+int     Game::getMilliCount(){
+	timeb tb;
+	ftime(&tb);
+	int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
+	return nCount;
+}
+
+int     Game::getMilliSpan(int nTimeStart){
+	int nSpan = getMilliCount() - nTimeStart;
+	if(nSpan < 0)
+		nSpan += 0x100000 * 1000;
+	return nSpan;
 }

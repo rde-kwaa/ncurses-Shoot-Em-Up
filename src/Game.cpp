@@ -6,7 +6,7 @@
 /*   By: akay <akay@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 01:04:00 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 10:35:47 by akay             ###   ########.fr       */
+/*   Updated: 2019/06/09 10:48:02 by akay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,13 @@ WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
 
 void    Game::displayPlayer(WINDOW *win, Player player)
 {
-    char symbol[player.getCharacter().size() + 1];
+    // int k = player.getCharacter().size() + 1;
+    // char symbol[k];
     
-    player.getCharacter().copy(symbol, player.getCharacter().size() + 1);
-    symbol[player.getCharacter().size()] = '\0';
+    // player.getCharacter().copy(symbol, player.getCharacter().size() + 1);
+    // symbol[player.getCharacter().size()] = '\0';
 
-    mvwprintw(win, player.getV(), player.getH(), symbol);
+    mvwprintw(win, player.getV(), player.getH(), "0");
 }
 
 void        Game::getAction(WINDOW *win, int termHeight, int termWidth)

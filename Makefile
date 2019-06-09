@@ -5,56 +5,68 @@ P = \033[1;95m
 G = \033[4;32m
 E = \033[0m
 
-# Name
-PROG := run
+# Compiler
+CXX          := clang++
 
-FILES = main.cpp  Entity.cpp Player.cpp Enemy.cpp
-SRC_DIR = src
-SRCS = src/main.cpp  src/Entity.cpp src/Player.cpp src/Enemy.cpp
-OBJDIR = obj
-OBJS = obj/main.o  obj/Entity.o obj/Player.o obj/Enemy.o
+# The Target Binary Program
+TARGET      := ft_retro
 
-# Sources
-# SRCS :=	$(wildcard src/*.cpp)
+# The Directories, Source, Includes, Objects and Binary
+SRCDIR      := src
+INCDIR      := inc
+OBJDIR      := obj
+TARGETDIR   := bin
+SRCEXT      := cpp
+DEPEXT      := d
+OBJEXT      := o
 
-# Object
-# /OBJS :=	$(SRCS:.cpp=.o)
-# OBJDIR := obj/
-# _OBJS	= $(patsubst src/%.cpp, %.o, $(SRC))
-# OBJS	= $(addprefix $(OBJDIR), $(_OBJS))
+#Flags, Libraries and Includes
+CXXFLAGS    := -std=c++98
+LIB         := -lncurses
+INC         := -I$(INCDIR) -I/usr/local/include
+INCDEP      := -I$(INCDIR)
 
-# Flag
-# CXXFLAGS :=	-Wall -Werror -Wextra -pedantic -std=c++98
-CXXFLAGS :=	-std=c++98
+SRCS     := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+OBJS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SRCS:.$(SRCEXT)=.$(OBJEXT)))
 
-# C++ Compiler
-CXX := clang++
-
-# Build
-$(PROG): $(OBJS)
-	@echo $(SRCS)
-	@$(CXX) $(OBJS) -lncurses -o $@
-	@echo "$(G)Done!$(E)"
-
-$(OBJS): $(SRCS)
-	mkdir -p $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-# All
-all: $(PROG)
-	@echo $(SRCS)
-
-# Clean
-clean:
-			@rm -f $(OBJS)
-			@echo "$(R)Cleaned!$(E)"
-fclean:     clean
-			@rm -f $(PROG)
-			@echo "$(P)Cleaned Everything!$(E)"
+#Defauilt Make
+all: directories $(TARGET)
 
 # Rebuild
-re:			fclean all
+re: fclean all
+
+# Make the Directories
+directories:
+	@mkdir -p $(OBJDIR)
+
+# Cleaners
+# clean
+clean:
+	@$(RM) -rf $(OBJDIR)
+	@echo "$(R)Cleaned!$(E)"
+
+# fclean
+fclean:     clean
+	@$(RM) -rf $(TARGET)
+	@echo "$(P)Cleaned Everything!$(E)"
+
+#Pull in dependency info for *existing* .o files
+-include $(OBJS:.$(OBJEXT)=.$(DEPEXT))
+
+#Link
+$(TARGET): $(OBJS)
+	$(CXX) -o $(TARGET) $^ $(LIB)
+	@echo "$(G)Done!$(E)"
+
+#Compile
+$(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INC) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) $(INCDEP) -MM $(SRCDIR)/$*.$(SRCEXT) > $(OBJDIR)/$*.$(DEPEXT)
+	@cp -f $(OBJDIR)/$*.$(DEPEXT) $(OBJDIR)/$*.$(DEPEXT).tmp
+	@sed -e 's|.*:|$(OBJDIR)/$*.$(OBJEXT):|' < $(OBJDIR)/$*.$(DEPEXT).tmp > $(OBJDIR)/$*.$(DEPEXT)
+	@sed -e 's/.*://' -e 's/\\$$//' < $(OBJDIR)/$*.$(DEPEXT).tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $(OBJDIR)/$*.$(DEPEXT)
+	@rm -f $(OBJDIR)/$*.$(DEPEXT).tmp
 
 # Redundency | GNU still runs if files with names below exist
-.PHONY:
-			all clean fclean re
+.PHONY: all re clean fclean

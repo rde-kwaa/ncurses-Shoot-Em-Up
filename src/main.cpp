@@ -18,6 +18,16 @@ void playerUpdate(WINDOW *win, Player playerOne){
 	mvwprintw(win, playerOne.getV(), playerOne.getH(), "0");
 }
 
+void        menu_sound(void)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "BeachLasagne.mp3", NULL);
+        exit(0);
+    }
+}
+
 void menu(WINDOW *win, int xMax, int yMax) {
     int x, y;
     int c = 0;
@@ -98,7 +108,7 @@ int main(void) {
     keypad(win, true);
     curs_set(0);  // hides the default screen cursor.
     menu(win, xMax, yMax);
-
+    menu_sound();
  	while(game.player.alive) {
 		milliSecondsElapsed = getMilliSpan(start) / 1000; // grabs current time
 

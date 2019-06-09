@@ -12,6 +12,7 @@ class Player : public Entity
 {
 	private:
 		void immaFirinMahLazer(WINDOW *win, int v, int h, const char * lazor);
+		int _score;
 
     public:
         Player(void);
@@ -24,6 +25,8 @@ class Player : public Entity
         void display();
         void shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[10]);
 		bool alive;
+		int getScore(void);
+		void setScore(int n);
 		
         std::string _character;
 };

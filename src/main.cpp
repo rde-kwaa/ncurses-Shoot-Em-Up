@@ -32,7 +32,7 @@ int main(void) {
 
 		getmaxyx(stdscr, yMax, xMax);
 		game.windowClean(win);
-		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
+		mvwprintw(win, 0, xMax /2, "score: %d	Time: %d", game.player.getScore(),milliSecondsElapsed);
         game.displayPlayer(win, game.player);
         game.displayEnemy(win, game.enemies[0], milliSecondsElapsed);
 		game.getAction(win, yMax, xMax);

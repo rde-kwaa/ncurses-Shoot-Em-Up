@@ -2,6 +2,7 @@
 
 Enemy::Enemy(void)
 {
+	this->_phase = 0;
 	return ;
 }
 
@@ -38,7 +39,7 @@ Enemy &Enemy::operator=(const Enemy &enemy){
 	this->_h = enemy._h;
 	this->_v = enemy._v;
 	this->_speed = enemy._speed;
-	this->_phase = enemy._phase;
+	this->_phase = 0;
 	return (*this);
 }
 

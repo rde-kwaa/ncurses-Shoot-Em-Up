@@ -1,6 +1,7 @@
 #include "../inc/Game.hpp"
 #include <signal.h>
 #include <iostream>
+#include <ctime>
 
 # define ENEMIES 100
 
@@ -81,22 +82,29 @@ void		Game::displayPlayer(WINDOW *win, Player player)
 void		Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
 {
 	(void)i;
+	int		n;
+
 	enemy.setH(enemy.getH() - 1);
 	if (enemy.getH() < 1)
 	{
 		enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
 	}
-	//ifs
-	if (enemy.getPhase() > 2 && enemy.getPhase() < 6) {
+	// std::cout<<"P  "<<enemy.getPhase()<<std::endl;
+	if (enemy.getPhase() > 4 && enemy.getPhase() < 10) {
+		n = 12;
 		init_pair(12, COLOR_MAGENTA, 0);
-	} else if (enemy.getPhase() > 0 && enemy.getPhase() < 3) {
-		init_pair(12, COLOR_YELLOW, 0);
+	} else if (enemy.getPhase() > 0 && enemy.getPhase() < 5) {
+		n = 13;
+		init_pair(13, COLOR_YELLOW, 0);
 	} else {
-		init_pair(12, COLOR_RED, 0);
+		n = 14;
+		init_pair(14, COLOR_RED, 0);
 	}
-	wattron(win, COLOR_PAIR(12));
+	
+
+	wattron(win, COLOR_PAIR(n));
 	mvwprintw(win, enemy.getV(), enemy.getH(), "X");
-	wattroff(win, COLOR_PAIR(12));
+	wattroff(win, COLOR_PAIR(n));
 
 }
 
@@ -298,10 +306,6 @@ void		Game::storylineFail(WINDOW *win, int maxH){
 		getch();
 	}
 	wclear(win);
-	// wrefresh(win);
-	// mvwprintw(win, 5, maxH / 2 - cenX[2], "Retry?");
-	// wrefresh(win);
-	// getch();
     wrefresh(win);
 }
 
@@ -349,17 +353,22 @@ void		Game::enemyAttacks(WINDOW *win, Player player) {
 	int yMax, xMax;
 	getmaxyx(stdscr, yMax, xMax);
 	time = this->getMilliSpan(this->getStartTime());
-	
+	// srand(time(NULL));
+
+	imminence = rand() % ENEMIES;
+	if (this->enemies[imminence].getPhase() == 0) {
+		this->enemies[imminence].setPhase(5);
+	}
 	for (int i = 0; i < ENEMIES; i++) {
-		imminence = ((time / 100) % 10) - (i % 10);
-		if (imminence == 0 && this->enemies[i].getPhase() == 1) {
-			this->enemies[i].setPhase(imminence);
-			this->player.alive = !this->enemies[i].shoot(win, xMax, player.getH(), player.getV());
-			this->enemies[i].shoot(win, xMax, player.getH(), player.getV());
-		} else if (imminence > 0 && imminence < 5) {
-			if (this->enemies[i].getH() < xMax - 5 && this->enemies[i].getH() > 5) {
-					this->enemies[i].setPhase(imminence);
+		if (this->enemies[i].getPhase() == 1) {
+			this->enemies[i].setPhase(0);
+			if (this->enemies[i].shoot(win, xMax, player.getH(), player.getV())) {
+                this->storylineFail(win, xMax);
+				this->game_Over();
+				this->player.alive = false;
 			}
+		} else if (this->enemies[i].getPhase() > 1 && this->enemies[i].getPhase() < 10) {
+			this->enemies[i].setPhase(this->enemies[i].getPhase() -1);
 		}
 	}
 }

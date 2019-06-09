@@ -40,6 +40,8 @@ int main(void) {
 		wrefresh(win);
         usleep(DELAY);
     }
+    // Call when player fails (STORYLINE)
+    game.storylineFail(win, xMax);
 
     endwin();
 }

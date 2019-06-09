@@ -5,44 +5,68 @@ P = \033[1;95m
 G = \033[4;32m
 E = \033[0m
 
-# Name
-PROG := run
+# Compiler
+CXX          := clang++
 
-# Sources
-SRCS :=	main.cpp Entity.cpp Enemy.cpp Player.cpp Bullet.cpp
+# The Target Binary Program
+TARGET      := ft_retro
 
-# Object
-OBJS :=	$(SRCS:.cpp=.o)
+# The Directories, Source, Includes, Objects and Binary
+SRCDIR      := src
+INCDIR      := inc
+OBJDIR      := obj
+TARGETDIR   := bin
+SRCEXT      := cpp
+DEPEXT      := d
+OBJEXT      := o
 
-# Flag
-CXXFLAGS :=	-Wall -Werror -Wextra -std=c++98
-# CXXFLAGS :=	-std=c++98
+#Flags, Libraries and Includes
+CXXFLAGS    := -std=c++98 -Wall -Werror -Wextra -pedantic -std=c++98
+LIB         := -lncurses
+INC         := -I$(INCDIR) -I/usr/local/include
+INCDEP      := -I$(INCDIR)
 
-# C++ Compiler
-CXX := clang++
+SRCS     := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+OBJS     := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SRCS:.$(SRCEXT)=.$(OBJEXT)))
 
-# Build
-$(PROG): $(OBJS)
-	@$(CXX) $(OBJS) -lncurses -o $@
-	@echo "$(G)Done!$(E)"
-
-%.o:%.c
-	$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-# All
-all: $(PROG)
-
-# Clean
-clean:
-			@rm -f $(OBJS)
-			@echo "$(R)Cleaned!$(E)"
-fclean:     clean
-			@rm -f $(PROG)
-			@echo "$(P)Cleaned Everything!$(E)"
+#Defauilt Make
+all: directories $(TARGET)
 
 # Rebuild
-re:			fclean all
+re: fclean all
+
+# Make the Directories
+directories:
+	@mkdir -p $(OBJDIR)
+
+# Cleaners
+# clean
+clean:
+	@$(RM) -rf $(OBJDIR)
+	@echo "$(R)Cleaned!$(E)"
+
+# fclean
+fclean:     clean
+	@$(RM) -rf $(TARGET)
+	@echo "$(P)Cleaned Everything!$(E)"
+
+#Pull in dependency info for *existing* .o files
+-include $(OBJS:.$(OBJEXT)=.$(DEPEXT))
+
+#Link
+$(TARGET): $(OBJS)
+	$(CXX) -o $(TARGET) $^ $(LIB)
+	@echo "$(G)Done!$(E)"
+
+#Compile
+$(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INC) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) $(INCDEP) -MM $(SRCDIR)/$*.$(SRCEXT) > $(OBJDIR)/$*.$(DEPEXT)
+	@cp -f $(OBJDIR)/$*.$(DEPEXT) $(OBJDIR)/$*.$(DEPEXT).tmp
+	@sed -e 's|.*:|$(OBJDIR)/$*.$(OBJEXT):|' < $(OBJDIR)/$*.$(DEPEXT).tmp > $(OBJDIR)/$*.$(DEPEXT)
+	@sed -e 's/.*://' -e 's/\\$$//' < $(OBJDIR)/$*.$(DEPEXT).tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $(OBJDIR)/$*.$(DEPEXT)
+	@rm -f $(OBJDIR)/$*.$(DEPEXT).tmp
 
 # Redundency | GNU still runs if files with names below exist
-.PHONY:
-			all clean fclean re
+.PHONY: all re clean fclean

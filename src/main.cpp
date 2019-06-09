@@ -34,7 +34,7 @@ int main(void) {
 		game.windowClean(win);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
         game.displayPlayer(win, game.player);
-        game.displayEnemy(win, game.enemies[0]);
+        game.displayEnemy(win, game.enemies[0], milliSecondsElapsed);
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);

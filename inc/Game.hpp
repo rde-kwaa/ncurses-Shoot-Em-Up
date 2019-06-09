@@ -14,7 +14,7 @@
 #define GAME_HPP
 
 #define DELAY 20000
-#define ENEMIES 100
+#define ENEMIES 1000
 #include <ncurses.h>
 #include "../inc/Player.hpp"
 #include "../inc/Enemy.hpp"

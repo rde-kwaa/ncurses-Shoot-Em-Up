@@ -1,7 +1,7 @@
 #include "../inc/Player.hpp"
 #include "../inc/Bullet.hpp"
 
-#define ENEMIES 100
+#define ENEMIES 1000
 
 Player::Player(void)
 {
@@ -61,27 +61,37 @@ void Player::immaFirinMahLazer(WINDOW *win, int v, int h, const char * lazor) {
 		mvwprintw(win, v, h, lazor);
 }
 
+std::string CreateLazer(int lazorLen, int currentH){
+	std::string str= "";
+	for (int i = currentH; i < lazorLen; i++){
+		str.append("=");
+	}
+	return (str);
+}
+
 void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[ENEMIES]){
 	int currentV = this->getV();
 	int currentH = this->getH();
-	std::string str= "";
+	int tmpEnemy = -1;
+	int tmpEnemyH = maxH;
+	// std::string str= "";
+	std::string lazer;
 	int lazorLen = maxH - 10;
 	for (int i = 0; i <= ENEMIES; i++){
 		
-		if(enemies[i].getV() == currentV && (enemies[i].getH() <= maxH - 5) && (enemies[i].getH() > this->getH())){
-			lazorLen = enemies[i].getH();
-			for (int i = currentH; i < lazorLen; i++){
-				str.append("=");
-			}
-			enemies[i].resetEnemy(maxH,maxV);
-			this->setScore(this->getScore() + 1);
-			break;
+		if(enemies[i].getV() == currentV && (enemies[i].getH() <= maxH - 5) && (enemies[i].getH() > this->getH())  && (enemies[i].getH() < tmpEnemyH) ){
+			tmpEnemyH = enemies[i].getH();
+			tmpEnemy = i;
 		}
 	}
-	if (str.empty()){
-		for (int i = currentH; i < lazorLen; i++){
-			str.append("=");
-		}
+	if (tmpEnemy >= 0){
+		lazorLen = enemies[tmpEnemy].getH();
+		lazer = CreateLazer(lazorLen, currentH);
+		enemies[tmpEnemy].resetEnemy(maxH,maxV);
+		this->setScore(this->getScore() + 1);
+	} else {
+		lazer = CreateLazer(lazorLen, currentH);
+
 	}
-	immaFirinMahLazer(win, currentV, currentH+1, str.c_str());
+	immaFirinMahLazer(win, currentV, currentH+1, (const char *)lazer.c_str());
 }

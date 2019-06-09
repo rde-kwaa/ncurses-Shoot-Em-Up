@@ -26,10 +26,10 @@ int main(void) {
     game.menu(win, yMax, xMax);
 
     int     i = 0;
+    int     k = 0;
 	game.storylineBegin(win, xMax);
 	int start = game.getMilliCount();
 	int milliSecondsElapsed;
-	
     srand(time(NULL));	
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
@@ -37,7 +37,7 @@ int main(void) {
 		game.windowClean(win);
 		getmaxyx(stdscr, yMax, xMax);
 		mvwprintw(win, 0, xMax /2, "score: %d	Time: %d", game.player.getScore(),milliSecondsElapsed);
-        if (i < ENEMIES)
+        if (i < ENEMIES && k % 10 == 0)
         {
             game.generateEnemy(10, 10, i);
             i++;
@@ -50,6 +50,7 @@ int main(void) {
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);
+        k++;
     }
     // Call when player fails (STORYLINE)
     game.storylineFail(win, xMax);

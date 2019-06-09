@@ -8,7 +8,6 @@ Player::Player(void)
 
 Player::Player(int h, int v) : Entity(h, v) {
     this->_character = "0";
-	this->_speed = 1;
 	this->alive = true;
     // getmaxyx(this->win, this->yMax, this->xMax);
     

@@ -69,3 +69,5 @@ And after that, if you still want something to do, here are some ideas of cool b
 
 
 Keep in mind that, as usual, bonuses will not be graded if the basics are not completed, and a bonus that crashes your program could bring your whole grade down...
+
+To debug Entity Classes run make debug

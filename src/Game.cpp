@@ -6,7 +6,7 @@
 /*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 01:04:00 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 13:37:02 by jlowing          ###   ########.fr       */
+/*   Updated: 2019/06/09 15:28:11 by akay             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
     enemy.setH(enemy.getH() - 1);
     if (enemy.getH() < 1)
     {
-        enemy.resetEnemy(this->getTermWidth(), this->getTermHeight());
+        enemy.resetEnemy(this->getTermWidth(), this->getTermHeight() - 5);
     }
     mvwprintw(win, enemy.getV(), enemy.getH(), "X");
 }
@@ -125,6 +125,7 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 
 void    Game::windowClean(WINDOW *win) {
     werase(win);
+    // wclear(win);
     box(win, 0, 0);
 }
 
@@ -188,7 +189,6 @@ int     Game::getMilliSpan(int nTimeStart){
 		nSpan += 0x100000 * 1000;
 	return nSpan;
 }
-
 void    Game::storylineBegin(WINDOW *win, int maxH){
 
     const char *text1 = "The Earth is in trouble...";
@@ -252,9 +252,10 @@ void    Game::storylineFail(WINDOW *win, int maxH){
     getch();
 }
 
-void    Game::generateEnemy(int h, int v)
+
+void    Game::generateEnemy(int h, int v, int id)
 {
-    this->enemies[0].setH(h);
-    this->enemies[0].setV(v);
-    this->enemies[0].randomStart(this->getTermWidth(), this->getTermHeight());
+    this->enemies[id].setH(h);
+    this->enemies[id].setV(v);
+    this->enemies[id].randomStart(this->getTermWidth(), this->getTermHeight() - 2);
 }

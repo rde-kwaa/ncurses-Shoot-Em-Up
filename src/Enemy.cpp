@@ -6,9 +6,13 @@ Enemy::Enemy(void)
 }
 
 void Enemy::randomStart(int maxH, int maxV) {
-    srand(time(NULL));	
-	this->_h = maxH;
-	this->_v = std::rand() % maxV;
+	this->_h = maxH - 1;
+	int iRand = std::rand() % maxV;
+	if (iRand == -1 || iRand == 0)
+	{
+		iRand -= 2;
+	}
+	this->_v = iRand;
 }
 
 Enemy::Enemy(int h, int v){

@@ -1,6 +1,7 @@
 #include "../inc/Player.hpp"
 #include "../inc/Bullet.hpp"
 
+#define ENEMIES 100
 
 Player::Player(void)
 {
@@ -60,12 +61,12 @@ void Player::immaFirinMahLazer(WINDOW *win, int v, int h, const char * lazor) {
 		mvwprintw(win, v, h, lazor);
 }
 
-void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[10]){
+void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[ENEMIES]){
 	int currentV = this->getV();
 	int currentH = this->getH();
 	std::string str= "";
 	int lazorLen = maxH - 10;
-	for (int i = 0; i <= 10; i++){
+	for (int i = 0; i <= ENEMIES; i++){
 		
 		if(enemies[i].getV() == currentV && (enemies[i].getH() <= maxH - 5) && (enemies[i].getH() > this->getH())){
 			lazorLen = enemies[i].getH();

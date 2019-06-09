@@ -25,20 +25,28 @@ int main(void) {
     game.setTermDimensions(yMax, xMax);
     game.menu(win, yMax, xMax);
 
-    // Call when game begins (STORYLINE)
-    game.storylineBegin(win, xMax);
+    int     i = 0;
+	game.storylineBegin(win, xMax);
 	int start = game.getMilliCount();
 	int milliSecondsElapsed;
 	
-	game.generateEnemy(10, 10);
+    srand(time(NULL));	
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
 
-		getmaxyx(stdscr, yMax, xMax);
 		game.windowClean(win);
+		getmaxyx(stdscr, yMax, xMax);
 		mvwprintw(win, 0, xMax /2, "score: %d	Time: %d", game.player.getScore(),milliSecondsElapsed);
+        if (i < ENEMIES)
+        {
+            game.generateEnemy(10, 10, i);
+            i++;
+        }
+        for (int j = 0; j < i; j++)
+        {
+            game.displayEnemy(win, game.enemies[j], milliSecondsElapsed);
+        }
         game.displayPlayer(win, game.player);
-        game.displayEnemy(win, game.enemies[0], milliSecondsElapsed);
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
         usleep(DELAY);

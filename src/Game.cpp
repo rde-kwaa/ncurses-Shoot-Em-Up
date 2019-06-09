@@ -88,29 +88,42 @@ void    Game::displayPlayer(WINDOW *win, Player player)
 
 void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 {
-    int move = wgetch(win);
-    switch(move)
-    {
-        case KEY_UP:
-            this->player.moveUp(termHeight);
-            break;
-        case KEY_DOWN:
-            this->player.moveDown(termHeight);
-            break;
-        case KEY_LEFT:
-            this->player.moveLeft();
-            break;
-        case KEY_RIGHT:
-            this->player.moveRight(termWidth);
-            break;
-        default:
-            break;
-    }
+	int move = wgetch(win);
+	switch(move)
+	{
+		case KEY_UP:
+			this->player.moveUp(termHeight);
+			break;
+		case KEY_DOWN:
+			this->player.moveDown(termHeight);
+			break;
+		case KEY_LEFT:
+			this->player.moveLeft();
+			break;
+		case KEY_RIGHT:
+			this->player.moveRight(termWidth);
+			break;
+		default:
+			break;
+	}
 }
 
 void    Game::windowClean(WINDOW *win) {
+	int yMax, xMax;
+	getmaxyx(stdscr, yMax, xMax);
+
     werase(win);
     box(win, 0, 0);
+	mvwprintw(win, yMax - 11, 1, "	                                                .                       .-.    .      *     _   .                                          ");
+	mvwprintw(win, yMax - 10, 1, "                        .           .                  *                      /   \\              _/ \\       *    .                                ");
+	mvwprintw(win, yMax - 9, 1, "        _    .  ,   .           .         _    .       .                  .--'\\/\\_ \\            /    \\  *    ___                                  ");
+	mvwprintw(win, yMax - 8, 1, "    *  / \\_ *  / \\_      _  *        *   /\\'__      *                 *  / \\_    _/ ^      \\/\\'__        /\\/\\  /\\  __/   \\ *                      ");
+	mvwprintw(win, yMax - 7, 1, "      /    \\  /    \\,   ((        .    _/  /  \\  *'.                    /    \\  /    .'   _/  /  \\  *' /    \\/  \\/ .`'\\_/\\   .                    ");
+	mvwprintw(win, yMax - 6, 1, " .   /\\/\\  /\\/ :' __ \\_  `          _^/  ^/    `--.  .                 /\\/\\  /\\/ :' __  ^/  ^/    `--./.'  ^  `-.\\ _    _:\\ _                     ");
+	mvwprintw(win, yMax - 5, 1, "    /    \\/  \\  _/  \\-'\\      *    /.' ^_   \\_   .'\\             *    /    \\/  \\  _/  \\-' __/.' ^ _   \\_   .'\\   _/ \\ .  __/ \\                    ");
+	mvwprintw(win, yMax - 4, 1, "  /\\  .-   `. \\/     \\ /==~=-=~=-=-;.  _/ \\ -. `_/   \\               /\\  .-   `. \\/     \\ / -.   _/ \\ -. `_/   \\ /    `._/  ^  \\                  ");
+	mvwprintw(win, yMax - 3, 1, " /  `-.__ ^   / .-'.--\\ =-=~_=-=~=^/  _ `--./ .-'  `- \\             / `-.__ ^   / .-'.--'    . /    `--./ .-'  `-.  `-. `.  -  `.                ");
+	mvwprintw(win, yMax - 2, 1, "/        `.  / /       `.~-^=-=~=^=.-'      '-._ `._   \\           /      `.  / /      `-.   /  .-'   / .   .'   \\    \\  \\  .-   \\               ");
 }
 
 void    Game::menu(WINDOW *win, int yMax, int xMax) {

@@ -69,11 +69,12 @@ initscr();
         {
             game.generateEnemy(10, 10, i);
             i++;
-        }
+        }		
         for (int j = 0; j < i; j++)
         {
             game.displayEnemy(win, game.enemies[j], milliSecondsElapsed);
         }
+		
         game.displayPlayer(win, game.player);
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);

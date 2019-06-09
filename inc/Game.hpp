@@ -40,16 +40,19 @@ class Game
         void        setTermHeight(int termHeight);
         void        setTermWidth(int termWidth);
         void        setTermDimensions(int termHeight, int termWidth);
+		void		setStartTime(int startTime);
         
         // Getters
         int         getTermHeight();
         int         getTermWidth();
+		int			getStartTime();
 
         // Window functions
         WINDOW      *createWindow(int height, int width, int coY, int coX);
         void        getAction(WINDOW *win, int termHeight, int termWidth);
         void        windowClean(WINDOW *win);
         void        menu(WINDOW *win, int winHeight, int winWidth);
+		void		makeScenery(WINDOW *win, int time);
 
         int         getMilliCount();
         int         getMilliSpan(int nStartTime);   
@@ -61,6 +64,7 @@ class Game
     private:
         int         _termHeight;
         int         _termWidth;
+		unsigned int startTime;
 };
 
 

@@ -12,6 +12,7 @@ int main(void) {
     cbreak();
 
 	int start = game.getMilliCount();
+	game.setStartTime(start);
 	int milliSecondsElapsed;
     
     getmaxyx(stdscr, yMax, xMax);

@@ -67,7 +67,7 @@ void Player::shoot(WINDOW *win, int maxH, int maxV, Enemy enemies[10]){
 	int lazorLen = maxH - 10;
 	for (int i = 0; i <= 10; i++){
 		
-		if(enemies[i].getV() == currentV && (enemies[i].getH() <= maxH - 5)){
+		if(enemies[i].getV() == currentV && (enemies[i].getH() <= maxH - 5) && (enemies[i].getH() > this->getH())){
 			lazorLen = enemies[i].getH();
 			for (int i = currentH; i < lazorLen; i++){
 				str.append("=");

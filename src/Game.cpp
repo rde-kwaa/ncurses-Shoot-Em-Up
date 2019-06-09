@@ -72,7 +72,8 @@ WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
 
 void    Game::displayPlayer(WINDOW *win, Player player)
 {
-    mvwprintw(win, player.getV(), player.getH(), "0");
+	const char * playerShip = this->player._character.c_str();
+    mvwprintw(win, player.getV(), player.getH(), playerShip);
 }
 
 void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)

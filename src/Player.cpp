@@ -67,6 +67,9 @@ std::string CreateLazer(int lazorLen, int currentH){
 	}
 	return (str);
 }
+void Player::die() {
+	this->alive = false;
+}
 
 
 void laser_sound(void)

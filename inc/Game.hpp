@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-kwaa <rde-kwaa@student.wethinkcode.    +#+  +:+       +#+        */
+/*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
 /*   Updated: 2019/06/09 13:54:11 by rde-kwaa         ###   ########.fr       */
@@ -39,6 +39,17 @@ class Game {
     void setTermWidth(int termWidth);
     void setTermDimensions(int termHeight, int termWidth);
 
+        int         getMilliCount();
+        int         getMilliSpan(int nStartTime);   
+
+        // Storyline
+        void        storylineBegin(WINDOW *win, int maxH);
+        void        storylineFail(WINDOW *win, int maxH);     
+    
+    private:
+        int         _termHeight;
+        int         _termWidth;
+};
     // Getters
     int getTermHeight();
     int getTermWidth();

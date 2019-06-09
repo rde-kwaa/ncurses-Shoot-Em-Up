@@ -53,14 +53,22 @@ int main(void) {
 	while (game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000;  // grabs current time
 
+    // Call when game begins (STORYLINE)
+    game.storylineBegin(win, xMax);
+
+ 	while(game.player.alive) {
+		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
+
 		getmaxyx(stdscr, yMax, xMax);
 		game.windowClean(win);
 		mvwprintw(win, 0, xMax / 2, "Time: %d", milliSecondsElapsed);
 		game.displayPlayer(win, game.player);
 		game.getAction(win, yMax, xMax);
 		wrefresh(win);
-		usleep(DELAY);
-	}
+        usleep(DELAY);
+    }
+    // Call when player fails (STORYLINE)
+    game.storylineFail(win, xMax);
 
 	endwin();
 }

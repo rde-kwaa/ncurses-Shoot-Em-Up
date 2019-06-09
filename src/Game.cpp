@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-kwaa <rde-kwaa@student.wethinkcode.    +#+  +:+       +#+        */
+/*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 01:04:00 by akay              #+#    #+#             */
 /*   Updated: 2019/06/09 14:52:46 by rde-kwaa         ###   ########.fr       */
@@ -197,4 +197,67 @@ int Game::getMilliSpan(int nTimeStart) {
 	if (nSpan < 0)
 		nSpan += 0x100000 * 1000;
 	return nSpan;
+}
+
+void    Game::storylineBegin(WINDOW *win, int maxH){
+
+    const char *text1 = "The Earth is in trouble...";
+    const char *text2 = "Mark Zuckerburg and the Queen of England threaten to enslave the entire world..";
+    const char *text3 = "As Elon's Prized Space car it is up to you to protect the people of Earth..";
+    const char *text4 = "Stop the ever growing Lizzard threat and mighty Elon will love you forever..";
+    const char *text5 = "Begin game?";
+    
+    wclear(win);
+    wrefresh(win);
+    
+    getch();
+    wrefresh(win);
+
+    mvwprintw(win, 1, maxH / 2 - 20, text1);
+    wrefresh(win);
+    getch();    
+
+    mvwprintw(win, 2, maxH / 2 - 45, text2);
+    wrefresh(win);
+    getch();    
+
+    mvwprintw(win, 3, maxH / 2 - 42, text3);
+    wrefresh(win);
+    getch();
+
+    mvwprintw(win, 4, maxH / 2 - 43, text4);
+    wrefresh(win);
+    getch();    
+    
+    wclear(win);
+    wrefresh(win);
+
+    mvwprintw(win, 5, maxH / 2 - 15, text5);
+    wrefresh(win);
+    getch();
+}
+
+void    Game::storylineFail(WINDOW *win, int maxH){
+    const char *textFail1 = "You have doomed us all";
+    const char *textFail2 = "The Queen of england now rules over humanity with Mark Zuckerburg at her side..";
+    const char *textFail3 = "Retry?";
+
+    wclear(win);
+    wrefresh(win);
+
+    mvwprintw(win, 1, maxH / 2 - 15, textFail1);
+    wrefresh(win);
+    getch();    
+
+    mvwprintw(win, 2, maxH / 2 - 42, textFail2);
+    wrefresh(win);
+    getch();
+
+
+    wclear(win);
+    wrefresh(win);
+
+    mvwprintw(win, 5, maxH / 2 - 15, textFail3);
+    wrefresh(win);
+    getch();
 }

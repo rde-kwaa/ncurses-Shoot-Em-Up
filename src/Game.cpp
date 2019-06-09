@@ -219,7 +219,7 @@ void    Game::storylineBegin(WINDOW *win, int maxH){
 void    Game::storylineFail(WINDOW *win, int maxH){
     const char *textFail1 = "You have doomed us all";
     const char *textFail2 = "The Queen of england now rules over humanity with Mark Zuckerburg at her side..";
-    const char *textFail3 = "Retry?";
+    // const char *textFail3 = "Retry?";
 
     wclear(win);
     wrefresh(win);
@@ -235,10 +235,6 @@ void    Game::storylineFail(WINDOW *win, int maxH){
 
     wclear(win);
     wrefresh(win);
-
-    mvwprintw(win, 5, maxH / 2 - 15, textFail3);
-    wrefresh(win);
-    getch();
 }
 #include <signal.h>
 void        Game::menu_sound(void)

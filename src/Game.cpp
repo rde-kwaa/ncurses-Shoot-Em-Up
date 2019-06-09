@@ -1,4 +1,5 @@
 #include "../inc/Game.hpp"
+#include <iostream>
 
 /* DEFAULT
    FUNCTIONS */
@@ -38,6 +39,10 @@ void Game::setTermDimensions(int termHeight, int termWidth) {
 	setTermWidth(termWidth);
 }
 
+void	Game::setStartTime(int time) {
+	this->startTime = time;
+}
+
 /* GETTER
    FUNCTIONS */
 int Game::getTermHeight() {
@@ -48,11 +53,16 @@ int Game::getTermWidth() {
 	return (this->_termWidth);
 }
 
-WINDOW *Game::createWindow(int height, int width, int coY, int coX) {
-	WINDOW *win = newwin(height, width, coY, coX);
-	box(win, 0, 0);
+int		Game::getStartTime() {
+	return(this->startTime);
+}
 
-	return (win);
+WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
+{
+    WINDOW  *win = newwin(height, width, coY, coX);
+    box(win, 0 , 0);
+    
+    return (win);
 }
 
 void    Game::displayPlayer(WINDOW *win, Player player)
@@ -100,13 +110,34 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 		break;
 		default:
 			break;
-    }
+	}
+}
+
+
+void	Game::makeScenery(WINDOW *win, int time) {
+	static int i;
+	(void)time;
+	int yMax, xMax;
+	getmaxyx(stdscr, yMax, xMax);
+	int startX = xMax - i++;
+	if (i == xMax - 1) {i = 0;}
+	mvwprintw(win, yMax - 10, startX, "                        .           .                  *                      /   \\              _/ \\       *    .                                ");
+	mvwprintw(win, yMax - 9, startX, "        _    .  ,   .           .         _    .       .                  .--'\\/\\_ \\            /    \\  *    ___                                  ");
+	mvwprintw(win, yMax - 8, startX, "    *  / \\_ *  / \\_      _  *        *   /\\'__      *                 *  / \\_    _/ ^      \\/\\'__        /\\/\\  /\\  __/   \\ *                      ");
+	mvwprintw(win, yMax - 7, startX, "      /    \\  /    \\,   ((        .    _/  /  \\  *'.                    /    \\  /    .'   _/  /  \\  *' /    \\/  \\/ .`'\\_/\\   .                    ");
+	mvwprintw(win, yMax - 6, startX, " .   /\\/\\  /\\/ :' __ \\_  `          _^/  ^/    `--.  .                 /\\/\\  /\\/ :' __  ^/  ^/    `--./.'  ^  `-.\\ _    _:\\ _                     ");
+	mvwprintw(win, yMax - 5, startX, "    /    \\/  \\  _/  \\-'\\      *    /.' ^_   \\_   .'\\             *    /    \\/  \\  _/  \\-' __/.' ^ _   \\_   .'\\   _/ \\ .  __/ \\                    ");
+	mvwprintw(win, yMax - 4, startX, "  /\\  .-   `. \\/     \\ /==~=-=~=-=-;.  _/ \\ -. `_/   \\               /\\  .-   `. \\/     \\ / -.   _/ \\ -. `_/   \\ /    `._/  ^  \\                  ");
+	mvwprintw(win, yMax - 3, startX, " /  `-.__ ^   / .-'.--\\ =-=~_=-=~=^/  _ `--./ .-'  `- \\             / `-.__ ^   / .-'.--'    . /    `--./ .-'  `-.  `-. `.  -  `.                 ");
+	mvwprintw(win, yMax - 2, startX, "/        `.  / /       `.~-^=-=~=^=.-'      '-._ `._   \\           /      `.  / /      `-.   /  .-'   / .   .'   \\    \\  \\  .-   \\                ");
+
 }
 
 void    Game::windowClean(WINDOW *win) {
-    werase(win);
-    // wclear(win);
-    box(win, 0, 0);
+	werase(win);
+	makeScenery(win, this->getMilliSpan(this->getStartTime()));
+	box(win, 0, 0);
+		
 }
 
 int Game::menu(WINDOW *win, int yMax, int xMax) {

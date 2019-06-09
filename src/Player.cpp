@@ -1,7 +1,7 @@
 #include "../inc/Player.hpp"
 #include "../inc/Bullet.hpp"
 
-#define ENEMIES 1000
+#define ENEMIES 100
 
 Player::Player(void)
 {

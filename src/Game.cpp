@@ -1,78 +1,64 @@
-
 #include "../inc/Game.hpp"
 
 /* DEFAULT
    FUNCTIONS */
-Game::Game(void)
-{
-    return ;
+Game::Game(void) {
+	return;
 }
 
-Game::Game(Player player)
-{
-    this->player = player;
+Game::Game(Player player) {
+	this->player = player;
 }
 
-Game::Game(Game const &obj)
-{
-    *this = obj;
+Game::Game(Game const &obj) {
+	*this = obj;
 }
 
-Game    &Game::operator=(Game const &obj)
-{
-    (void)obj;
-    return (*this);
+Game &Game::operator=(Game const &obj) {
+	(void)obj;
+	return (*this);
 }
 
-Game::~Game()
-{
-    return ;
+Game::~Game() {
+	return;
 }
-
-
-
 
 /* SETTER
    FUNCTIONS */
-void    Game::setTermHeight(int termHeight)
-{
-    this->_termHeight = termHeight;
+void Game::setTermHeight(int termHeight) {
+	this->_termHeight = termHeight;
 }
 
-void    Game::setTermWidth(int termWidth)
-{
-    this->_termWidth = termWidth;
+void Game::setTermWidth(int termWidth) {
+	this->_termWidth = termWidth;
 }
 
-void    Game::setTermDimensions(int termHeight, int termWidth)
-{
-    setTermHeight(termHeight);
-    setTermWidth(termWidth);
+void Game::setTermDimensions(int termHeight, int termWidth) {
+	setTermHeight(termHeight);
+	setTermWidth(termWidth);
 }
 
 /* GETTER
    FUNCTIONS */
-int     Game::getTermHeight()
-{
-    return (this->_termHeight);
+int Game::getTermHeight() {
+	return (this->_termHeight);
 }
 
-int     Game::getTermWidth()
-{
-    return(this->_termWidth);
+int Game::getTermWidth() {
+	return (this->_termWidth);
 }
 
-WINDOW  *Game::createWindow(int height, int width, int coY, int coX)
-{
-    WINDOW  *win = newwin(height, width, coY, coX);
-    box(win, 0 , 0);
-    
-    return (win);
+WINDOW *Game::createWindow(int height, int width, int coY, int coX) {
+	WINDOW *win = newwin(height, width, coY, coX);
+	box(win, 0, 0);
+
+	return (win);
 }
 
 void    Game::displayPlayer(WINDOW *win, Player player)
 {
-    mvwprintw(win, player.getV(), player.getH(), "0");
+	const char * playerShip = this->player._character.c_str();
+    mvwprintw(win, player.getV(), player.getH(), playerShip);
 }
 
 void   Game::displayEnemy(WINDOW *win, Enemy &enemy, int i)
@@ -105,8 +91,13 @@ void        Game::getAction(WINDOW *win, int termHeight, int termWidth)
 			this->player.moveRight(termWidth);
 			break;
 		case ' ':
-			this->player.shoot(win ,termWidth,termHeight ,this->enemies);
+			this->player.shoot(win, termWidth, termHeight, this->enemies);
 			break;
+		case 27:
+			windowClean(win);
+			wrefresh(win);
+			exit(0);
+		break;
 		default:
 			break;
     }
@@ -118,128 +109,148 @@ void    Game::windowClean(WINDOW *win) {
     box(win, 0, 0);
 }
 
-void    Game::menu(WINDOW *win, int yMax, int xMax) {
-    int x, y;
-    int c = 0;
-	int i = 0;
-    char list[3][9] = {"NEW GAME", "HELP", "QUIT"};
-    char item[9];
+int Game::menu(WINDOW *win, int yMax, int xMax) {
+	int xCen = xMax / 2 - 8;
+	int yCen = yMax / 2 - 2;
+	int item;
+	int highlight = 0;
+	int ws = 0;
+	std::string items[3] = {"NEW GAME", "HELP", "QUIT"};
+	std::string s;
 
-    for (int t = 0; t < 3; t++) {
-        x = xMax / 2;
-        y = yMax / 2;
-        move(10, 10);
-        if (t == 0)
-            wattron(win, A_STANDOUT);  // highlights the first item.
-        else
-            wattroff(win, A_STANDOUT);
-        sprintf(item, "%-7s", list[t]);
-        mvwprintw(win, t + 1, 2, "%s", item);
-    }
-
-    wrefresh(win);  // update the terminal screen
-    while (c != 'q') {
-        c = wgetch(win);
-		
-        sprintf(item, "%-7s", list[i]);
-		
-        mvwprintw(win, i + 1, 2, "%s", item);
-        // use a variable to increment or decrement the value based on the input.
-        switch (c) {
-            case KEY_UP:
-                i--;
-                i = (i < 0) ? 2 : i;
-                break;
-            case KEY_DOWN:
-                i++;
-                i = (i > 2) ? 0 : i;
-                break;
-        }
-        // now highlight the next item in the list.
-        wattron(win, A_STANDOUT);
-
-        sprintf(item, "%-7s", list[i]);
-        mvwprintw(win, i + 1, 2, "%s", item);
-        wattroff(win, A_STANDOUT);
-    }
-    werase(win);
+	while (1) {
+		mvwprintw(win, yCen - 2, xCen + 4, "|FT_RETRO|");
+		for (int i = 0; i < 3; i++) {
+			if (i == highlight)
+				wattron(win, A_STANDOUT);
+			s = items[i].c_str();
+			(strlen(s.c_str()) > 5) ? ws = 4 : ws = 6;
+			// print at centered coordinate. c_str is to cast as it only takes char *.
+			mvwprintw(win, i + yCen + 1, xCen + 1, "%*s%*s",
+					  (8 + strlen(s.c_str()) / 2), s.c_str(), ws, " ");
+			wattroff(win, A_STANDOUT);
+		}
+		item = wgetch(win);
+		wrefresh(win);
+		switch (item) {
+			case KEY_UP:
+				highlight--;
+				(highlight == -1) ? highlight = 0 : 0;
+				break;
+			case KEY_DOWN:
+				highlight++;
+				(highlight == 3) ? highlight = 2 : 0;
+				break;
+			default:
+				break;
+		}
+		if (item == 10) {
+			switch (highlight) {
+				case 0:
+					return 0;
+				case 1:
+					return 1;
+				case 2:
+					return 2;
+				default:
+					break;
+			}
+		}
+	}
 }
 
-int     Game::getMilliCount(){
+int Game::help(WINDOW *win, int yMax) {
+	int ch;
+	std::string back = "BACK";
+	std::string instructs[15] = {
+		"OBJECTIVE:",
+		"Shoot down your enemies that will appear on the right of the screen, but don't collide with them!",
+		"Each enemy that you eliminate will add to your killscore.",
+		"Get the highest killscore possible, and most importantly, have FUN!!!",
+		" ",
+		"MOVEMENT:",
+		"UP ARROW - Go Up...",
+		"DOWN ARROW - Go Down...",
+		"LEFT ARROW - Go Left...",
+		"RIGHT ARROW - Go Right...",
+		" ",
+		"ACTIONS:",
+		"SPACEBAR - Fire",
+		"",
+		"EXIT - ESC x 2"};
+
+	while (1) {
+		mvwprintw(win, 2, 3, "HELP:");
+		for (int i = 0; i < 15; i++) {
+			mvwprintw(win, 4 + i, 3, "%s", instructs[i].c_str());
+		}
+		wattron(win, A_STANDOUT);
+		curs_set(1);
+
+		mvwprintw(win, yMax - 3, 3, "%s", back.c_str());
+		curs_set(0);
+		wattroff(win, A_STANDOUT);
+		ch = wgetch(win);
+		wrefresh(win);
+		if (ch == 10) {
+			return 1;
+		}
+	}
+}
+
+int Game::getMilliCount() {
 	timeb tb;
 	ftime(&tb);
 	int nCount = tb.millitm + (tb.time & 0xfffff) * 1000;
 	return nCount;
 }
 
-int     Game::getMilliSpan(int nTimeStart){
+int Game::getMilliSpan(int nTimeStart) {
 	int nSpan = getMilliCount() - nTimeStart;
-	if(nSpan < 0)
+	if (nSpan < 0)
 		nSpan += 0x100000 * 1000;
 	return nSpan;
 }
 void    Game::storylineBegin(WINDOW *win, int maxH){
+std::string texts[5] = {
+		"The Earth is in trouble...",
+		"Mark Zuckerburg and the Queen of England threaten to enslave the entire world..",
+		"As Elon's Prized Space car it is up to you to protect the people of Earth..",
+		"Stop the ever growing Lizzard threat and mighty Elon will love you forever..",
+		"Begin Game?"};
+int cenX[5] = {20, 45, 42, 43, 15};
 
-    const char *text1 = "The Earth is in trouble...";
-    const char *text2 = "Mark Zuckerburg and the Queen of England threaten to enslave the entire world..";
-    const char *text3 = "As Elon's Prized Space car it is up to you to protect the people of Earth..";
-    const char *text4 = "Stop the ever growing Lizzard threat and mighty Elon will love you forever..";
-    const char *text5 = "Begin game?";
-
-    // wclear(win);
-    // wrefresh(win);
-    
-    getch();
-    wrefresh(win);
-
-    mvwprintw(win, 1, maxH / 2 - 20, text1);
-    wrefresh(win);
-    getch();    
-
-    mvwprintw(win, 2, maxH / 2 - 45, text2);
-    wrefresh(win);
-    getch();    
-
-    mvwprintw(win, 3, maxH / 2 - 42, text3);
-    wrefresh(win);
-    getch();
-
-    mvwprintw(win, 4, maxH / 2 - 43, text4);
-    wrefresh(win);
-    getch();    
-    
     wclear(win);
     wrefresh(win);
 
-    mvwprintw(win, 5, maxH / 2 - 15, text5);
-    wrefresh(win);
-    getch();
+	for (int i=0; i<5; i++){
+		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
+    	wrefresh(win);
+    	getch();
+	}
 }
 
 void    Game::storylineFail(WINDOW *win, int maxH){
-    const char *textFail1 = "You have doomed us all";
-    const char *textFail2 = "The Queen of england now rules over humanity with Mark Zuckerburg at her side..";
-    // const char *textFail3 = "Retry?";
+	std::string texts[2] = {
+		"You have doomed us all",
+		"The Queen of england now rules over humanity with Mark Zuckerburg at her side.."};
+	int cenX[2] = {15, 42};
 
     wclear(win);
     wrefresh(win);
 
-    mvwprintw(win, 1, maxH / 2 - 15, textFail1);
-    wrefresh(win);
-    getch();    
-
-    mvwprintw(win, 2, maxH / 2 - 42, textFail2);
-    wrefresh(win);
-    getch();
-
-
-    wclear(win);
+	for (int i=0; i<2; i++){
+		mvwprintw(win, 1 + i, maxH / 2 - cenX[i], texts[i].c_str());
+    	wrefresh(win);
+    	getch();
+	}
+	wclear(win);
     wrefresh(win);
 }
 #include <signal.h>
 void        Game::menu_sound(void)
 {
-	
+
     pid_t pid = fork();
     if (!pid)
     {

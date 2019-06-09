@@ -26,6 +26,9 @@ int main(void) {
     game.setTermDimensions(yMax, xMax);
     game.menu(win, yMax, xMax);
 
+    // Call when game begins (STORYLINE)
+    game.storylineBegin(win, xMax);
+
  	while(game.player.alive) {
 		milliSecondsElapsed = game.getMilliSpan(start) / 1000; // grabs current time
 

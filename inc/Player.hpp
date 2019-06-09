@@ -8,20 +8,19 @@
 class Player : public Entity
 {
 
-	public:
-		Player(int h, int v, std::string c);
-		~Player();
-		void moveUp();
-		void moveDown();
-		void moveLeft();
-		void moveRight();
-		int  getMove(WINDOW *win, int vMax, int hMax);
-		void display();
-		void shoot();
+    public:
+        Player(void);
+        Player(int h, int v);
+        ~Player();
+        void moveUp();
+        void moveDown(int maxV);
+        void moveLeft();
+        void moveRight(int maxH);
+        void display();
+        void shoot();
 		bool alive;
 		
-		std::string _character;
+        std::string _character;
 };
 
 #endif
-

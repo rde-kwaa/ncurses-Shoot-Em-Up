@@ -12,9 +12,9 @@ Bullet::Bullet(int x, int y, std::string c){
  Bullet::~Bullet(){
  }
 
-void    Bullet::updatePosition(){
-    if (this->_h == this->_maxH){
-        this->_h = -1;
-        this->_v = -1;
-    }
-}
+// void    Bullet::updatePosition(){
+//     if (this->_h == this->_maxH){
+//         this->_h = -1;
+//         this->_v = -1;
+//     }
+// }

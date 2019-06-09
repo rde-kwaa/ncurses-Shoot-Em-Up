@@ -6,4 +6,8 @@
 *.ipch
 *.out
 *.vscode
+obj
+run
+ft_retro
 *.o
+*.d

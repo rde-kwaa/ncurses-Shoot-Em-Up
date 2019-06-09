@@ -7,3 +7,5 @@
 *.out
 *.vscode
 *.o
+run
+ft_retro

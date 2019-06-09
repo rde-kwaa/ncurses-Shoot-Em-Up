@@ -1,11 +1,10 @@
 #include <ncurses.h>
 #include <unistd.h>
 #include <iostream>
-#include <list>
 #include <cstdlib>
 #include <sys/timeb.h>
-#include "../inc/Entity.hpp"
-#include "../inc/Player.hpp"
+#include "Entity.hpp"
+#include "Player.hpp"
 
 #define DELAY 20000
 
@@ -14,45 +13,28 @@ void windowClean(WINDOW *win) {
     box(win, 0, 0);
 }
 
-void playerUpdate(WINDOW *win, Player playerOne,int yMax, int xMax){
+void playerUpdate(WINDOW *win, Player playerOne){
 	mvwprintw(win, playerOne.getV(), playerOne.getH(), "0");
-}
-
-void objectUpdate(WINDOW *win, std::list<Entity> &listOfPlayer, int yMax, int xMax) {
-    std::list<Entity>::iterator it = listOfPlayer.begin();
-    it = listOfPlayer.begin();
-    int next_x;
-    // TODO -- loop list
-
-	 next_x = it->getH() + it->getSpeed();
-
-	if (next_x >= xMax || next_x < 0) {
-		it->setSpeed(it->getSpeed()* -1);
-	} else {
-		it->setH(it->getH()+it->getV());
-	}
-	mvwprintw(win, 5+2, it->getH(), "0");
 }
 
 void menu(WINDOW *win, int xMax, int yMax) {
     int x, y;
-    int c, i = 0;
+    int c = 0;
+	int i = 0;
     char list[3][9] = {"NEW GAME", "HELP", "QUIT"};
     char item[9];
 
-
-
-    for (i = 0; i < 3; i++) {
+    for (int t = 0; t < 3; t++) {
         x = xMax / 2;
         y = yMax / 2;
         move(10, 10);
         printw("Rush-Type");
-        if (i == 0)
+        if (t == 0)
             wattron(win, A_STANDOUT);  // highlights the first item.
         else
             wattroff(win, A_STANDOUT);
-        sprintf(item, "%-7s", list[i]);
-        mvwprintw(win, i + 1, 2, "%s", item);
+        sprintf(item, "%-7s", list[t]);
+        mvwprintw(win, t + 1, 2, "%s", item);
     }
 
     wrefresh(win);  // update the terminal screen
@@ -96,11 +78,7 @@ int getMilliSpan(int nTimeStart){
 	return nSpan;
 }
 
-void updateTime(WINDOW *win, int xMax, int milliSecondsElapsed){
-	
-}
-
-int main(int argc, char *argv[]) {
+int main(void) {
     initscr();
     noecho();
     cbreak();
@@ -120,8 +98,8 @@ int main(int argc, char *argv[]) {
     menu(win, xMax, yMax);
 
     Player playerOne(1, 1, "0");
- 	while(playerOne._alive) {
-		milliSecondsElapsed = getMilliSpan(start) /1000; // grabs current time
+ 	while(playerOne.alive) {
+		milliSecondsElapsed = getMilliSpan(start) / 1000; // grabs current time
 
 		getmaxyx(stdscr, yMax, xMax);
 		yMax -=10;
@@ -130,7 +108,7 @@ int main(int argc, char *argv[]) {
 		windowClean(win);
 		mvwprintw(win, 0, xMax /2, "Time: %d", milliSecondsElapsed);
 		
-		playerUpdate(win, playerOne, yMax, xMax);
+		playerUpdate(win, playerOne);
 		refresh();
 		playerOne.getMove(win, yMax, xMax);
 		wrefresh(win);

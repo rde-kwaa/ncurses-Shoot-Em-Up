@@ -1,4 +1,4 @@
-#include "../inc/Enemy.hpp"
+#include "Enemy.hpp"
 
 void Enemy::_randomStart() {
 	srand(time(NULL));

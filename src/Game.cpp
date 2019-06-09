@@ -6,7 +6,7 @@
 /*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 01:04:00 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 13:37:02 by jlowing          ###   ########.fr       */
+/*   Updated: 2019/06/09 15:43:04 by jlowing          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ void    Game::menu(WINDOW *win, int yMax, int xMax) {
         x = xMax / 2;
         y = yMax / 2;
         move(10, 10);
-        printw("Rush-Type");
         if (t == 0)
             wattron(win, A_STANDOUT);  // highlights the first item.
         else
@@ -182,9 +181,9 @@ void    Game::storylineBegin(WINDOW *win, int maxH){
     const char *text3 = "As Elon's Prized Space car it is up to you to protect the people of Earth..";
     const char *text4 = "Stop the ever growing Lizzard threat and mighty Elon will love you forever..";
     const char *text5 = "Begin game?";
-    
-    wclear(win);
-    wrefresh(win);
+
+    // wclear(win);
+    // wrefresh(win);
     
     getch();
     wrefresh(win);
@@ -236,4 +235,45 @@ void    Game::storylineFail(WINDOW *win, int maxH){
     mvwprintw(win, 5, maxH / 2 - 15, textFail3);
     wrefresh(win);
     getch();
+}
+#include <signal.h>
+void        Game::menu_sound(void)
+{
+	
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/BeachLasagne.mp3", NULL);
+		exit(0);
+    }
+}
+
+void        Game::laser_sound(void)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/pew.mp3", NULL);
+        exit(0);
+    }
+}
+
+void        Game::boom(void)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/Boom.mp3", NULL);
+        exit(0);
+    }
+}
+
+void        Game::game_Over(void)
+{
+    pid_t pid = fork();
+    if (!pid)
+    {
+        execlp("afplay", "afplay", "./res/gameovervoice.mp3", NULL);
+        exit(0);
+    }
 }

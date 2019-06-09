@@ -6,7 +6,7 @@
 /*   By: jlowing <jlowing@student.wethinkcode.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 00:50:20 by akay              #+#    #+#             */
-/*   Updated: 2019/06/09 13:35:19 by jlowing          ###   ########.fr       */
+/*   Updated: 2019/06/09 15:43:17 by jlowing          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,13 @@ class Game
 
         // Storyline
         void        storylineBegin(WINDOW *win, int maxH);
-        void        storylineFail(WINDOW *win, int maxH);     
+        void        storylineFail(WINDOW *win, int maxH); 
+		
+		// Sound
+		void        menu_sound(void);
+		void        laser_sound(void);
+		void        boom(void);
+		void        game_Over(void);
     
     private:
         int         _termHeight;
